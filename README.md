@@ -1,2 +1,4 @@
-# restaurant-app-v2
-Restaurant App V2. Features included a web interface for customer to make order, and a web interface for managers to customize the menu and receive orders.
+
+# Features
+- A web interface that allow customers to make order and check the order status
+- A web interface that allow managers to customize the restaurant menu and receive orders
