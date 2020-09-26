@@ -7,4 +7,4 @@
 - React + Redux
 - MaterialUI
 - .Net Core 3.1 + EF Core 3
-- MySQL DB
+- MSSQL
