@@ -10,8 +10,13 @@ namespace RestaurantApp.DAL.Repositories
 {
     public class AccountRepository : BaseRepository<Account, int>, IAccountRepository
     {
-        public AccountRepository(DbContext context): base(context)
+        public AccountRepository(RestaurantAppContext context): base(context)
         {
+        }
+
+        public Account GetByEmail(string email)
+        {
+            return base.SingleOrDefault(acc => acc.Email == email);
         }
     }
 }

@@ -6,6 +6,13 @@ namespace RestaurantApp.DAL
 {
     public class RestaurantAppContext : DbContext
     {
+
+        public RestaurantAppContext() { }
+
+        public RestaurantAppContext(DbContextOptions<RestaurantAppContext> options)
+        : base(options)
+        { }
+
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -19,11 +26,10 @@ namespace RestaurantApp.DAL
         public DbSet<MenuOptionGroup> MenuOptionGroups { get; set; }
         public DbSet<MenuOptionItem> MenuOptionItems { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("BloggingDatabase");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<MenuItemMenuOptionGroup>()
                 .HasKey(x => new { x.MenuItemID, x.MenuOptionGroupID });
 
@@ -49,6 +55,18 @@ namespace RestaurantApp.DAL
                    .HasOne(x => x.MenuOptionItem)
                    .WithMany(y => y.OrderedItemMenuOptionItems)
                    .HasForeignKey(x => x.MenuOptionItemID);
+
+
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    ID = 1,
+                    CreatedOn = DateTime.Now,
+                    Email = "weijie0192@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("weijie0192"),
+                    Name = "Manager"
+                }
+            );
         }
     }
 }

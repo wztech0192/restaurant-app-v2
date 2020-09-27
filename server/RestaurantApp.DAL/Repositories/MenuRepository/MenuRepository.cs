@@ -10,7 +10,7 @@ namespace RestaurantApp.DAL.Repositories
 {
     public class MenuRepository : BaseRepository<Menu, int>, IMenuRepository
     {
-        public MenuRepository(DbContext context): base(context)
+        public MenuRepository(RestaurantAppContext context): base(context)
         {
         }
     }

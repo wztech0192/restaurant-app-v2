@@ -19,6 +19,9 @@ namespace RestaurantApp.DAL.Models
         public string Password { get; set; }
 
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; } = new List<Card>();

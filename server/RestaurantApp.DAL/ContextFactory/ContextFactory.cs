@@ -6,6 +6,7 @@ namespace RestaurantApp.DAL
 {
     internal sealed class ContextFactory: IContextFactory
     {
+
         public RestaurantAppContext Create()
         {
             return new RestaurantAppContext();

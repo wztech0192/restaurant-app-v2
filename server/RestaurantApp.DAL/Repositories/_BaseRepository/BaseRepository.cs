@@ -9,9 +9,9 @@ namespace RestaurantApp.DAL.Repositories
 {
     public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class
     {
-        protected readonly DbContext Context;
+        protected readonly RestaurantAppContext Context;
 
-        public BaseRepository(DbContext context)
+        public BaseRepository(RestaurantAppContext context)
         {
             Context = context;
         }

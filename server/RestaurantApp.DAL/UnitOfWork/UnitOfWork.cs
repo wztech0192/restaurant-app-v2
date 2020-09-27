@@ -15,14 +15,14 @@ namespace RestaurantApp.DAL
         {
             _context = contextFactory.Create();
 
-            AccountRepository = new AccountRepository(_context);
-            MenuRepository = new MenuRepository(_context);
-            OrderRepository = new OrderRepository(_context);
+            Accounts = new AccountRepository(_context);
+            Menus = new MenuRepository(_context);
+            Orders = new OrderRepository(_context);
         }
 
-        public IAccountRepository AccountRepository { get; private set; }
-        public IMenuRepository MenuRepository { get; private set; }
-        public IOrderRepository OrderRepository { get; private set; }
+        public IAccountRepository Accounts { get; private set; }
+        public IMenuRepository Menus { get; private set; }
+        public IOrderRepository Orders { get; private set; }
 
         public int Complete()
         {

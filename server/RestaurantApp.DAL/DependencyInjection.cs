@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,16 @@ namespace RestaurantApp.DAL
             //todo: pass connection string to context
             //configuration.GetConnectionString("RestaurantAppContext");
 
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            var test = configuration.GetConnectionString("RestaurantAppContext");
+
+            var connStr = configuration.GetConnectionString("RestaurantAppContext");
+
             services.AddScoped<IContextFactory, ContextFactory>();
+
+            services.AddDbContext<RestaurantAppContext>(options => options.UseSqlServer(connStr)); 
         }
     }
 }

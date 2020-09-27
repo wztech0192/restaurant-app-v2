@@ -10,7 +10,7 @@ namespace RestaurantApp.DAL.Repositories
 {
     public class OrderRepository : BaseRepository<Order, int>, IOrderRepository
     {
-        public OrderRepository(DbContext context): base(context)
+        public OrderRepository(RestaurantAppContext context): base(context)
         {
         }
     }
