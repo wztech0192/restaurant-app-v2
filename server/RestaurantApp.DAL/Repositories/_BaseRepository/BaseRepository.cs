@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RestaurantApp.DAL.Repositories
 {
-    public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class
+    internal class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class
     {
         protected readonly RestaurantAppContext Context;
 

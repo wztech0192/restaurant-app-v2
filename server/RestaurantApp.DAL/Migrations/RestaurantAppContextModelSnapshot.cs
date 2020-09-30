@@ -46,6 +46,16 @@ namespace RestaurantApp.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedOn = new DateTime(2020, 9, 30, 18, 40, 56, 267, DateTimeKind.Local).AddTicks(6730),
+                            Email = "weijie0192@gmail.com",
+                            Name = "Manager",
+                            Password = "$2a$11$EUS5tspPIQF8P0W32W7FBOS/H3tlPahiTo4AU9tIfP3.2pTqvZmRi"
+                        });
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.Card", b =>

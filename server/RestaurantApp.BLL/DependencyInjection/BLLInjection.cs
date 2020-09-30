@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RestaurantApp.BLL.Services;
+using RestaurantApp.DAL.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RestaurantApp.BLL
+namespace RestaurantApp.BLL.DependencyInjection
 {
-    public static class DependencyInjection
+    public static class BLLInjection
     {
-        public static void InjectBLL(IServiceCollection services, IConfiguration configuration)
+        public static void Inject(IServiceCollection services, IConfiguration configuration)
         {
-            DAL.DependencyInjection.InjectDAL(services, configuration);
+            DALInjection.Inject(services, configuration);
 
             services.AddScoped<IAccountService, AccountService>();
         }

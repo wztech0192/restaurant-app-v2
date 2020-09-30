@@ -8,7 +8,7 @@ using System.Text;
 
 namespace RestaurantApp.DAL.Repositories
 {
-    public class MenuRepository : BaseRepository<Menu, int>, IMenuRepository
+    internal class MenuRepository : BaseRepository<Menu, int>, IMenuRepository
     {
         public MenuRepository(RestaurantAppContext context): base(context)
         {

@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RestaurantApp.DAL
+namespace RestaurantApp.DAL.DependencyInjection
 {
-    public static class DependencyInjection
+    public static class DALInjection
     {
-        public static void InjectDAL(IServiceCollection services, IConfiguration configuration)
+        public static void Inject(IServiceCollection services, IConfiguration configuration)
         {
             //todo: pass connection string to context
             //configuration.GetConnectionString("RestaurantAppContext");
@@ -17,11 +17,9 @@ namespace RestaurantApp.DAL
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            var test = configuration.GetConnectionString("RestaurantAppContext");
-
             var connStr = configuration.GetConnectionString("RestaurantAppContext");
 
-            services.AddScoped<IContextFactory, ContextFactory>();
+            services.AddScoped<IContextFactory>(c => new ContextFactory(connStr));
 
             services.AddDbContext<RestaurantAppContext>(options => options.UseSqlServer(connStr)); 
         }

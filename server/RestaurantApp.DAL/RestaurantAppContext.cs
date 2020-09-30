@@ -7,11 +7,22 @@ namespace RestaurantApp.DAL
     public class RestaurantAppContext : DbContext
     {
 
-        public RestaurantAppContext() { }
+        private readonly string _connStr;
 
         public RestaurantAppContext(DbContextOptions<RestaurantAppContext> options)
         : base(options)
         { }
+
+        public RestaurantAppContext(string connStr)
+        {
+            _connStr = connStr;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connStr);
+        }
+
 
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Card> Cards { get; set; }
@@ -26,6 +37,19 @@ namespace RestaurantApp.DAL
         public DbSet<MenuOptionGroup> MenuOptionGroups { get; set; }
         public DbSet<MenuOptionItem> MenuOptionItems { get; set; }
 
+        private void seeding(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>().HasData(
+                new Account
+                {
+                    ID = 1,
+                    CreatedOn = DateTime.Now,
+                    Email = "weijie0192@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("weijie0192"),
+                    Name = "Manager"
+                }
+            );
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,17 +80,9 @@ namespace RestaurantApp.DAL
                    .WithMany(y => y.OrderedItemMenuOptionItems)
                    .HasForeignKey(x => x.MenuOptionItemID);
 
+            seeding(modelBuilder);
 
-            modelBuilder.Entity<Account>().HasData(
-                new Account
-                {
-                    ID = 1,
-                    CreatedOn = DateTime.Now,
-                    Email = "weijie0192@gmail.com",
-                    Password = BCrypt.Net.BCrypt.HashPassword("weijie0192"),
-                    Name = "Manager"
-                }
-            );
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

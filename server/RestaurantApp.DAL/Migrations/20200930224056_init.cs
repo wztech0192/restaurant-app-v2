@@ -15,6 +15,7 @@ namespace RestaurantApp.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -263,6 +264,11 @@ namespace RestaurantApp.DAL.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Accounts",
+                columns: new[] { "ID", "CreatedOn", "Email", "Name", "Password" },
+                values: new object[] { 1, new DateTime(2020, 9, 30, 18, 40, 56, 267, DateTimeKind.Local).AddTicks(6730), "weijie0192@gmail.com", "Manager", "$2a$11$EUS5tspPIQF8P0W32W7FBOS/H3tlPahiTo4AU9tIfP3.2pTqvZmRi" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cards_AccountID",

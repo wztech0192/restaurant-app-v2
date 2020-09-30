@@ -10,14 +10,12 @@ using System.Linq;
 
 namespace RestaurantApp.BLL.Services
 {
-    public class AccountService : BaseService, IAccountService
+    internal class AccountService : BaseService, IAccountService
     {
 
         public AccountService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
-
-
 
         public IServiceMessage<AccountDTO> Create(AccountDTO dto)
         {

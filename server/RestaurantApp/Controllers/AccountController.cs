@@ -21,11 +21,18 @@ namespace RestaurantApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(AccountDTO dto)
+        [Route("")]
+        public IActionResult CreateNewAccount(AccountDTO dto)
         {
             return base.ProcessService(_service.Create(dto));
         }
 
+        /// <summary>
+        /// Get all accounts.
+        /// </summary>
+        /// <returns>List of all accounts</returns>
+        /// <response code="200">List of all accounts</response>
+        /// <response code="400">something is wrong</response>    
         [HttpGet("all")]
         public IActionResult GetAll()
         {
