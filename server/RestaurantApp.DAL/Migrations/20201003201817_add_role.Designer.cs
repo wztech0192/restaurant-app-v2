@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201003201817_add_role")]
+    partial class add_role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,13 +46,9 @@ namespace RestaurantApp.DAL.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Accounts");
 
@@ -58,10 +56,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 4, 14, 5, 11, 579, DateTimeKind.Local).AddTicks(8130),
+                            CreatedOn = new DateTime(2020, 10, 3, 16, 18, 17, 336, DateTimeKind.Local).AddTicks(8679),
                             Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$De3IOvGiBLGm8xXZQGwUAOdKvkZ.C/odVE/qpjtSU1kDbXkTSihyC",
+                            Password = "$2a$11$s/z.ks83dp/wDmb.zCwjReWh9pIV9ifj4Oc5RfRVPxWFiC6d6JqVO",
                             Role = "Manager"
                         });
                 });

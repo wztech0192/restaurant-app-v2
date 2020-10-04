@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201003221924_make_role_required")]
+    partial class make_role_required
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,19 +51,16 @@ namespace RestaurantApp.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.ToTable("Accounts");
 
                     b.HasData(
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 4, 14, 5, 11, 579, DateTimeKind.Local).AddTicks(8130),
+                            CreatedOn = new DateTime(2020, 10, 3, 18, 19, 23, 691, DateTimeKind.Local).AddTicks(9955),
                             Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$De3IOvGiBLGm8xXZQGwUAOdKvkZ.C/odVE/qpjtSU1kDbXkTSihyC",
+                            Password = "$2a$11$tFb2Nf/vruvnN7ZwOrKt7O2FcgOsqdaFtsj5QoyWJxZqxnQGPF/kG",
                             Role = "Manager"
                         });
                 });

@@ -1,80 +1,173 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Options;
 using RestaurantApp.BLL.DTOs;
 using RestaurantApp.BLL.Infrastructures;
+using RestaurantApp.BLL.Infrastructures.Exceptions;
 using RestaurantApp.DAL;
 using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
 
 namespace RestaurantApp.BLL.Services
 {
     internal class AccountService : BaseService, IAccountService
     {
 
-        public AccountService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public AccountService(
+            IUnitOfWork unitOfWork,
+            IOptions<AppSettings> appSettingOptions,
+            IJWTService jwtService)
+            : base(unitOfWork, appSettingOptions, jwtService)
         {
         }
 
-        public IServiceMessage<AccountDTO> Create(AccountDTO dto)
+
+        public IServiceMessage<AccountDTO> Login(AccountDTO dto)
         {
-            var msg = base.Create<AccountDTO>();
-
-            try
+            return base.ProcessMessage<AccountDTO>(msg =>
             {
-                validateCreateAccount(dto);
 
-                var entity = new Account();
-                entity.Email = dto.Email;
-                entity.Name = dto.Name;
-                entity.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
+                validateLoginAccount(dto);
 
-                base.UnitOfWork.Accounts.Add(entity);
+                var entity = base.UnitOfWork.Accounts.GetByEmail(dto.Email);
+
+                validAccountPassword(dto, entity);
+
+                msg.Data = new AccountDTO(entity)
+                {
+                    Token = base.JWTService.GenerateAccountJWTToken(entity)
+                };
+                msg.Success = true;
+            });
+        }
+
+        public IServiceMessage<AccountDTO> Update(AccountDTO dto)
+        {
+            return base.ProcessMessage<AccountDTO>(msg =>
+            {
+                var entity = base.JWTService.GetCurrentAccount();
+
+                validateCreateOrUpdateAccount(dto, entity, true);
+                validAccountPassword(dto, entity);
+
+                setAccountMetadata(dto, entity, true);
+
                 base.UnitOfWork.Complete();
 
                 msg.Data = new AccountDTO(entity);
                 msg.Success = true;
-            }
-            catch (Exception e)
-            {
-                base.HandleException(msg, e);
-            }
+            });
+        }
 
-            return msg;
+        public IServiceMessage<AccountDTO> Create(AccountDTO dto)
+        {
+            return base.ProcessMessage<AccountDTO>(msg =>
+            {
+                validateCreateOrUpdateAccount(dto);
+
+                var entity = new Account
+                {
+                    Role = Policy.User,
+                    CreatedOn = DateTime.Now
+                };
+
+                setAccountMetadata(dto, entity);
+
+                base.UnitOfWork.Accounts.Add(entity);
+                base.UnitOfWork.Complete();
+
+                msg.Data = new AccountDTO(entity)
+                {
+                    Token = base.JWTService.GenerateAccountJWTToken(entity),
+                };
+                msg.Success = true;
+            });
         }
 
 
         public IServiceMessage<IEnumerable<AccountDTO>> GetAll()
         {
-            //todo authenticate
-
-            var msg = base.Create<IEnumerable<AccountDTO>>();
-
-            try
+            return base.ProcessMessage<IEnumerable<AccountDTO>>(msg =>
             {
                 msg.Data = base.UnitOfWork.Accounts.GetAll().Select(acc => new AccountDTO(acc));
                 msg.Success = true;
-            }
-            catch (Exception e)
+            });
+        }
+
+        private void setAccountMetadata(AccountDTO dto, Account entity, bool useNewPassword = false)
+        {
+            entity.Email = dto.Email;
+            entity.Name = dto.Name;
+
+            if (useNewPassword)
             {
-                base.HandleException(msg, e);
+                if(!string.IsNullOrEmpty(dto.NewPassword))
+                    entity.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
             }
-            return msg;
+            else
+            {
+                entity.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            }
         }
 
         #region validator
 
-        private void validateCreateAccount(AccountDTO dto)
+        private void validatePassword(List<string> errors, string password)
+        {
+            if(password.Length < 6 || password.Length > 100)
+            {
+                errors.Add("Password length must between 6 and 100.");
+            }
+        }
+
+        private void validAccountPassword(AccountDTO dto, Account entity)
+        {
+            if (entity == null || !BCrypt.Net.BCrypt.Verify(dto.Password, entity.Password))
+            {
+                throw new ServiceException("Incorrect user name or password, please retry!", HttpStatusCode.Unauthorized);
+            }
+        }
+
+        private void validateCreateOrUpdateAccount(AccountDTO dto, Account entity = null, bool isUpdate = false)
         {
             base.HandleValidation(errors =>
             {
                 validateAccountDTO(errors, dto);
 
-                if (!errors.Any() && base.UnitOfWork.Accounts.GetByEmail(dto.Email) != null)
+                if (string.IsNullOrEmpty(dto.Name))
                 {
-                    errors.Add("The provided email already existed in the service");
+                    errors.Add("A name is required");
                 }
+
+                if(isUpdate && !string.IsNullOrEmpty(dto.NewPassword))
+                {
+                    validatePassword(errors, dto.NewPassword);
+                }
+
+                if (!errors.Any())
+                {
+                    var existingEmail = base.UnitOfWork.Accounts.GetByEmail(dto.Email);
+
+                    if (isUpdate && entity == null)
+                    {
+                        errors.Add("Account not found!");
+                    }
+                    else if (existingEmail != null && (!isUpdate || existingEmail.ID != entity.ID))
+                    {
+                        errors.Add("The provided email already existed in the service");
+                    }
+                }
+            });
+        }
+
+        private void validateLoginAccount(AccountDTO dto)
+        {
+            base.HandleValidation(errors =>
+            {
+                validateAccountDTO(errors, dto);
             });
         }
 
@@ -86,18 +179,16 @@ namespace RestaurantApp.BLL.Services
             }
             else
             {
-                if (string.IsNullOrEmpty(dto.Name))
-                {
-                    errors.Add("A name is required");
-                }
+
                 if (string.IsNullOrEmpty(dto.Password))
                 {
                     errors.Add("A password is required");
                 }
-                else if (dto.Password.Length < 6 || dto.Password.Length > 100)
+                else
                 {
-                    errors.Add("Password length must between 6 and 100.");
+                    validatePassword(errors, dto.Password);
                 }
+          
 
                 if (string.IsNullOrEmpty(dto.Email))
                 {
@@ -106,7 +197,7 @@ namespace RestaurantApp.BLL.Services
                 else
                 {
                     var check = new EmailAddressAttribute();
-                    if (check.IsValid(dto.Email))
+                    if (!check.IsValid(dto.Email))
                     {
                         errors.Add("Incorrect email format");
                     }

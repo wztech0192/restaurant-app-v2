@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace RestaurantApp.BLL.Infrastructures
@@ -7,6 +8,9 @@ namespace RestaurantApp.BLL.Infrastructures
     public class ServiceMessage<T> : IServiceMessage<T>
     {
         public bool Success { get; set; }
+
+
+        public HttpStatusCode? ResCode { get; set; }
 
         public ICollection<string> ErrorMessages { get; set; } = new List<string>();
 

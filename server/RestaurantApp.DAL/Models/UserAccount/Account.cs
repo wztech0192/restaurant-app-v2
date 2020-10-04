@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text;
 
 namespace RestaurantApp.DAL.Models
@@ -25,5 +26,8 @@ namespace RestaurantApp.DAL.Models
         public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; } = new List<Card>();
+
+        [Required]
+        public string Role { get; set; }
     }
 }

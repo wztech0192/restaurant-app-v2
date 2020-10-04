@@ -11,17 +11,10 @@ namespace RestaurantApp.DAL.DependencyInjection
     {
         public static void Inject(IServiceCollection services, IConfiguration configuration)
         {
-            //todo: pass connection string to context
-            //configuration.GetConnectionString("RestaurantAppContext");
-
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            var connStr = configuration.GetConnectionString("RestaurantAppContext");
-
-            services.AddScoped<IContextFactory>(c => new ContextFactory(connStr));
-
-            services.AddDbContext<RestaurantAppContext>(options => options.UseSqlServer(connStr)); 
+            services.AddDbContext<RestaurantAppContext>(options => 
+                options.UseSqlServer(configuration.GetConnectionString("RestaurantAppContext"))); 
         }
     }
 }

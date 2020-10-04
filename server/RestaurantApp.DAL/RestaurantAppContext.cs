@@ -7,21 +7,10 @@ namespace RestaurantApp.DAL
     public class RestaurantAppContext : DbContext
     {
 
-        private readonly string _connStr;
 
         public RestaurantAppContext(DbContextOptions<RestaurantAppContext> options)
         : base(options)
         { }
-
-        public RestaurantAppContext(string connStr)
-        {
-            _connStr = connStr;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connStr);
-        }
 
 
         public DbSet<Account> Accounts { get; set; }
@@ -29,7 +18,6 @@ namespace RestaurantApp.DAL
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderedItem> OrderedItems { get; set; }
         public DbSet<OrderedItemMenuOptionItem> OrderedItemMenuOptionItems { get; set; }
-
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuEntry> MenuEntries { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
@@ -46,13 +34,18 @@ namespace RestaurantApp.DAL
                     CreatedOn = DateTime.Now,
                     Email = "weijie0192@gmail.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("weijie0192"),
-                    Name = "Manager"
+                    Name = "Manager",
+                    Role = "Manager"
                 }
             );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Account>()
+                .HasIndex(a => a.Email)
+                .IsUnique();
 
             modelBuilder.Entity<MenuItemMenuOptionGroup>()
                 .HasKey(x => new { x.MenuItemID, x.MenuOptionGroupID });

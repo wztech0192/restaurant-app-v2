@@ -11,9 +11,9 @@ namespace RestaurantApp.DAL
 
         private readonly RestaurantAppContext _context;
 
-        public UnitOfWork(IContextFactory contextFactory)
+        public UnitOfWork(RestaurantAppContext context)
         {
-            _context = contextFactory.Create();
+            _context = context;
 
             Accounts = new AccountRepository(_context);
             Menus = new MenuRepository(_context);

@@ -14,13 +14,13 @@ namespace RestaurantApp.BLL.DTOs
 
         internal AccountDTO(Account entity)
         {
-            ID = entity.ID;
             Email = entity.Email;
             Name = entity.Name;
             CreatedOn = entity.CreatedOn;
         }
 
-        public int ID { get; set; }
+
+        public string Token { get; set; }
 
         public string Email { get; set; }
 
@@ -29,6 +29,8 @@ namespace RestaurantApp.BLL.DTOs
         public DateTime CreatedOn { get; set; }
 
         public string Password { get; set; }
+
+        public string NewPassword { get; set; }
 
     }
 }
