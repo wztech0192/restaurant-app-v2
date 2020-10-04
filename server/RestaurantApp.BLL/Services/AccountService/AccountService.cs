@@ -70,7 +70,7 @@ namespace RestaurantApp.BLL.Services
 
                 var entity = new Account
                 {
-                    Role = Policy.User,
+                    Role = Policy.Customer,
                     CreatedOn = DateTime.Now
                 };
 

@@ -9,13 +9,13 @@ namespace RestaurantApp.BLL.Infrastructures
     public static class Policy
     {
         public const string Manager = "Manager";
-        public const string User = "User";
+        public const string Customer = "Customer";
 
 
         public static void AddPolicies(AuthorizationOptions config)
         {
             AddPolicy(config, Manager);
-            AddPolicy(config, User);
+            AddPolicy(config, Customer);
         }
 
         public static void AddPolicy(AuthorizationOptions config, string Role)
