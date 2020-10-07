@@ -11,5 +11,6 @@ namespace RestaurantApp.BLL.Services
         IServiceMessage<AccountDTO> Create(AccountDTO dto);
         IServiceMessage<AccountDTO> Update(AccountDTO dto);
         IServiceMessage<IEnumerable<AccountDTO>> GetAll();
+        IServiceMessage<AccountDTO> GetCurrent();
     }
 }

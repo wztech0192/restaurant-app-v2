@@ -18,11 +18,14 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantApp.BLL.DependencyInjection;
 using RestaurantApp.BLL.Infrastructures;
+using RestaurantApp.Middleware;
 
 namespace RestaurantApp
 {
     public class Startup
     {
+        const string CorsPolicy = "CorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,8 +40,10 @@ namespace RestaurantApp
             var appSettings = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettings);
 
-            services.AddControllers();
+            services.UseCustomCors();
 
+            services.AddControllers();
+            services.AddRouting(options => options.LowercaseUrls = true);
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -132,7 +137,10 @@ namespace RestaurantApp
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 
                 });
+
+                app.UseCors(CustomCorsPolicy.DEV_CORS);
             }
+
 
             app.UseHttpsRedirection();
 

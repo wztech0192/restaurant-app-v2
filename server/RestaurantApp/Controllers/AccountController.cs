@@ -68,5 +68,17 @@ namespace RestaurantApp.Controllers
         {
             return base.ProcessService(_service.GetAll());
         }
+
+
+        /// <summary>
+        /// Get current account info.
+        /// </summary>
+        /// <returns>Get current account</returns>
+        [HttpGet("")]
+        [Authorize]
+        public IActionResult GetCurrent()
+        {
+            return base.ProcessService(_service.GetCurrent());
+        }
     }
 }

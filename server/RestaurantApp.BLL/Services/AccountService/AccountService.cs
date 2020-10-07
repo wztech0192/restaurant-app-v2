@@ -24,6 +24,15 @@ namespace RestaurantApp.BLL.Services
         {
         }
 
+        public IServiceMessage<AccountDTO> GetCurrent()
+        {
+            return base.ProcessMessage<AccountDTO>(msg =>
+            {
+                var entity = base.JWTService.GetCurrentAccount();
+                msg.Data = new AccountDTO(entity);
+                msg.Success = true;
+            });
+        }
 
         public IServiceMessage<AccountDTO> Login(AccountDTO dto)
         {

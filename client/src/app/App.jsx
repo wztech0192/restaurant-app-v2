@@ -9,6 +9,7 @@ import history from "./history";
 import { ThemeProvider } from "@material-ui/core";
 import NotistackProvider from "./NotistackProvider";
 import theme from "app/theme";
+import GlobalModal from "./Indicator/GlobalModal";
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                     <Router history={history}>
                         <Header />
                         <Routes />
+                        <GlobalModal />
                     </Router>
                 </NotistackProvider>
             </ThemeProvider>

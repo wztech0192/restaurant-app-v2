@@ -10,6 +10,7 @@ using RestaurantApp.BLL.Infrastructures;
 namespace RestaurantApp.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class BaseController : ControllerBase
     {
         public IActionResult ProcessService<T>(IServiceMessage<T> msg)
