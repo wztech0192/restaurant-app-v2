@@ -1,6 +1,12 @@
 import { handleOpenModal } from "./Indicator/indicatorSlice";
 
-export const asyncAction = ({ promise, success, failed, completed }) => async dispatch => {
+export const asyncAction = ({
+    promise,
+    success,
+    failed,
+    completed,
+    hideErrorModal
+}) => async dispatch => {
     try {
         const res = await promise();
         const json = await res.json();
@@ -15,30 +21,32 @@ export const asyncAction = ({ promise, success, failed, completed }) => async di
     } catch (e) {
         if (failed) failed(e);
 
-        let title = "Request Error";
-        if (e.res) {
-            switch (e.res.status) {
-                case 404:
-                    title = "Not Found";
-                    break;
-                case 400:
-                    title = "Bad Request";
-                    break;
-                case 401:
-                    title = "Unauthorized";
-                    break;
-                default:
+        if (!hideErrorModal) {
+            let title = "Request Error";
+            if (e.res) {
+                switch (e.res.status) {
+                    case 404:
+                        title = "Not Found";
+                        break;
+                    case 400:
+                        title = "Bad Request";
+                        break;
+                    case 401:
+                        title = "Unauthorized";
+                        break;
+                    default:
+                }
+                title = `${e.res.status} ${title}`;
             }
-            title = `${e.res.status} ${title}`;
+            dispatch(
+                handleOpenModal({
+                    title: title,
+                    color: "secondary",
+                    message: !e.errors && "Unexcepted error occurred, please refresh and retry!",
+                    messages: e.errors
+                })
+            );
         }
-        dispatch(
-            handleOpenModal({
-                title: title,
-                color: "secondary",
-                message: !e.errors && "Unexcepted error occurred, please refresh and retry!",
-                messages: e.errors
-            })
-        );
     }
     if (completed) completed();
 };

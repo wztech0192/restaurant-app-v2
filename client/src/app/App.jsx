@@ -6,24 +6,30 @@ import store from "./store";
 import "fontsource-roboto";
 import { Router } from "react-router-dom";
 import history from "./history";
-import { ThemeProvider } from "@material-ui/core";
-import NotistackProvider from "./NotistackProvider";
+import { Fade, ThemeProvider } from "@material-ui/core";
+import NotistackProvider from "../common/NotistackProvider";
 import theme from "app/theme";
 import GlobalModal from "./Indicator/GlobalModal";
+import AccountViewModal from "./Account/AccountViewModal";
+import Notifier from "./Indicator/Notifier";
 
 const App = () => {
     return (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <NotistackProvider>
-                    <Router history={history}>
-                        <Header />
-                        <Routes />
-                        <GlobalModal />
-                    </Router>
-                </NotistackProvider>
-            </ThemeProvider>
-        </Provider>
+        <Fade in>
+            <Provider store={store}>
+                <ThemeProvider theme={theme}>
+                    <NotistackProvider>
+                        <Router history={history}>
+                            <Header />
+                            <AccountViewModal />
+                            <Routes />
+                            <Notifier />
+                            <GlobalModal />
+                        </Router>
+                    </NotistackProvider>
+                </ThemeProvider>
+            </Provider>
+        </Fade>
     );
 };
 

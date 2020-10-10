@@ -15,7 +15,7 @@ const GlobalModalContent = React.memo(
         return (
             <>
                 <DialogTitle>
-                    <Typography variant="h6" color={"primary"}>
+                    <Typography variant="h6" component="span" color={"primary"}>
                         {title}
                     </Typography>
                 </DialogTitle>
@@ -52,7 +52,7 @@ const GlobalModalContent = React.memo(
                             </Button>
                         </>
                     ) : (
-                        <Button onClick={onConfirm} color="primary">
+                        <Button onClick={handleClose} color="primary">
                             Ok
                         </Button>
                     )}
@@ -66,9 +66,7 @@ const GlobalModalContent = React.memo(
 export default () => {
     const dispatch = useDispatch();
     const modal = useSelector(state => state.indicator.modal);
-    console.log(modal);
     const handleClose = dispatch(handleCloseModal);
-    console.log(!!modal.open);
     return (
         <Dialog open={!!modal.open} onClose={handleClose}>
             <GlobalModalContent {...modal} handleClose={handleClose} />
