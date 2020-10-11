@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
-import { postLogin, postAccount } from "app/apiProvider";
+import { postLogin, postAccount, getAccount } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import { enqueueSnackbar, setErrors, setLoading } from "app/Indicator/indicatorSlice";
 
@@ -49,6 +49,9 @@ const counterSlice = createSlice({
             state.accountInfo = payload;
             state.token = payload.token;
         },
+        loadAccountInfo(state, { payload }) {
+            state.accountInfo = payload;
+        },
         editAccountInfo(state, { payload }) {
             state.editAccountInfo[payload.name] = payload.value;
         }
@@ -57,7 +60,7 @@ const counterSlice = createSlice({
 
 export default counterSlice.reducer;
 
-const { setAccountView, setAccountInfo, editAccountInfo } = counterSlice.actions;
+const { setAccountView, setAccountInfo, editAccountInfo, loadAccountInfo } = counterSlice.actions;
 
 export const handleEditAccountInfo = dispatch => e =>
     dispatch(
@@ -70,6 +73,16 @@ export const handleEditAccountInfo = dispatch => e =>
 export const getAccountToken = state => state.account.token;
 
 export const handleSetAccountView = mode => dispatch => e => dispatch(setAccountView(mode));
+
+export const handleGetAccountInfo = dispatch => {
+    dispatch(
+        asyncAction({
+            promise: getAccount,
+            success: accountInfo => dispatch(loadAccountInfo(accountInfo)),
+            failed: e => dispatch(setAccountView(ACCOUNT_VIEW.CLOSE))
+        })
+    );
+};
 
 export const handleLoginAccount = (accountData, actionType) => dispatch => e => {
     const apiCall = actionType === "login" ? postLogin : postAccount;

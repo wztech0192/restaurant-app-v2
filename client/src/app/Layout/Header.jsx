@@ -27,7 +27,7 @@ const Header = () => {
                     </IconButton>
                 </Tooltip>
                 <Typography variant="h6" className={classes.title}>
-                    Hibachi House
+                    XXXX XXX
                 </Typography>
                 <AccountButton />
             </Toolbar>

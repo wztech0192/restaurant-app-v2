@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
 
 const TextFieldWrapper = ({
     value = "",
@@ -9,6 +9,7 @@ const TextFieldWrapper = ({
     name,
     margin = "normal",
     fullWidth = true,
+    solid,
     ...props
 }) => {
     if (typeof error === "object") {

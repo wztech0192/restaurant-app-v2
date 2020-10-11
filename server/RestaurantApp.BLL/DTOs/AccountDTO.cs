@@ -17,6 +17,7 @@ namespace RestaurantApp.BLL.DTOs
             Email = entity.Email;
             Name = entity.Name;
             CreatedOn = entity.CreatedOn;
+            Role = entity.Role;
         }
 
 
@@ -31,6 +32,8 @@ namespace RestaurantApp.BLL.DTOs
         public string Password { get; set; }
 
         public string NewPassword { get; set; }
+
+        public string Role { get; set; }
 
     }
 }

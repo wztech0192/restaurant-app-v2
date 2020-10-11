@@ -19,6 +19,7 @@ import {
 } from "./accountSlice";
 import TextField from "common/TextField";
 import ErrorDisplayer from "common/ErrorDisplayer";
+import { validEmailRegex } from "common";
 
 const progessBarStyle = {
     width: "90%",
@@ -26,15 +27,13 @@ const progessBarStyle = {
     borderRadius: 50
 };
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 const Register = ({ handleClose, loading, errors }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.account.editAccountInfo);
 
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
-    const emailCheck = state.email && !state.email.match(emailRegex) && "Invalid email format";
+    const emailCheck = state.email && !state.email.match(validEmailRegex) && "Invalid email format";
     const passwordCheck =
         state.password && state.password.length < 6 && "Minimum 6 characters required";
     const confirmPasswordCheck =
