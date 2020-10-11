@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
-import { postLogin } from "app/apiProvider";
+import { postLogin, postAccount } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import { enqueueSnackbar, setErrors, setLoading } from "app/Indicator/indicatorSlice";
-import { useSnackbar } from "notistack";
 
 //save/retrieve token from local storage
 const TOKEN_KEY = "TOKEN_KEY";
@@ -33,7 +32,8 @@ export const ACCOUNT_VIEW = {
 const initialState = {
     token: localStoredToken,
     accountInfo: undefined,
-    viewMode: ACCOUNT_VIEW.CLOSE
+    viewMode: ACCOUNT_VIEW.CLOSE,
+    editAccountInfo: {}
 };
 
 const counterSlice = createSlice({
@@ -42,50 +42,66 @@ const counterSlice = createSlice({
     reducers: {
         setAccountView(state, { payload }) {
             state.viewMode = payload;
+            state.editAccountInfo = initialState.editAccountInfo;
         },
         setAccountInfo(state, { payload }) {
             state.viewMode = ACCOUNT_VIEW.CLOSE;
             state.accountInfo = payload;
             state.token = payload.token;
+        },
+        editAccountInfo(state, { payload }) {
+            state.editAccountInfo[payload.name] = payload.value;
         }
     }
 });
 
 export default counterSlice.reducer;
 
-const { setAccountView, setAccountInfo } = counterSlice.actions;
+const { setAccountView, setAccountInfo, editAccountInfo } = counterSlice.actions;
+
+export const handleEditAccountInfo = dispatch => e =>
+    dispatch(
+        editAccountInfo({
+            name: e.target.name,
+            value: e.target.value
+        })
+    );
 
 export const getAccountToken = state => state.account.token;
 
 export const handleSetAccountView = mode => dispatch => e => dispatch(setAccountView(mode));
 
-export const handleLoginAccount = accountData => dispatch => e => {
-    const reverseLoadingPayload = dispatch(
-        setLoading({ target: "accountViewModal", loading: true })
-    );
-    dispatch(setErrors({ errors: undefined, target: "login" }));
+export const handleLoginAccount = (accountData, actionType) => dispatch => e => {
+    const apiCall = actionType === "login" ? postLogin : postAccount;
+    const reverseLoadingPayload = dispatch(setLoading({ target: "account", loading: true }));
+    dispatch(setErrors({ target: "account" }));
     dispatch(
         asyncAction({
             hideErrorModal: true,
-            promise: () => postLogin(accountData),
+            promise: () => apiCall(accountData),
             success: accountInfo => {
                 dispatch(setAccountInfo(accountInfo));
                 dispatch(
                     enqueueSnackbar({
-                        message: `Welcome back, ${accountInfo.name}!`,
+                        message: `Hello, ${accountInfo.name}!`,
                         variant: "success"
                     })
                 );
+                dispatch(setLoading(reverseLoadingPayload));
             },
             failed: e => {
                 let errors = "Oops, something went wrong!";
                 if (e.errors && e.errors.length > 0) {
-                    errors = e.errors.join(", ");
+                    if (actionType === "login")
+                        dispatch(
+                            editAccountInfo({
+                                name: "password",
+                                value: ""
+                            })
+                        );
+                    errors = e.errors;
                 }
-                dispatch(setErrors({ errors, target: "login" }));
-            },
-            completed: () => {
-                dispatch(setLoading(reverseLoadingPayload));
+                dispatch(setErrors({ errors, target: "account", toggleLoading: true }));
             }
         })
     );

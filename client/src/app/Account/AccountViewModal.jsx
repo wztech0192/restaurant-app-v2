@@ -5,7 +5,7 @@ import { ACCOUNT_VIEW, handleSetAccountView } from "./accountSlice";
 import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
-import { getLoading } from "app/Indicator/indicatorSlice";
+import { getErrors, getLoading, setErrors } from "app/Indicator/indicatorSlice";
 
 const AccountViews = {
     [ACCOUNT_VIEW.LOGIN]: Login,
@@ -14,9 +14,14 @@ const AccountViews = {
 };
 
 const AccountViewModalContent = React.memo(
-    ({ handleClose, viewMode, loading }) => {
+    ({ handleClose, viewMode, loading, errors, dispatch }) => {
+        React.useEffect(() => {
+            //clear error
+            dispatch(setErrors({ target: "account" }));
+        }, [dispatch]);
+
         const View = AccountViews[viewMode];
-        return <View handleClose={handleClose} loading={loading} />;
+        return <View handleClose={handleClose} loading={loading} errors={errors} />;
     },
     (prev, next) => !next.open
 );
@@ -26,14 +31,23 @@ export default () => {
     const viewMode = useSelector(state => state.account.viewMode);
     const handleClose = dispatch(handleSetAccountView(ACCOUNT_VIEW.CLOSE));
     const open = viewMode !== ACCOUNT_VIEW.CLOSE;
-    const loading = useSelector(getLoading("accountViewModal"));
+    const loading = useSelector(getLoading("account"));
+    const errors = useSelector(getErrors("account"));
 
     return (
-        <Dialog open={open} onClose={handleClose} disableBackdropClick={loading}>
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            disableBackdropClick={loading}
+            maxWidth="xs"
+            fullWidth
+        >
             <AccountViewModalContent
                 loading={loading}
                 open={open}
                 viewMode={viewMode}
+                errors={errors}
+                dispatch={dispatch}
                 handleClose={handleClose}
             />
         </Dialog>

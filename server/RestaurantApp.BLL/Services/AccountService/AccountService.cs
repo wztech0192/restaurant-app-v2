@@ -128,7 +128,7 @@ namespace RestaurantApp.BLL.Services
         {
             if(password.Length < 6 || password.Length > 100)
             {
-                errors.Add("Password length must between 6 and 100.");
+                errors.Add("Password length must between 6 and 100");
             }
         }
 
@@ -166,7 +166,7 @@ namespace RestaurantApp.BLL.Services
                     }
                     else if (existingEmail != null && (!isUpdate || existingEmail.ID != entity.ID))
                     {
-                        errors.Add("The provided email already existed in the service");
+                        errors.Add("The email address is already registerd");
                     }
                 }
             });
