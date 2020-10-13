@@ -1,15 +1,5 @@
 import React from "react";
-import {
-    DialogContent,
-    Button,
-    Typography,
-    Grid,
-    IconButton,
-    Link,
-    LinearProgress,
-    Fade
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { DialogContent, Button, Grid, Link, LinearProgress, Fade } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
     ACCOUNT_VIEW,
@@ -20,6 +10,7 @@ import {
 import TextField from "common/TextField";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import { validEmailRegex } from "common";
+import AccountHeader from "./AccountHeader";
 
 const progessBarStyle = {
     width: "90%",
@@ -51,16 +42,9 @@ const Register = ({ handleClose, loading, errors }) => {
     return (
         <Fade in>
             <DialogContent>
-                <Typography variant="h5" gutterBottom>
+                <AccountHeader loading={loading} handleClose={handleClose}>
                     Sign Up
-                    {!loading && (
-                        <span className="floatRight">
-                            <IconButton onClick={handleClose} size="small">
-                                <CloseIcon />
-                            </IconButton>
-                        </span>
-                    )}
-                </Typography>
+                </AccountHeader>
                 <form>
                     <TextField
                         required
@@ -134,7 +118,6 @@ const Register = ({ handleClose, loading, errors }) => {
                         </Grid>
                     </Grid>
                 </form>
-                <br />
             </DialogContent>
         </Fade>
     );
