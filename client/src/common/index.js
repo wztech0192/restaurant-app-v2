@@ -11,3 +11,5 @@ export const shallowReplace = (state, replaceState) => {
         state[key] = replaceState[key];
     }
 };
+
+export const prettyJsonStringify = obj => JSON.stringify(obj, null, 4);

@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestaurantApp.BLL.DependencyInjection;
 using RestaurantApp.BLL.Infrastructures;
+using RestaurantApp.Hubs;
 using RestaurantApp.Middleware;
 
 namespace RestaurantApp
@@ -41,7 +42,7 @@ namespace RestaurantApp
             services.Configure<AppSettings>(appSettings);
 
             services.UseCustomCors();
-
+            services.AddSignalR();
             services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -153,6 +154,7 @@ namespace RestaurantApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<OrderHub>("/orders");
             });
         }
     }

@@ -1,13 +1,18 @@
-import { handleOpenModal } from "./Indicator/indicatorSlice";
+import { handleOpenModal, setLoading } from "./Indicator/indicatorSlice";
 
 export const asyncAction = ({
     promise,
     success,
     failed,
     completed,
-    hideErrorModal
+    hideErrorModal,
+    toggleLoadingFor
 }) => async dispatch => {
     try {
+        if (toggleLoadingFor) {
+            dispatch(setLoading({ target: toggleLoadingFor, loading: true }));
+        }
+
         const res = await promise();
         const json = await res.json();
         if (res.ok) {
@@ -48,5 +53,10 @@ export const asyncAction = ({
             );
         }
     }
+
     if (completed) completed();
+
+    if (toggleLoadingFor) {
+        dispatch(setLoading({ target: toggleLoadingFor, loading: false }));
+    }
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Dialog } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { ACCOUNT_VIEW, handleLoadLocalAccount, handleSetAccountView } from "./accountSlice";
+import { ACCOUNT_VIEW, handleSetAccountView } from "./accountSlice";
 import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
@@ -33,10 +33,6 @@ export default () => {
     const open = viewMode !== ACCOUNT_VIEW.CLOSE;
     const loading = useSelector(getLoading("account"));
     const errors = useSelector(getErrors("account"));
-
-    React.useEffect(() => {
-        dispatch(handleLoadLocalAccount);
-    }, [dispatch]);
 
     return (
         <Dialog

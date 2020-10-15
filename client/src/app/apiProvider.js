@@ -7,3 +7,6 @@ export const postAccount = data => apiCaller.post("account", data);
 export const putAccount = data => apiCaller.put("account", data);
 
 export const getAccount = () => apiCaller.get("account");
+
+export const getMenu = menuName => apiCaller.get("menu/" + menuName);
+export const getAllMenu = () => apiCaller.get("menu");

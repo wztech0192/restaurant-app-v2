@@ -7,7 +7,7 @@ import {
     handleLoginAccount,
     handleSetAccountView
 } from "./accountSlice";
-import TextField from "common/TextField";
+import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import AccountHeader from "./AccountHeader";
 
@@ -30,7 +30,7 @@ const Login = ({ handleClose, loading, errors }) => {
                     Sign In
                 </AccountHeader>
                 <form>
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Email"
                         disabled={loading}
@@ -39,7 +39,7 @@ const Login = ({ handleClose, loading, errors }) => {
                         onChange={handleUpdateState}
                         autoComplete="email"
                     />
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Password"
                         name="password"

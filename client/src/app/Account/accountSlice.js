@@ -36,7 +36,7 @@ const initialState = {
     editAccountInfo: {}
 };
 
-const counterSlice = createSlice({
+const slice = createSlice({
     name: "account",
     initialState,
     reducers: {
@@ -71,7 +71,7 @@ const counterSlice = createSlice({
     }
 });
 
-export default counterSlice.reducer;
+export default slice.reducer;
 
 export const getAccountToken = state => state.account.token;
 export const getAccountRole = state =>
@@ -85,7 +85,7 @@ const {
     setToken,
     reset,
     setEditAccountInfo
-} = counterSlice.actions;
+} = slice.actions;
 
 export { setEditAccountInfo };
 

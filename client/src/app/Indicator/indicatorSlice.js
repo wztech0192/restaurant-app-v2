@@ -11,7 +11,7 @@ const initialState = {
     notifications: []
 };
 
-const counterSlice = createSlice({
+const slice = createSlice({
     name: "account",
     initialState,
     reducers: {
@@ -33,11 +33,19 @@ const counterSlice = createSlice({
         },
         enqueueSnackbar(state, { payload }) {
             const key = (payload && payload.key) || uid();
-            state.notifications.push({
-                key,
-                message: payload.message,
-                options: payload
-            });
+
+            if (typeof payload === "string") {
+                state.notifications.push({
+                    key,
+                    message: payload
+                });
+            } else {
+                state.notifications.push({
+                    key,
+                    message: payload.message,
+                    options: payload
+                });
+            }
         },
         removeSnackbar(state, { payload }) {
             state.notifications = state.notifications.filter(n => n.key !== payload);
@@ -45,7 +53,7 @@ const counterSlice = createSlice({
     }
 });
 
-export default counterSlice.reducer;
+export default slice.reducer;
 
 const {
     setModal,
@@ -53,7 +61,7 @@ const {
     setLoading: setLoadingAction,
     enqueueSnackbar,
     removeSnackbar
-} = counterSlice.actions;
+} = slice.actions;
 
 const setLoading = payload => dispatch => {
     dispatch(setLoadingAction(payload));

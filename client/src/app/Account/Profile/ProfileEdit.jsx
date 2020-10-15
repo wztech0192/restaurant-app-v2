@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Grid, IconButton, LinearProgress, Switch, Tooltip } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { handleEditAccountInfo, handleUpdateAccount } from "../accountSlice";
-import TextField from "common/TextField";
+import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import UndoIcon from "@material-ui/icons/Undo";
 import { validEmailRegex } from "common";
@@ -40,7 +40,7 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
 
     return (
         <form>
-            <TextField
+            <TextFieldWrapper
                 required
                 label="Name"
                 disabled={loading}
@@ -48,7 +48,7 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
                 value={state.name}
                 onChange={handleUpdateState}
             />
-            <TextField
+            <TextFieldWrapper
                 required
                 label="Email"
                 name="email"
@@ -67,7 +67,7 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
             Change Password
             {changePassword && (
                 <>
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="New Password"
                         name="newPassword"
@@ -78,7 +78,7 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
                         helperText="Minimum 6 characters "
                         onChange={handleUpdateState}
                     />
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Confirm Password"
                         name="confirmPassword"
@@ -91,7 +91,7 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
                 </>
             )}
             <hr />
-            <TextField
+            <TextFieldWrapper
                 required
                 label="Current Password"
                 name="password"

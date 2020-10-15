@@ -12,7 +12,7 @@ namespace RestaurantApp.DAL.Models
         public int ID { get; set; }
 
         [Required]
-        public string Version { get; set; }
+        public string Name { get; set; }
 
         public int Tax { get; set; }
 

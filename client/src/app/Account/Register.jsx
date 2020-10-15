@@ -7,7 +7,7 @@ import {
     handleLoginAccount,
     handleSetAccountView
 } from "./accountSlice";
-import TextField from "common/TextField";
+import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import { validEmailRegex } from "common";
 import AccountHeader from "./AccountHeader";
@@ -46,7 +46,7 @@ const Register = ({ handleClose, loading, errors }) => {
                     Sign Up
                 </AccountHeader>
                 <form>
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Name"
                         disabled={loading}
@@ -54,7 +54,7 @@ const Register = ({ handleClose, loading, errors }) => {
                         value={state.name}
                         onChange={handleUpdateState}
                     />
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Email"
                         name="email"
@@ -64,7 +64,7 @@ const Register = ({ handleClose, loading, errors }) => {
                         helperText="example@mail.com"
                         onChange={handleUpdateState}
                     />
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Password"
                         name="password"
@@ -75,7 +75,7 @@ const Register = ({ handleClose, loading, errors }) => {
                         helperText="Minimum 6 characters "
                         onChange={handleUpdateState}
                     />
-                    <TextField
+                    <TextFieldWrapper
                         required
                         label="Confirm Password"
                         name="confirmPassword"

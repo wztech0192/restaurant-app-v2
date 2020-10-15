@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "../accountSlice";
-import TextField from "common/TextField";
+import TextFieldWrapper from "common/TextFieldWrapper";
 import { getDateStr } from "common";
 
 const ProfileReadonly = ({ accountInfo }) => {
@@ -10,9 +10,9 @@ const ProfileReadonly = ({ accountInfo }) => {
 
     return (
         <>
-            <TextField label="Name" value={accountInfo.name} disabled solid />
-            <TextField label="Email" value={accountInfo.email} disabled solid />
-            <TextField
+            <TextFieldWrapper label="Name" value={accountInfo.name} disabled solid />
+            <TextFieldWrapper label="Email" value={accountInfo.email} disabled solid />
+            <TextFieldWrapper
                 label="Register Date"
                 value={getDateStr(accountInfo.createdOn)}
                 disabled

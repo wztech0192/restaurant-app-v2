@@ -1,26 +1,63 @@
 import React from "react";
-import { getAccountToken } from "app/Account/accountSlice";
+import { getAccountRole, getAccountToken } from "app/Account/accountSlice";
 import Home from "features/Home";
 import { useSelector } from "react-redux";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Unauthorized from "./Unauthorized";
+import { isManager } from "app/Account/roleChecker";
+import ManagerTabs from "./ManagerTabs";
+import ManageMenu from "features/ManageMenu";
+import ManageOrders from "features/ManageOrders";
+import { Container, makeStyles } from "@material-ui/core";
 /**
  * From https://tylermcginnis.com/react-router-protected-routes-authentication/
  */
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        marginTop: theme.mixins.toolbar.minHeight + 30,
+        marginBottom: theme.mixins.toolbar.minHeight
+    }
+}));
 export default () => {
+    const classes = useStyles();
+
     const isLogin = useSelector(getAccountToken);
+    const role = useSelector(getAccountRole);
+    const manager = isManager(role);
+
+    const isAuthorized = isLogin && manager;
     return (
-        <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/unauthorized" exact component={Unauthorized} />
-            <PrivateRoute path="/management" exact component={Home} isLogin={isLogin} />
-        </Switch>
+        <Container className={classes.root} maxWidth="md">
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <PrivateRoute
+                    path="/manage/menu"
+                    exact
+                    component={ManageMenu}
+                    isAuthorized={isAuthorized}
+                />
+                <PrivateRoute
+                    path="/manage/orders"
+                    exact
+                    component={ManageOrders}
+                    isAuthorized={isAuthorized}
+                />
+                <PrivateRoute
+                    path="/manage/status"
+                    exact
+                    component={Home}
+                    isAuthorized={isAuthorized}
+                />
+            </Switch>
+            {isAuthorized && <ManagerTabs />}
+        </Container>
     );
 };
 
-const PrivateRoute = ({ component: Component, isLogin, ...rest }) => (
+const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
     <Route
         {...rest}
-        render={props => (isLogin ? <Component {...props} /> : <Redirect to="/unauthorized" />)}
+        render={props => (isAuthorized ? <Component {...props} /> : <Unauthorized />)}
     />
 );
