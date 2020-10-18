@@ -14,12 +14,6 @@ namespace RestaurantApp.DAL.Repositories
         {
         }
 
-        public Account GetAccountWithCard(int id)
-        {
-            var account = base.Context.Accounts.Include(x => x.Cards).Where(acc => acc.ID == id).FirstOrDefault();
-            return account;
-        }
-
         public Account GetByEmail(string email)
         {
             return base.SingleOrDefault(acc => acc.Email == email);

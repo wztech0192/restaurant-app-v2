@@ -18,13 +18,11 @@ namespace RestaurantApp.DAL
             Accounts = new AccountRepository(_context);
             Menus = new MenuRepository(_context);
             Orders = new OrderRepository(_context);
-            Cards = new CardRepository(_context);
         }
 
         public IAccountRepository Accounts { get; private set; }
         public IMenuRepository Menus { get; private set; }
         public IOrderRepository Orders { get; private set; }
-        public ICardRepository Cards { get; private set; }
 
         public int Complete()
         {

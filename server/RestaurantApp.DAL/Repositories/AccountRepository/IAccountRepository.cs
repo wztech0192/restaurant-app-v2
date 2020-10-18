@@ -8,7 +8,6 @@ namespace RestaurantApp.DAL.Repositories
 {
     public interface IAccountRepository : IBaseRepository<Account, int>
     {
-        Account GetAccountWithCard(int id);
         Account GetByEmail(string email);
     }
 

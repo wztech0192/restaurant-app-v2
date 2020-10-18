@@ -10,7 +10,6 @@ namespace RestaurantApp.DAL
         IAccountRepository Accounts { get; }
         IMenuRepository Menus { get; }
         IOrderRepository Orders { get; }
-        ICardRepository Cards { get; }
 
         public int Complete();
 

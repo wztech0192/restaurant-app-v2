@@ -57,7 +57,7 @@ namespace RestaurantApp.BLL.Services
                     var jwtToken = (JwtSecurityToken)validatedToken;
                     var accountId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-                    return _unitOfWork.Accounts.GetAccountWithCard(accountId);
+                    return _unitOfWork.Accounts.Get(accountId);
                 }
                 catch(Exception e)
                 {
