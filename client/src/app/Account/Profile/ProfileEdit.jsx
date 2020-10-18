@@ -6,6 +6,7 @@ import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import UndoIcon from "@material-ui/icons/Undo";
 import { validEmailRegex } from "common";
+import CardList from "../CardList";
 
 const progessBarStyle = {
     width: "90%",
@@ -15,6 +16,7 @@ const progessBarStyle = {
 
 const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
     const [changePassword, setChangePassword] = React.useState(false);
+    const [changeManageCard, setChangeManageCards] = React.useState(false);
     const state = useSelector(state => state.account.editAccountInfo);
     const dispatch = useDispatch();
     const handleUpdateState = dispatch(handleEditAccountInfo);
@@ -58,6 +60,25 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
                 helperText="example@mail.com"
                 onChange={handleUpdateState}
             />
+
+
+            <Switch
+                disabled={loading}
+                color="primary"
+                value={changePassword}
+                onChange={e => setChangeManageCards(e.target.checked)}
+            />{" "}
+            Manage Cards
+            {changeManageCard && (
+                <>
+                    <br/>
+                    <CardList/>
+ 
+                </>
+            )}
+            <br/>
+
+
             <Switch
                 disabled={loading}
                 color="primary"

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\server",
+    "\\server\\RestaurantApp.BLL",
+    "\\server\\RestaurantApp.BLL\\Infrastructures",
+    "\\server\\RestaurantApp.BLL\\Infrastructures\\ServiceMessage",
+    "\\server\\RestaurantApp.BLL\\Services",
+    "\\server\\RestaurantApp.BLL\\Services\\AccountService",
+    "\\server\\RestaurantApp.BLL\\Services\\JWTService"
+  ],
+  "SelectedNode": "\\client\\src\\serviceWorker.js",
+  "PreviewInSolutionExplorer": false
+}
