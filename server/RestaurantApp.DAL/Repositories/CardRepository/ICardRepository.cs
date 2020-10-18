@@ -6,10 +6,9 @@ using System.Text;
 
 namespace RestaurantApp.DAL.Repositories
 {
-    public interface IAccountRepository : IBaseRepository<Account, int>
+    public interface ICardRepository : IBaseRepository<Card, int>
     {
-        Account GetAccountWithCard(int id);
-        Account GetByEmail(string email);
+
     }
 
 }

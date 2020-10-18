@@ -1,6 +1,7 @@
 ﻿using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RestaurantApp.BLL.DTOs
@@ -18,6 +19,7 @@ namespace RestaurantApp.BLL.DTOs
             Name = entity.Name;
             CreatedOn = entity.CreatedOn;
             Role = entity.Role;
+            Cards = entity.Cards.Select(card => new CardDTO(card)).ToList();
         }
 
 
@@ -34,6 +36,9 @@ namespace RestaurantApp.BLL.DTOs
         public string NewPassword { get; set; }
 
         public string Role { get; set; }
+
+
+        public virtual ICollection<CardDTO> Cards { get; set; } = new List<CardDTO>();
 
     }
 }
