@@ -33,12 +33,14 @@ const Header = () => {
                 </Tooltip>
 
                 <Typography variant="h6" className={classes.grow}>
-                    Hibachi House
+                    Place Holder
                 </Typography>
 
                 {!isOrderHubConnected && (
                     <Tooltip title="Not connected to the service, trying to reconnect">
-                        <CloudOffIcon color="secondary" />
+                        <IconButton color="secondary">
+                            <CloudOffIcon />
+                        </IconButton>
                     </Tooltip>
                 )}
 

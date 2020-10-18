@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201017205837_add_date_on_menu")]
+    partial class add_date_on_menu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,10 +60,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 18, 15, 6, 40, 576, DateTimeKind.Local).AddTicks(5061),
+                            CreatedOn = new DateTime(2020, 10, 17, 16, 58, 37, 28, DateTimeKind.Local).AddTicks(4036),
                             Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$jJofTy0HYV8Eg4aga5QHXOUUSKAUeJbY7vm4679ngwas6PsKEzPMa",
+                            Password = "$2a$11$15F1xd.5Csdvbby93FlxQeTpYI4jjKEvFLfkYEjq/HLLW6DXCzZ6u",
                             Role = "Manager"
                         });
                 });
@@ -113,8 +115,8 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<double>("Tax")
-                        .HasColumnType("float");
+                    b.Property<int>("Tax")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");

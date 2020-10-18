@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, Divider, MenuItem, TextField, Typography } from "@material-ui/core";
+import { Chip, MenuItem, TextField, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchMenus, handleSelectMenu, MenuStatus } from "./manageMenuSlice";
 import SkeletonWrapper from "common/SkeletonWrapper";
@@ -33,7 +33,7 @@ const getChipPropByStatus = status => {
     }
 };
 
-const MenuSelector = ({ selectedMenu }) => {
+const MenuSelector = ({ selectedID }) => {
     const dispatch = useDispatch();
     const menus = useSelector(state => state.manageMenu.menus);
 
@@ -46,8 +46,8 @@ const MenuSelector = ({ selectedMenu }) => {
     const MenuOptions = React.useMemo(
         () =>
             menus
-                ? menus.map(({ name, status }) => (
-                      <MenuItem key={name} value={name}>
+                ? menus.map(({ name, status, id }) => (
+                      <MenuItem key={name} value={id}>
                           {name} &nbsp;&nbsp;
                           <Chip {...getChipPropByStatus(status)} size="small" />
                       </MenuItem>
@@ -63,16 +63,15 @@ const MenuSelector = ({ selectedMenu }) => {
                 select
                 variant="outlined"
                 label="Select Menu"
-                value={selectedMenu}
-                name="selectedMenu"
+                value={selectedID}
+                name="selectedID"
                 onChange={dispatch(handleSelectMenu)}
             >
-                <MenuItem value="_new">
+                <MenuItem value="-1">
                     <Typography color="primary">
                         <b>CREATE NEW MENU</b>
                     </Typography>
                 </MenuItem>
-                <Divider />
                 {MenuOptions}
             </TextField>
         </SkeletonWrapper>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllMenu, getMenu } from "app/apiProvider";
+import { getAllMenu, getMenu, postMenu } from "app/apiProvider";
 import { enqueueSnackbar, setErrors, setLoading } from "app/Indicator/indicatorSlice";
 import { asyncAction } from "app/sharedActions";
 import { prettyJsonStringify } from "common";
@@ -12,13 +12,13 @@ export const MenuStatus = {
 };
 
 const newMenu = {
-    name: ""
+    id: -1
 };
 
 const initialState = {
     menus: undefined,
     selectedMenu: {
-        name: "",
+        id: "",
         infoJson: undefined,
         info: undefined,
         isValid: true
@@ -33,8 +33,8 @@ const slice = createSlice({
             state.menus = payload || initialState.menus;
         },
         setSelectedMenu(state, { payload }) {
-            state.selectedMenu.name = payload;
-            if (state.selectedMenu.name === "_new") {
+            state.selectedMenu.id = payload;
+            if (state.selectedMenu.id === newMenu.id) {
                 state.selectedMenu.info = newMenu;
                 state.selectedMenu.infoJson = prettyJsonStringify(newMenu);
             }
@@ -83,14 +83,38 @@ export const handleSetMenuInfoJson = dispatch => e => {
 };
 
 export const handleSelectMenu = dispatch => e => {
-    dispatch(setSelectedMenu(e.target.value));
+    let selectedID = parseInt(e.target.value) || 0;
+    dispatch(setSelectedMenu(selectedID));
 };
 
-export const handleFetchMenuInfo = menuName => dispatch => {
+export const handleFetchMenuInfo = id => dispatch => {
     dispatch(
         asyncAction({
             toggleLoadingFor: "manageMenu",
-            promise: () => getMenu(menuName),
+            promise: () => getMenu(id),
+            success: menuInfo => {
+                dispatch(setMenuInfo(menuInfo));
+            }
+        })
+    );
+};
+
+export const handleFetchMenus = dispatch => {
+    dispatch(
+        asyncAction({
+            promise: getAllMenu,
+            success: menus => dispatch(setMenus(menus))
+        })
+    );
+};
+
+export const handleSaveMenu = (dispatch, getState) => e => {
+    const infoJson = getState().manageMenu.selectedMenu.infoJson;
+    const menu = JSON.parse(infoJson);
+    dispatch(
+        asyncAction({
+            toggleLoadingFor: "manageMenu",
+            promise: () => postMenu(menu),
             success: menuInfo => {
                 dispatch(setMenuInfo(menuInfo));
                 dispatch(
@@ -102,17 +126,4 @@ export const handleFetchMenuInfo = menuName => dispatch => {
             }
         })
     );
-};
-
-export const handleFetchMenus = dispatch => {
-    setTimeout(() => {
-        dispatch(setMenus([]));
-    }, 1000);
-
-    /* dispatch(
-        asyncAction({
-            promise: getAllMenu,
-            success: menus => dispatch(setMenus(menus))
-        })
-    );*/
 };

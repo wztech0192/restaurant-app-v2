@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TextFieldWrapper = ({
-    value = "",
+    value,
     variant,
     error,
     helperText,
@@ -37,7 +37,7 @@ const TextFieldWrapper = ({
         <TextField
             {...props}
             className={solid ? classes.solid : undefined}
-            value={value}
+            value={value || ""}
             variant={variant || "outlined"}
             name={name}
             error={!!error}

@@ -26,7 +26,9 @@ const SkeletonWrapper = ({ children, loading, variant, ...skeletonProps }) => {
                     {...skeletonProps}
                 />
             </Fade>
-            <Fade in={!loading}>{children}</Fade>
+            <Fade in={!loading}>
+                <div>{children}</div>
+            </Fade>
         </div>
     );
 };

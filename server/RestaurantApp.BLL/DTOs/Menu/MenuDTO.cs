@@ -1,23 +1,31 @@
 ﻿using RestaurantApp.DAL.Enum;
+using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace RestaurantApp.DAL.Models
+namespace RestaurantApp.BLL.DTOs
 {
-    public class Menu
+    public class MenuDTO
     {
-        [Key]
+        public MenuDTO() { }
+
+        internal MenuDTO(Menu entity, bool includeDetail = true)
+        {
+            ID = entity.ID;
+            Name = entity.Name;
+            Status = entity.Status;
+            if (includeDetail)
+            {
+                Tax = entity.Tax;
+            }
+        }
+
         public int ID { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public double Tax { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
 
         public MenuStatus Status { get; set; }
 
