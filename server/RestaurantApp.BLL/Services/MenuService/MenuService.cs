@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using RestaurantApp.BLL.DTOs;
+using RestaurantApp.BLL.Helpers;
 using RestaurantApp.BLL.Infrastructures;
 using RestaurantApp.DAL;
 using RestaurantApp.DAL.Enum;
@@ -21,7 +22,16 @@ namespace RestaurantApp.BLL.Services
         {
         }
 
+        public IServiceMessage<MenuDTO> Get(int menuId)
+        {
+            return base.ProcessMessage<MenuDTO>(msg =>
+            {
+                var entity = base.UnitOfWork.Menus.Get(menuId);
 
+                msg.Data = new MenuDTO(entity);
+                msg.Success = true;
+            });
+        }
 
         public IServiceMessage<IEnumerable<MenuDTO>> GetAll()
         {
@@ -33,13 +43,27 @@ namespace RestaurantApp.BLL.Services
                 msg.Success = true;
             });
         }
+        public IServiceMessage<int> DeleteDraftMenu(int id)
+        {
+            return base.ProcessMessage<int>(msg =>
+            {
+                var menu = base.UnitOfWork.Menus.Get(id);
+                validateRemoveMenu(menu);
+
+                base.UnitOfWork.Menus.Remove(menu);
+                base.UnitOfWork.Complete();
+                msg.Data = menu.ID;
+                msg.Success = true;
+            });
+        }
+
 
         public IServiceMessage<MenuDTO> CreateOrUpdate(MenuDTO dto)
         {
             return base.ProcessMessage<MenuDTO>(msg =>
             {
                 Menu entity = null;
-                if(dto.ID > 0)
+                if (dto.ID > 0)
                 {
                     entity = base.UnitOfWork.Menus.Get(dto.ID);
                 }
@@ -53,10 +77,11 @@ namespace RestaurantApp.BLL.Services
                     base.UnitOfWork.Menus.Add(entity);
                 }
 
-                validCreateUpdateMenu(dto, entity);
+                validateCreateUpdateMenu(dto, entity);
 
                 handleUpdateMenuMetadata(dto, entity);
-               
+                handleUpdateMenuEntries(dto, entity);
+
                 base.UnitOfWork.Complete();
 
                 msg.Data = new MenuDTO(entity);
@@ -64,9 +89,10 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
+      
+
 
         #region helper
-
         private void handleUpdateMenuMetadata(MenuDTO dto, Menu entity)
         {
             entity.UpdatedOn = DateTime.Now;
@@ -75,24 +101,43 @@ namespace RestaurantApp.BLL.Services
 
         }
 
+        private void handleUpdateMenuEntries(MenuDTO dto, Menu entity)
+        {
+            entity.MenuEntries.CreateUpdateDelete(
+                dtos: dto.MenuEntries,
+                dtoKey: entryDTO => entryDTO.ID,
+                entityKey: entryEntity => entryEntity.ID,
+                create: entryDTO => {
+                    entity.MenuEntries.Add(new MenuEntry()
+                    {
+                        Name = entryDTO.Name
+                    });
+                },
+                update: (entryEntity, entryDTO) =>
+                {
+                    entryEntity.Name = entryDTO.Name;
+                },
+                delete: entryEntity =>
+                {
+                    entity.MenuEntries.Remove(entryEntity);
+                });
+        }
         #endregion
 
 
         #region validator
-
-        private void validCreateUpdateMenu(MenuDTO dto, Menu entity)
+        private void validateCreateUpdateMenu(MenuDTO dto, Menu entity)
         {
             base.HandleValidation(msg =>
             {
-                if(entity is null)
+                if (entity is null)
                 {
                     msg.Add("Menu cannot found");
                 }
-                else if(entity.Status != MenuStatus.Draft)
+                else if (entity.Status != MenuStatus.Draft)
                 {
                     msg.Add("Only draft menu can be edited");
                 }
-
 
                 if (dto is null)
                 {
@@ -107,9 +152,22 @@ namespace RestaurantApp.BLL.Services
 
                 }
             });
-            
         }
 
+        private void validateRemoveMenu(Menu entity)
+        {
+            base.HandleValidation(msg =>
+            {
+                if (entity is null)
+                {
+                    msg.Add("Menu cannot found");
+                }
+                else if (entity.Status != MenuStatus.Draft)
+                {
+                    msg.Add("Only draft menu can be removed");
+                }
+            });
+        }
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllMenu, getMenu, postMenu } from "app/apiProvider";
-import { enqueueSnackbar, setErrors, setLoading } from "app/Indicator/indicatorSlice";
+import { deleteMenu, getAllMenu, getMenu, postMenu } from "app/apiProvider";
+import { enqueueSnackbar, handleOpenModal } from "app/Indicator/indicatorSlice";
 import { asyncAction } from "app/sharedActions";
 import { prettyJsonStringify } from "common";
 
@@ -12,7 +12,8 @@ export const MenuStatus = {
 };
 
 const newMenu = {
-    id: -1
+    id: -1,
+    status: MenuStatus.New
 };
 
 const initialState = {
@@ -25,26 +26,63 @@ const initialState = {
     }
 };
 
+const reduceSelectMenu = (state, id) => {
+    state.selectedMenu.id = id;
+    if (state.selectedMenu.id === newMenu.id) {
+        state.selectedMenu.info = newMenu;
+        state.selectedMenu.infoJson = prettyJsonStringify(newMenu);
+    } else {
+        state.selectedMenu.info = undefined;
+        state.selectedMenu.infoJson = undefined;
+        state.selectedMenu.isValid = true;
+    }
+};
+
 const slice = createSlice({
     name: "manageMenu",
     initialState,
     reducers: {
+        removeMenu(state, { payload }) {
+            state.selectedMenu = initialState.selectedMenu;
+            state.menus = state.menus.filter(menu => menu.id !== payload);
+        },
+        cloneMenu(state) {
+            state.selectedMenu.id = newMenu.id;
+            state.selectedMenu.info = newMenu;
+        },
         setMenus(state, { payload }) {
             state.menus = payload || initialState.menus;
         },
         setSelectedMenu(state, { payload }) {
-            state.selectedMenu.id = payload;
-            if (state.selectedMenu.id === newMenu.id) {
-                state.selectedMenu.info = newMenu;
-                state.selectedMenu.infoJson = prettyJsonStringify(newMenu);
-            }
+            reduceSelectMenu(state, payload);
         },
         setMenuInfoJson(state, { payload }) {
             state.selectedMenu.infoJson = payload;
         },
         setMenuInfo(state, { payload }) {
             state.selectedMenu.info = payload;
-            state.selectedMenu.infoJson = prettyJsonStringify(payload);
+            const tempInfo = { ...payload };
+            //remove not changeable properties
+            delete tempInfo.status;
+            delete tempInfo.id;
+            state.selectedMenu.infoJson = prettyJsonStringify(tempInfo);
+
+            //update dropdown
+            const updateIndex = state.menus.findIndex(menu => menu.id === payload.id);
+            const newDropdown = {
+                name: payload.name,
+                id: payload.id,
+                status: payload.status
+            };
+            if (updateIndex > -1) {
+                state.menus[updateIndex] = newDropdown;
+            } else {
+                state.menus.push(newDropdown);
+            }
+            //select if not equal
+            if (state.selectedMenu.id !== payload.id) {
+                reduceSelectMenu(state, payload.id);
+            }
         },
         formatMenuInfoJson(state) {
             try {
@@ -62,12 +100,18 @@ const slice = createSlice({
 export default slice.reducer;
 
 const {
+    cloneMenu,
     setSelectedMenu,
     setMenuInfoJson,
     setMenuInfo,
     setMenus,
-    formatMenuInfoJson
+    formatMenuInfoJson,
+    removeMenu
 } = slice.actions;
+
+export const handleCloneMenu = dispatch => e => {
+    dispatch(cloneMenu());
+};
 
 let timeout;
 export const handleSetMenuInfoJson = dispatch => e => {
@@ -109,8 +153,9 @@ export const handleFetchMenus = dispatch => {
 };
 
 export const handleSaveMenu = (dispatch, getState) => e => {
-    const infoJson = getState().manageMenu.selectedMenu.infoJson;
+    const { infoJson, info } = getState().manageMenu.selectedMenu;
     const menu = JSON.parse(infoJson);
+    menu.id = info.id;
     dispatch(
         asyncAction({
             toggleLoadingFor: "manageMenu",
@@ -121,6 +166,33 @@ export const handleSaveMenu = (dispatch, getState) => e => {
                     enqueueSnackbar({
                         message: "Action completed!",
                         variant: "success"
+                    })
+                );
+            }
+        })
+    );
+};
+
+export const handleRemoveMenu = (dispatch, getState) => e => {
+    const id = getState().manageMenu.selectedMenu.info.id;
+    dispatch(
+        handleOpenModal({
+            title: "Remove Confirmation",
+            titleColor: "secondary",
+            message: "Are you sure you want to permanently remove this menu?",
+            onConfirm: () => {
+                dispatch(
+                    asyncAction({
+                        toggleLoadingFor: "manageMenu",
+                        promise: () => deleteMenu(id),
+                        success: () => {
+                            dispatch(removeMenu(id));
+                            dispatch(
+                                enqueueSnackbar({
+                                    message: "Menu removed!"
+                                })
+                            );
+                        }
                     })
                 );
             }

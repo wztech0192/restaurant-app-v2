@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
-import "fontsource-roboto";
 import { Fade, ThemeProvider } from "@material-ui/core";
 import NotistackProvider from "../common/NotistackProvider";
 import theme from "app/theme";

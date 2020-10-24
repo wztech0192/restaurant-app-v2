@@ -24,6 +24,7 @@ export const asyncAction = ({
             throw error;
         }
     } catch (e) {
+        console.error(e);
         if (failed) failed(e);
 
         if (!hideErrorModal) {

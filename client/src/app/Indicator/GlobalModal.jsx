@@ -11,11 +11,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleCloseModal } from "./indicatorSlice";
 
 const GlobalModalContent = React.memo(
-    ({ title, variant = "info", content, buttons, message, messages, onConfirm, handleClose }) => {
+    ({
+        title,
+        titleColor = "primary",
+        content,
+        buttons,
+        message,
+        messages,
+        onConfirm,
+        handleClose
+    }) => {
         return (
             <>
                 <DialogTitle>
-                    <Typography variant="h6" component="span" color={"primary"}>
+                    <Typography variant="h6" component="span" color={titleColor}>
                         {title}
                     </Typography>
                 </DialogTitle>

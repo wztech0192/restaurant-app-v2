@@ -34,6 +34,28 @@ namespace RestaurantApp.Controllers
         }
 
         /// <summary>
+        /// Get a menu.
+        /// </summary>
+        /// <returns>Detail menu data</returns>
+        [HttpGet("{id}")]
+        [Authorize(Roles = Policy.Manager)]
+        public IActionResult Get(int id)
+        {
+            return base.ProcessService(_service.Get(id));
+        }
+
+        /// <summary>
+        /// Create or update a menu
+        /// </summary>
+        /// <returns>Menu</returns>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = Policy.Manager)]
+        public IActionResult Remove(int id)
+        {
+            return base.ProcessService(_service.DeleteDraftMenu(id));
+        }
+
+        /// <summary>
         /// Create or update a menu
         /// </summary>
         /// <returns>Menu</returns>

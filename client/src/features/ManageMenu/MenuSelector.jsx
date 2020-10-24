@@ -47,7 +47,7 @@ const MenuSelector = ({ selectedID }) => {
         () =>
             menus
                 ? menus.map(({ name, status, id }) => (
-                      <MenuItem key={name} value={id}>
+                      <MenuItem key={id} value={id}>
                           {name} &nbsp;&nbsp;
                           <Chip {...getChipPropByStatus(status)} size="small" />
                       </MenuItem>

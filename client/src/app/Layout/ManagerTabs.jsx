@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 const useStyles = makeStyles({
     root: {
         bottom: 0,
-        position: "absolute",
+        position: "fixed",
         width: "100%",
         left: 0
     }

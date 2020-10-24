@@ -14,11 +14,13 @@ const useStyles = makeStyles({
     }
 });
 
+const skeletonTimeout = { enter: 50, exit: 500 };
+const contentTimeout = { enter: 500, exit: 50 };
 const SkeletonWrapper = ({ children, loading, variant, ...skeletonProps }) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Fade in={loading}>
+            <Fade in={loading} unmountOnExit timeout={skeletonTimeout}>
                 <Skeleton
                     animation="wave"
                     variant={variant || "rect"}
@@ -26,7 +28,7 @@ const SkeletonWrapper = ({ children, loading, variant, ...skeletonProps }) => {
                     {...skeletonProps}
                 />
             </Fade>
-            <Fade in={!loading}>
+            <Fade in={!loading} timeout={contentTimeout}>
                 <div>{children}</div>
             </Fade>
         </div>

@@ -2,6 +2,7 @@
 using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RestaurantApp.BLL.DTOs
@@ -18,6 +19,8 @@ namespace RestaurantApp.BLL.DTOs
             if (includeDetail)
             {
                 Tax = entity.Tax;
+                MenuEntries = entity.MenuEntries.Select(en => new MenuEntryDTO(en));
+                SideItems = entity.SideItems.Select(en => new MenuOptionDTO(en));
             }
         }
 
@@ -29,8 +32,8 @@ namespace RestaurantApp.BLL.DTOs
 
         public MenuStatus Status { get; set; }
 
-        public virtual ICollection<MenuEntry> MenuEntries { get; set; } = new List<MenuEntry>();
+        public IEnumerable<MenuEntryDTO> MenuEntries { get; set; } = new List<MenuEntryDTO>();
 
-        public virtual ICollection<MenuOptionItem> SideItems { get; set; } = new List<MenuOptionItem>();
+        public IEnumerable<MenuOptionDTO> SideItems = new List<MenuOptionDTO>();
     }
 }

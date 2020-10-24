@@ -9,5 +9,7 @@ namespace RestaurantApp.BLL.Services
     {
         IServiceMessage<IEnumerable<MenuDTO>> GetAll();
         IServiceMessage<MenuDTO> CreateOrUpdate(MenuDTO dto);
+        IServiceMessage<MenuDTO> Get(int id);
+        IServiceMessage<int> DeleteDraftMenu(int id);
     }
 }
