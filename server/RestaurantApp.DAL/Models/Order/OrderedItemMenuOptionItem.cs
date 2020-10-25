@@ -13,7 +13,7 @@ namespace RestaurantApp.DAL.Models
         public virtual OrderedItem OrderedItem { get; set; }
 
         public int MenuOptionItemID { get; set; }
-        public MenuOptionItem MenuOptionItem { get; set; }
+        public virtual MenuOptionItem MenuOptionItem { get; set; }
 
 
     }

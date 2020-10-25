@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201025211147_menu-structure-add-cascade-delete")]
+    partial class menustructureaddcascadedelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,10 +60,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 25, 17, 14, 50, 494, DateTimeKind.Local).AddTicks(4233),
+                            CreatedOn = new DateTime(2020, 10, 25, 17, 11, 46, 196, DateTimeKind.Local).AddTicks(3180),
                             Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$A1cjIxmAoqtrtlJPuY/6M.VbhzyhyhGnQCqKyczCPC9v0x4/OP1oe",
+                            Password = "$2a$11$5bo1TLIQjyyuYPzqR5flzeHv5HKasgg4ATN3Q5.hLdIztEKIiN2tq",
                             Role = "Manager"
                         });
                 });

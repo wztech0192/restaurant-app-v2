@@ -13,5 +13,10 @@ namespace RestaurantApp.DAL.Repositories
         public MenuRepository(RestaurantAppContext context): base(context)
         {
         }
+
+        public Menu GetActive()
+        {
+            return base.Context.Menus.FirstOrDefault(x => x.Status == Enum.MenuStatus.Active);
+        }
     }
 }

@@ -43,6 +43,7 @@ namespace RestaurantApp.BLL.Services
                 msg.Success = true;
             });
         }
+
         public IServiceMessage<int> DeleteDraftMenu(int id)
         {
             return base.ProcessMessage<int>(msg =>
@@ -50,6 +51,18 @@ namespace RestaurantApp.BLL.Services
                 var menu = base.UnitOfWork.Menus.Get(id);
                 validateRemoveMenu(menu);
 
+                foreach (var menuEntry in menu.MenuEntries)
+                {
+                    menuEntry.MenuItems.Clear();
+                }
+                menu.MenuEntries.Clear();
+
+                foreach (var optionGroup in menu.OptionGroups)
+                {
+                    optionGroup.MenuOptionItems.Clear();
+                }
+
+                menu.OptionGroups.Clear();
                 base.UnitOfWork.Menus.Remove(menu);
                 base.UnitOfWork.Complete();
                 msg.Data = menu.ID;
@@ -58,7 +71,7 @@ namespace RestaurantApp.BLL.Services
         }
 
 
-        public IServiceMessage<MenuDTO> CreateOrUpdate(MenuDTO dto)
+        public IServiceMessage<MenuDTO> CreateOrUpdate(MenuDTO dto, bool updateStatus)
         {
             return base.ProcessMessage<MenuDTO>(msg =>
             {
@@ -77,10 +90,30 @@ namespace RestaurantApp.BLL.Services
                     base.UnitOfWork.Menus.Add(entity);
                 }
 
-                validateCreateUpdateMenu(dto, entity);
+                if (entity != null && entity.Status <= MenuStatus.Draft)
+                {
+                    validateCreateUpdateMenu(dto, entity);
 
-                handleUpdateMenuMetadata(dto, entity);
-                handleUpdateMenuEntries(dto, entity);
+                    handleUpdateMenuMetadata(dto, entity);
+                    handleUpdateMenuEntries(dto.MenuEntries, entity.MenuEntries);
+                    handleUpdateMenuOptionGroups(dto.OptionGroups, entity.OptionGroups);
+                }
+
+                if (updateStatus)
+                {
+                    validateUpdateMenuStatus(entity);
+
+                    entity.Status += 1;
+                    if (entity.Status == MenuStatus.Active)
+                    {
+                        var activeMenu = base.UnitOfWork.Menus.GetActive();
+                        if (activeMenu != null)
+                        {
+                            activeMenu.Status = MenuStatus.Saved;
+                        }
+                    };
+
+                }
 
                 base.UnitOfWork.Complete();
 
@@ -89,7 +122,7 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
-      
+
 
 
         #region helper
@@ -101,31 +134,149 @@ namespace RestaurantApp.BLL.Services
 
         }
 
-        private void handleUpdateMenuEntries(MenuDTO dto, Menu entity)
+        private ICollection<MenuEntry> handleUpdateMenuEntries(IEnumerable<MenuEntryDTO> dtos, ICollection<MenuEntry> entities)
         {
-            entity.MenuEntries.CreateUpdateDelete(
-                dtos: dto.MenuEntries,
-                dtoKey: entryDTO => entryDTO.ID,
-                entityKey: entryEntity => entryEntity.ID,
-                create: entryDTO => {
-                    entity.MenuEntries.Add(new MenuEntry()
+            entities.CreateUpdateDelete(
+                dtos: dtos,
+                dtoKey: dto => dto.ID,
+                entityKey: entity => entity.ID,
+                create: dto =>
+                {
+                    entities.Add(new MenuEntry()
                     {
-                        Name = entryDTO.Name
+                        Name = dto.Name,
+                        Summary = dto.Summary,
+                        MenuItems = handleUpdateMenuItems(dto.MenuItems, new List<MenuItem>()),
                     });
                 },
-                update: (entryEntity, entryDTO) =>
+                update: (entity, dto) =>
                 {
-                    entryEntity.Name = entryDTO.Name;
+                    entity.Name = dto.Name;
+                    entity.Summary = dto.Summary;
+                    handleUpdateMenuItems(dto.MenuItems, entity.MenuItems);
                 },
-                delete: entryEntity =>
+                delete: entity =>
                 {
-                    entity.MenuEntries.Remove(entryEntity);
+                    entities.Remove(entity);
                 });
+
+            return entities;
         }
+
+        private ICollection<MenuItem> handleUpdateMenuItems(IEnumerable<MenuItemDTO> dtos, ICollection<MenuItem> entities)
+        {
+            entities.CreateUpdateDelete(
+              dtos: dtos,
+              dtoKey: dto => dto.ID,
+              entityKey: entity => entity.ID,
+              create: dto =>
+              {
+                  entities.Add(new MenuItem()
+                  {
+                      Name = dto.Name,
+                      Summary = dto.Summary,
+                      CanAddSides = dto.CanAddSides,
+                      OptionPriceMultiplier = dto.OptionPriceMultiplier,
+                      Price = dto.Price,
+                      MenuOptionGroups = string.Join(MenuItem.Seperator, dto.OptionGroupNames)
+                  });
+              },
+              update: (entity, dto) =>
+              {
+                  entity.Name = dto.Name;
+                  entity.Summary = dto.Summary;
+                  entity.CanAddSides = dto.CanAddSides;
+                  entity.OptionPriceMultiplier = dto.OptionPriceMultiplier;
+                  entity.Price = dto.Price;
+                  entity.MenuOptionGroups = string.Join(MenuItem.Seperator, dto.OptionGroupNames);
+              },
+              delete: entity =>
+              {
+                  entities.Remove(entity);
+              });
+
+            return entities;
+        }
+
+        private ICollection<MenuOptionGroup> handleUpdateMenuOptionGroups(IDictionary<string, IEnumerable<MenuOptionDTO>> dtosSource, ICollection<MenuOptionGroup> entities)
+        {
+            var dtos = dtosSource.ToDictionary(x => x.Key.ToLower(), x => x.Value);
+            foreach (var entity in entities.ToList())
+            {
+                var entityName = entity.Name.ToLower();
+                if (dtos.TryGetValue(entityName, out IEnumerable<MenuOptionDTO> optionDtos))
+                {
+                    handleUpdateGroupOptionItems(optionDtos, entity.MenuOptionItems);
+                    dtos.Remove(entityName);
+                }
+                else
+                {
+                    entities.Remove(entity);
+                }
+            }
+
+            foreach (var dto in dtos)
+            {
+                entities.Add(new MenuOptionGroup()
+                {
+                    Name = dto.Key,
+                    MenuOptionItems = handleUpdateGroupOptionItems(dto.Value, new List<MenuOptionItem>())
+                });
+            }
+            return entities;
+        }
+
+        private ICollection<MenuOptionItem> handleUpdateGroupOptionItems(IEnumerable<MenuOptionDTO> dtos, ICollection<MenuOptionItem> entities)
+        {
+            entities.CreateUpdateDelete(
+              dtos: dtos,
+              dtoKey: dto => dto.ID,
+              entityKey: entity => entity.ID,
+              create: dto =>
+              {
+                  entities.Add(new MenuOptionItem()
+                  {
+                      Name = dto.Name,
+                      Price = dto.Price
+                  });
+              },
+              update: (entity, dto) =>
+              {
+                  entity.Name = dto.Name;
+                  entity.Price = dto.Price;
+              },
+              delete: entity =>
+              {
+                  entities.Remove(entity);
+              });
+
+            return entities;
+        }
+
         #endregion
 
 
         #region validator
+
+        private void validateUpdateMenuStatus(Menu entity)
+        {
+            base.HandleValidation(msg =>
+            {
+                if (entity is null)
+                {
+                    msg.Add("Menu cannot found");
+                }
+                else
+                {
+                    if (entity.Status == MenuStatus.Active)
+                    {
+                        msg.Add($"Cannot update the status of a Active menu");
+                    }
+                }
+            });
+        }
+
+
         private void validateCreateUpdateMenu(MenuDTO dto, Menu entity)
         {
             base.HandleValidation(msg =>

@@ -19,9 +19,10 @@ namespace RestaurantApp.BLL.DTOs
             Price = entity.Price;
             OptionPriceMultiplier = entity.OptionPriceMultiplier;
             CanAddSides = entity.CanAddSides;
-            OptionsList = entity.MenuItemMenuOptionGroups
-                .Select(optionGroup => optionGroup.MenuOptionGroup.MenuOptionItems
-                                        .Select(option => new MenuOptionDTO(option)));
+            if (!string.IsNullOrEmpty(entity.MenuOptionGroups))
+            {
+                OptionGroupNames = entity.MenuOptionGroups.Split(MenuItem.Seperator);
+            }
         }
 
         public int ID { get; set; }
@@ -35,6 +36,6 @@ namespace RestaurantApp.BLL.DTOs
         public double OptionPriceMultiplier { get; set; }
         public bool CanAddSides { get; set; }
 
-        public IEnumerable<IEnumerable<MenuOptionDTO>> OptionsList { get; set; } = new List<IEnumerable<MenuOptionDTO>>();
+        public IEnumerable<string> OptionGroupNames { get; set; } = new List<string>();
     }
 }

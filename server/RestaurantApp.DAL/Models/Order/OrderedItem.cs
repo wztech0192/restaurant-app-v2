@@ -11,19 +11,15 @@ namespace RestaurantApp.DAL.Models
         [Key]
         public int ID { get; set; }
 
-        public DateTime CreatedOn { get; set; }
-
-        public string EncryptedCardInfo { get; set; }
-
-        public double Tip { get; set; }
-
         public double Total { get; set; }
 
-        public virtual Account Account { get;set;}
+        [Required]
+        public virtual Order Order { get; set; }
 
-        public virtual Menu Menu { get; set; }
+        [Required]
+        public virtual MenuItem MenuItem { get; set; }
 
-        public virtual IEnumerable<OrderedItemMenuOptionItem> OrderedItemMenuOptionItems { get; set; }
+        public virtual IEnumerable<OrderedItemMenuOptionItem> OrderedOptions { get; set; }
 
 
     }

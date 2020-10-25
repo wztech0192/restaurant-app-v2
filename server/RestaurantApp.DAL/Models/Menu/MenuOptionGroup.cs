@@ -15,9 +15,7 @@ namespace RestaurantApp.DAL.Models
 
         public virtual ICollection<MenuOptionItem> MenuOptionItems { get; set; }
 
-        public virtual ICollection<MenuItemMenuOptionGroup> MenuItemMenuOptionGroups { get; set; }
-
-
-
+        [Required]
+        public virtual Menu Menu { get; set; }
     }
 }

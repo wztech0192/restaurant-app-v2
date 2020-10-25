@@ -20,7 +20,8 @@ namespace RestaurantApp.BLL.DTOs
             {
                 Tax = entity.Tax;
                 MenuEntries = entity.MenuEntries.Select(en => new MenuEntryDTO(en));
-                SideItems = entity.SideItems.Select(en => new MenuOptionDTO(en));
+                OptionGroups = entity.OptionGroups
+                    .ToDictionary(en => en.Name, en => en.MenuOptionItems.Select(enItem => new MenuOptionDTO(enItem) ));
             }
         }
 
@@ -34,6 +35,7 @@ namespace RestaurantApp.BLL.DTOs
 
         public IEnumerable<MenuEntryDTO> MenuEntries { get; set; } = new List<MenuEntryDTO>();
 
-        public IEnumerable<MenuOptionDTO> SideItems = new List<MenuOptionDTO>();
+        public IDictionary<string, IEnumerable<MenuOptionDTO>> OptionGroups { get; set; } = new Dictionary<string, IEnumerable<MenuOptionDTO>>();
+
     }
 }

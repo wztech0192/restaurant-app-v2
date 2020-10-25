@@ -8,7 +8,7 @@ namespace RestaurantApp.DAL.Repositories
 {
     public interface IMenuRepository : IBaseRepository<Menu, int>
     {
-
+        Menu GetActive();
     }
 
 }

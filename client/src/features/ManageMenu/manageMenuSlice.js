@@ -13,7 +13,8 @@ export const MenuStatus = {
 
 const newMenu = {
     id: -1,
-    status: MenuStatus.New
+    status: MenuStatus.New,
+    name: "Place holder"
 };
 
 const initialState = {
@@ -30,12 +31,20 @@ const reduceSelectMenu = (state, id) => {
     state.selectedMenu.id = id;
     if (state.selectedMenu.id === newMenu.id) {
         state.selectedMenu.info = newMenu;
-        state.selectedMenu.infoJson = prettyJsonStringify(newMenu);
+        setStateMenuInfo(state, newMenu);
     } else {
         state.selectedMenu.info = undefined;
         state.selectedMenu.infoJson = undefined;
         state.selectedMenu.isValid = true;
     }
+};
+
+const setStateMenuInfo = (state, payload) => {
+    const tempInfo = { ...payload };
+    //remove not changeable properties
+    delete tempInfo.status;
+    delete tempInfo.id;
+    state.selectedMenu.infoJson = prettyJsonStringify(tempInfo);
 };
 
 const slice = createSlice({
@@ -61,11 +70,16 @@ const slice = createSlice({
         },
         setMenuInfo(state, { payload }) {
             state.selectedMenu.info = payload;
-            const tempInfo = { ...payload };
-            //remove not changeable properties
-            delete tempInfo.status;
-            delete tempInfo.id;
-            state.selectedMenu.infoJson = prettyJsonStringify(tempInfo);
+
+            setStateMenuInfo(state, payload);
+
+            //update the previous active menu to saved
+            if (payload.status === MenuStatus.Active) {
+                const previousActive = state.menus.find(menu => menu.status === MenuStatus.Active);
+                if (previousActive) {
+                    previousActive.status = MenuStatus.Saved;
+                }
+            }
 
             //update dropdown
             const updateIndex = state.menus.findIndex(menu => menu.id === payload.id);
@@ -79,8 +93,9 @@ const slice = createSlice({
             } else {
                 state.menus.push(newDropdown);
             }
-            //select if not equal
+
             if (state.selectedMenu.id !== payload.id) {
+                //select if not equal
                 reduceSelectMenu(state, payload.id);
             }
         },
@@ -152,25 +167,38 @@ export const handleFetchMenus = dispatch => {
     );
 };
 
-export const handleSaveMenu = (dispatch, getState) => e => {
+export const handleSaveMenu = updateStatus => (dispatch, getState) => e => {
     const { infoJson, info } = getState().manageMenu.selectedMenu;
     const menu = JSON.parse(infoJson);
     menu.id = info.id;
-    dispatch(
-        asyncAction({
-            toggleLoadingFor: "manageMenu",
-            promise: () => postMenu(menu),
-            success: menuInfo => {
-                dispatch(setMenuInfo(menuInfo));
-                dispatch(
-                    enqueueSnackbar({
-                        message: "Action completed!",
-                        variant: "success"
-                    })
-                );
-            }
-        })
-    );
+    const wrapAction = () =>
+        dispatch(
+            asyncAction({
+                toggleLoadingFor: "manageMenu",
+                promise: () => postMenu(menu, updateStatus),
+                success: menuInfo => {
+                    dispatch(setMenuInfo(menuInfo));
+                    dispatch(
+                        enqueueSnackbar({
+                            message: "Action completed!",
+                            variant: "success"
+                        })
+                    );
+                }
+            })
+        );
+
+    if (updateStatus) {
+        dispatch(
+            handleOpenModal({
+                title: "Update Status Confirmation",
+                message: "Are you sure you want to do this?",
+                onConfirm: wrapAction
+            })
+        );
+    } else {
+        wrapAction();
+    }
 };
 
 export const handleRemoveMenu = (dispatch, getState) => e => {

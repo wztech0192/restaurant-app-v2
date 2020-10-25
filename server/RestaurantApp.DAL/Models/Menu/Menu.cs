@@ -23,6 +23,8 @@ namespace RestaurantApp.DAL.Models
 
         public virtual ICollection<MenuEntry> MenuEntries { get; set; } = new List<MenuEntry>();
 
-        public virtual ICollection<MenuOptionItem> SideItems { get; set; } = new List<MenuOptionItem>();
+        public virtual ICollection<MenuOptionGroup> OptionGroups { get; set; } = new List<MenuOptionGroup>();
+
+        public static string SideOptionGroupName => "side orders";
     }
 }

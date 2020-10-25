@@ -22,11 +22,15 @@ namespace RestaurantApp.DAL.Models
         public double OptionPriceMultiplier { get; set; }
         public bool CanAddSides { get; set; }
 
+        [Required]
         public virtual MenuEntry MenuEntry { get; set; }
 
-        public virtual ICollection<MenuItemMenuOptionGroup> MenuItemMenuOptionGroups { get; set; }
+        public virtual IEnumerable<OrderedItem> OrderedItems { get; set; }
 
+        // groupName1;groupName2,  concated string
+        public string MenuOptionGroups { get; set; }
 
+        public static string Seperator => ";";
 
     }
 }

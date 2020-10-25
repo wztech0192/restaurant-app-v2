@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using RestaurantApp.BLL.DTOs;
 using RestaurantApp.BLL.Infrastructures;
 using RestaurantApp.BLL.Services;
+using RestaurantApp.DAL.Enum;
 
 namespace RestaurantApp.Controllers
 {
@@ -44,6 +45,7 @@ namespace RestaurantApp.Controllers
             return base.ProcessService(_service.Get(id));
         }
 
+
         /// <summary>
         /// Create or update a menu
         /// </summary>
@@ -61,9 +63,9 @@ namespace RestaurantApp.Controllers
         /// <returns>Menu</returns>
         [HttpPost("")]
         [Authorize(Roles = Policy.Manager)]
-        public IActionResult Post(MenuDTO dto)
+        public IActionResult Post(MenuDTO dto, [FromQuery] bool updateStatus)
         {
-            return base.ProcessService(_service.CreateOrUpdate(dto));
+            return base.ProcessService(_service.CreateOrUpdate(dto, updateStatus));
         }
     }
 }

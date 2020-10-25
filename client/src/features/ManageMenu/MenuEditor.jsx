@@ -79,7 +79,7 @@ const MenuEditor = ({ selectedID }) => {
                                 <IconButton
                                     color="primary"
                                     disabled={!isValid}
-                                    onClick={dispatch(handleSaveMenu)}
+                                    onClick={dispatch(handleSaveMenu(false))}
                                 >
                                     <SaveIcon />
                                 </IconButton>
@@ -99,7 +99,13 @@ const MenuEditor = ({ selectedID }) => {
                     <br />
 
                     {status === MenuStatus.Saved ? (
-                        <Button variant="contained" disabled={!isValid} fullWidth color="primary">
+                        <Button
+                            variant="contained"
+                            disabled={!isValid}
+                            fullWidth
+                            color="primary"
+                            onClick={dispatch(handleSaveMenu(true))}
+                        >
                             Use This Menu
                         </Button>
                     ) : (
@@ -107,6 +113,7 @@ const MenuEditor = ({ selectedID }) => {
                             <Button
                                 variant="outlined"
                                 disabled={!isValid}
+                                onClick={dispatch(handleSaveMenu(true))}
                                 fullWidth
                                 color="primary"
                             >

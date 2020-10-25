@@ -16,14 +16,10 @@ namespace RestaurantApp.DAL.Models
 
         public double Price { get; set; }
 
-        public virtual MenuOptionGroup MenuOptionGroup { get; set; }
+        [Required]
+        public virtual MenuOptionGroup Group { get; set; }
 
-        public virtual Menu Menu { get; set; }
-
-        public virtual IEnumerable<OrderedItemMenuOptionItem> OrderedItemMenuOptionItems { get; set; }
-
-        [NotMapped]
-        public bool IsSideOption => Menu != null;
+        public virtual ICollection<OrderedItemMenuOptionItem> OrderedItems { get; set; }
 
     }
 }

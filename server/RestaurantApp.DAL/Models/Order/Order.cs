@@ -22,8 +22,10 @@ namespace RestaurantApp.DAL.Models
 
         public OrderStatus Status { get; set; }
 
+        [Required]
         public virtual Account Account { get;set;}
 
+        [Required]
         public virtual Menu Menu { get; set; }
 
         public virtual IEnumerable<OrderedItem> OrderedItems { get; set; }

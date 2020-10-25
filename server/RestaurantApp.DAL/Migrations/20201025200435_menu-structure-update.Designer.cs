@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201025200435_menu-structure-update")]
+    partial class menustructureupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -58,10 +60,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 25, 17, 14, 50, 494, DateTimeKind.Local).AddTicks(4233),
+                            CreatedOn = new DateTime(2020, 10, 25, 16, 4, 33, 878, DateTimeKind.Local).AddTicks(8918),
                             Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$A1cjIxmAoqtrtlJPuY/6M.VbhzyhyhGnQCqKyczCPC9v0x4/OP1oe",
+                            Password = "$2a$11$1VfFeXBZ9hd3HKNW8P/FWOzFW5o2.D4SoEIFQ./.Rl0aSJGwGg7iq",
                             Role = "Manager"
                         });
                 });
@@ -134,7 +136,7 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MenuID")
+                    b.Property<int?>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -164,7 +166,7 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<bool>("CanAddSides")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MenuEntryID")
+                    b.Property<int?>("MenuEntryID")
                         .HasColumnType("int");
 
                     b.Property<string>("MenuOptionGroups")
@@ -197,7 +199,7 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MenuID")
+                    b.Property<int?>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -218,7 +220,7 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GroupID")
+                    b.Property<int?>("GroupID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -242,7 +244,7 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountID")
+                    b.Property<int?>("AccountID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -251,7 +253,7 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<string>("EncryptedCardInfo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MenuID")
+                    b.Property<int?>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -279,10 +281,10 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MenuItemID")
+                    b.Property<int?>("MenuItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int?>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<double>("Total")
@@ -323,66 +325,50 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.HasOne("RestaurantApp.DAL.Models.Menu", "Menu")
                         .WithMany("MenuEntries")
-                        .HasForeignKey("MenuID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.MenuItem", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.MenuEntry", "MenuEntry")
                         .WithMany("MenuItems")
-                        .HasForeignKey("MenuEntryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuEntryID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.MenuOptionGroup", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.Menu", "Menu")
                         .WithMany("OptionGroups")
-                        .HasForeignKey("MenuID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.MenuOptionItem", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.MenuOptionGroup", "Group")
                         .WithMany("MenuOptionItems")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.Order", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountID");
 
                     b.HasOne("RestaurantApp.DAL.Models.Menu", "Menu")
                         .WithMany()
-                        .HasForeignKey("MenuID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.OrderedItem", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.MenuItem", "MenuItem")
-                        .WithMany("OrderedItems")
-                        .HasForeignKey("MenuItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("MenuItemID");
 
                     b.HasOne("RestaurantApp.DAL.Models.Order", "Order")
                         .WithMany("OrderedItems")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderID");
                 });
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.OrderedItemMenuOptionItem", b =>

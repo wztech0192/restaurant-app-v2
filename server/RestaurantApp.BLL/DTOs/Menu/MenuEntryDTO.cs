@@ -2,6 +2,7 @@
 using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RestaurantApp.BLL.DTOs
@@ -15,7 +16,7 @@ namespace RestaurantApp.BLL.DTOs
             ID = entity.ID;
             Name = entity.Name;
             Summary = entity.Summary;
-          
+            MenuItems = entity.MenuItems.Select(x => new MenuItemDTO(x));
         }
 
         public int ID { get; set; }

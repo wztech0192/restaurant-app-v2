@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RestaurantApp.DAL.DependencyInjection
 {
@@ -14,7 +12,9 @@ namespace RestaurantApp.DAL.DependencyInjection
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<RestaurantAppContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString("RestaurantAppContext"))); 
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("RestaurantAppContext"))); 
         }
     }
 }
