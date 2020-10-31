@@ -1,6 +1,6 @@
 import React from "react";
 import { getAccountRole, getAccountToken } from "app/Account/accountSlice";
-import Home from "features/Home";
+import CustomerMain from "features/CustomerMain";
 import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import Unauthorized from "./Unauthorized";
@@ -8,6 +8,7 @@ import { isManager } from "app/Account/roleChecker";
 import ManagerTabs from "./ManagerTabs";
 import ManageMenu from "features/ManageMenu";
 import ManageOrders from "features/ManageOrders";
+import OrderMenu from "features/OrderMenu";
 import { Container, makeStyles } from "@material-ui/core";
 /**
  * From https://tylermcginnis.com/react-router-protected-routes-authentication/
@@ -30,7 +31,8 @@ export default () => {
     return (
         <Container className={classes.root} maxWidth="md">
             <Switch>
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={CustomerMain} />
+                <Route path="/order" exact component={OrderMenu} />
                 <PrivateRoute
                     path="/manage/menu"
                     exact
@@ -46,7 +48,7 @@ export default () => {
                 <PrivateRoute
                     path="/manage/status"
                     exact
-                    component={Home}
+                    component={CustomerMain}
                     isAuthorized={isAuthorized}
                 />
             </Switch>

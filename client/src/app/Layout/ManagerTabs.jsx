@@ -23,6 +23,10 @@ const routes = [
     {
         to: "/manage/menu",
         label: "Menu"
+    },
+    {
+        to: "/order",
+        label: "Make Order"
     }
 ];
 

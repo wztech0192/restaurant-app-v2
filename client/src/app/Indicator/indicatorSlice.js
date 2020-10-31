@@ -1,13 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import uid from "uid";
 
+export const LOADING = {
+    GLOBAL: "GLOBAL"
+};
 const initialState = {
     modal: {
         open: false,
         color: "primary"
     },
     errors: {},
-    loading: {},
+    loading: {
+        [LOADING.GLOBAL]: true
+    },
     notifications: []
 };
 
@@ -63,14 +68,21 @@ const {
     removeSnackbar
 } = slice.actions;
 
-const setLoading = payload => dispatch => {
+export { setErrors, enqueueSnackbar, removeSnackbar };
+
+export const setLoading = payload => dispatch => {
     dispatch(setLoadingAction(payload));
     return {
         ...payload,
         loading: !payload.loading
     };
 };
-export { setErrors, setLoading, enqueueSnackbar, removeSnackbar };
+
+export const setGlobalLoading = loading =>
+    setLoadingAction({
+        target: LOADING.GLOBAL,
+        loading
+    });
 
 export const getErrors = target => state =>
     !target ? state.indicator.errors : state.indicator.errors[target];

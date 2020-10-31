@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
 import { postLogin, postAccount, getAccount, putAccount } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
-import { enqueueSnackbar, setErrors, setLoading } from "app/Indicator/indicatorSlice";
+import {
+    enqueueSnackbar,
+    setErrors,
+    setGlobalLoading,
+    setLoading
+} from "app/Indicator/indicatorSlice";
 import { shallowReplace } from "common";
 
 //save/retrieve token from local storage
@@ -113,7 +118,10 @@ export const handleGetAccountInfo = dispatch => {
         asyncAction({
             promise: getAccount,
             success: accountInfo => dispatch(loadAccountInfo({ accountInfo })),
-            failed: e => dispatch(setAccountView(ACCOUNT_VIEW.CLOSE))
+            failed: e => dispatch(setAccountView(ACCOUNT_VIEW.CLOSE)),
+            completed: () => {
+                dispatch(setGlobalLoading(false));
+            }
         })
     );
 };
@@ -126,6 +134,8 @@ export const handleLoadLocalAccount = dispatch => {
         //todo: fetch current account?
         dispatch(setToken(localToken));
         dispatch(handleGetAccountInfo);
+    } else {
+        dispatch(setGlobalLoading(false));
     }
 };
 

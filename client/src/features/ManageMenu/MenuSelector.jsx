@@ -68,7 +68,7 @@ const MenuSelector = ({ selectedID }) => {
                 onChange={dispatch(handleSelectMenu)}
             >
                 <MenuItem value="-1">
-                    <Typography color="primary">
+                    <Typography>
                         <b>CREATE NEW MENU</b>
                     </Typography>
                 </MenuItem>

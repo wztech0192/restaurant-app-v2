@@ -9,6 +9,7 @@ import GlobalModal from "app/Indicator/GlobalModal";
 import { handleLoadLocalAccount } from "app/Account/accountSlice";
 import { useDispatch } from "react-redux";
 import { handleStartOrderHub } from "app/signalRHubs/ordersHub";
+import GlobalLoading from "app/Indicator/GlobalLoading";
 
 const Layout = () => {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Layout = () => {
             <Routes />
             <Notifier />
             <GlobalModal />
+            <GlobalLoading />
         </Router>
     );
 };

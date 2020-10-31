@@ -7,6 +7,7 @@ import { getAccountToken, handleGetAccountInfo, setEditAccountInfo } from "../ac
 import { Skeleton } from "@material-ui/lab";
 import AccountHeader from "../AccountHeader";
 import ProfileEdit from "./ProfileEdit";
+import { LOADING, setLoading } from "app/Indicator/indicatorSlice";
 
 const Profile = ({ handleClose, loading, errors }) => {
     const accountInfo = useSelector(state => state.account.accountInfo);
@@ -17,6 +18,8 @@ const Profile = ({ handleClose, loading, errors }) => {
     React.useEffect(() => {
         if (token && !accountInfo) {
             dispatch(handleGetAccountInfo);
+        } else {
+            dispatch(setLoading({ target: LOADING.GLOBAL, loading: false }));
         }
     }, [accountInfo, token, dispatch]);
 
