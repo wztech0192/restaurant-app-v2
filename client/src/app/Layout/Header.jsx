@@ -5,9 +5,6 @@ import AccountButton from "app/Account/AccountButton";
 import { useSelector } from "react-redux";
 import { checkIsOrderHubConnected } from "app/signalRHubs/ordersHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
-import { Link, useLocation } from "react-router-dom";
-import HomeIcon from "@material-ui/icons/Home";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -18,7 +15,6 @@ const useStyles = makeStyles(theme => ({
 const phoneNum = "(803)226-0689";
 const Header = ({ header }) => {
     const classes = useStyles();
-    const location = useLocation();
     const isOrderHubConnected = useSelector(checkIsOrderHubConnected);
 
     return (

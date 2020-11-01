@@ -40,7 +40,7 @@ export default makeStyles(theme => ({
     cartButton: {
         position: "fixed",
         bottom: 24,
-        right: 8
+        right: 12
     },
     clearBtn: {
         position: "fixed",

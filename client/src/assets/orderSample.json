@@ -1,0 +1,16 @@
+{
+    "id": 1,
+    "tip": 0.0,
+    "total": 10.0,
+    "orderedItems": [
+        {
+            "total": 5.0,
+            "itemId": 1,
+            "quantity": 2,
+            "entryName": "testEntry",
+            "name": "testItem",
+            "sides": [],
+            "requiredOptions": []
+        }
+    ]
+}

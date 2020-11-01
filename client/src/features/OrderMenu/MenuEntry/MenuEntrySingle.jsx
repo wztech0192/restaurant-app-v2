@@ -3,11 +3,11 @@ import { Paper, Typography, Grow, TextField, MenuItem, Divider } from "@material
 import useStyles from "../useStyles";
 import mainFrameImage from "assets/mainFrame.png";
 import { handleSelectEntryName } from "../orderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MenuEntryTitle from "./MenuEntryTitle";
 import MenuItemList from "../MenuItem/MenuItemList";
 
-const MenuSingleEntry = ({ menu, selectedEntryName }) => {
+const MenuEntrySingle = ({ menu, selectedEntryName }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -54,4 +54,4 @@ const MenuSingleEntry = ({ menu, selectedEntryName }) => {
     );
 };
 
-export default MenuSingleEntry;
+export default MenuEntrySingle;

@@ -4,16 +4,16 @@ import useStyles from "./useStyles";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import MenuEntries from "./MenuEntry/MenuEntries";
 import MenuSearch from "./MenuSearch";
-import MenuSingleEntry from "./MenuEntry/MenuSingleEntry";
+import MenuEntrySingle from "./MenuEntry/MenuEntrySingle";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HomeIcon from "@material-ui/icons/Home";
-import history from "app/history";
 import { handleSelectEntryName } from "./orderSlice";
 import { Link } from "react-router-dom";
 import { handleFetchMenu } from "./menuSlice";
 import { Skeleton } from "@material-ui/lab";
-
+import menu from "assets/menuSample";
+import CartFloatButton from "./Cart/CartFloatButton";
 const LoadingSkeleton = () => (
     <Grid container spacing={2}>
         <Grid item md={6} xs={12}>
@@ -41,7 +41,7 @@ const OrderMenu = ({ setHeader }) => {
     const classes = useStyles();
     const selectedEntryName = useSelector(state => state.order.selectedEntryName);
 
-    const menu = useSelector(state => state.menu);
+    // const menu = useSelector(state => state.menu);
     const hasMenu = Boolean(menu);
 
     const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const OrderMenu = ({ setHeader }) => {
         }
     }, [hasMenu, dispatch]);
 
-    const MenuView = selectedEntryName ? MenuSingleEntry : MenuEntries;
+    const MenuView = selectedEntryName ? MenuEntrySingle : MenuEntries;
 
     return (
         <Fade in>
@@ -79,15 +79,7 @@ const OrderMenu = ({ setHeader }) => {
                     <LoadingSkeleton />
                 )}
                 <Zoom in={hasMenu}>
-                    <Fab
-                        variant="extended"
-                        color="primary"
-                        className={classes.cartButton}
-                        // onClick={e => actions.toggleOrderCart()}
-                    >
-                        <ShoppingCart className={classes.extendedIcon} />
-                        &nbsp;&nbsp; ${0.0 /*orderCart.total.toFixed(2)*/}
-                    </Fab>
+                    <CartFloatButton classes={classes} />
                 </Zoom>
                 {/*<SwipeableDrawer
                     anchor="bottom"
