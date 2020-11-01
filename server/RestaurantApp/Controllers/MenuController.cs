@@ -45,6 +45,16 @@ namespace RestaurantApp.Controllers
             return base.ProcessService(_service.Get(id));
         }
 
+        /// <summary>
+        /// Get active menu.
+        /// </summary>
+        /// <returns>Detail menu data</returns>
+        [HttpGet("active")]
+        public IActionResult GetActive()
+        {
+            return base.ProcessService(_service.GetActive());
+        }
+
 
         /// <summary>
         /// Create or update a menu

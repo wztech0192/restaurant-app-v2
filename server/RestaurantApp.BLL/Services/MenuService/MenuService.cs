@@ -21,6 +21,16 @@ namespace RestaurantApp.BLL.Services
             : base(unitOfWork, appSettingOptions, jwtService)
         {
         }
+        public IServiceMessage<MenuDTO> GetActive()
+        {
+            return base.ProcessMessage<MenuDTO>(msg =>
+            {
+                var entity = base.UnitOfWork.Menus.GetActive();
+
+                msg.Data = new MenuDTO(entity);
+                msg.Success = true;
+            });
+        }
 
         public IServiceMessage<MenuDTO> Get(int menuId)
         {

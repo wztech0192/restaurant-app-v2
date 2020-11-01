@@ -7,9 +7,10 @@ import indicator from "./Indicator/indicatorSlice";
 import orderHub from "./signalRHubs/ordersHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
 import order from "features/OrderMenu/orderSlice";
+import menu from "features/OrderMenu/menuSlice";
 
 //apply reducers here
-const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu, order });
+const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu, order, menu });
 
 function configureAppStore(preloadedState) {
     const store = configureStore({

@@ -7,6 +7,8 @@ import { checkIsOrderHubConnected } from "app/signalRHubs/ordersHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
 import { Link, useLocation } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+
 const useStyles = makeStyles(theme => ({
     grow: {
         flexGrow: 1
@@ -14,29 +16,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const phoneNum = "(803)226-0689";
-const Header = ({ title }) => {
+const Header = ({ header }) => {
     const classes = useStyles();
     const location = useLocation();
     const isOrderHubConnected = useSelector(checkIsOrderHubConnected);
-    const isHome = location.pathname === "/";
 
     return (
         <AppBar position="fixed">
             <Toolbar>
-                {isHome ? (
+                {!header.action ? (
                     <Tooltip title={`Call us at ${phoneNum}`}>
-                        <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            component="a"
+                            href={`tel:+${phoneNum}`}
+                        >
                             <PhoneIcon />
                         </IconButton>
                     </Tooltip>
                 ) : (
-                    <IconButton component={Link} to="/" edge="start" color="inherit">
-                        <HomeIcon />
-                    </IconButton>
+                    header.action
                 )}
 
                 <Typography variant="h6" component="div" className={classes.grow}>
-                    {title}
+                    {header.title}
                 </Typography>
 
                 {!isOrderHubConnected && (

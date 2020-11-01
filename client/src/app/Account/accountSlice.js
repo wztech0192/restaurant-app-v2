@@ -8,7 +8,6 @@ import {
     setGlobalLoading,
     setLoading
 } from "app/Indicator/indicatorSlice";
-import { shallowReplace } from "common";
 
 //save/retrieve token from local storage
 const TOKEN_KEY = "TOKEN_KEY";
@@ -45,8 +44,8 @@ const slice = createSlice({
     name: "account",
     initialState,
     reducers: {
-        reset(state) {
-            shallowReplace(state, initialState);
+        reset() {
+            return initialState;
         },
         setToken(state, { payload }) {
             state.token = payload;

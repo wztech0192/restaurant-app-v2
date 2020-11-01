@@ -1,5 +1,13 @@
 import React from "react";
-import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, Chip, Fade } from "@material-ui/core";
+import {
+    Grid,
+    Card,
+    CardActionArea,
+    CardMedia,
+    CardContent,
+    Typography,
+    Fade
+} from "@material-ui/core";
 import useStyles from "../useStyles";
 import mainFrameImage from "assets/mainFrame.png";
 import { handleSelectEntryName } from "../orderSlice";
@@ -10,6 +18,7 @@ const MenuEntries = ({ menu }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const menuEntries = menu.menuEntries;
+
     return (
         <Fade in>
             <Grid container spacing={2}>
@@ -17,7 +26,9 @@ const MenuEntries = ({ menu }) => {
                     return (
                         <Grid key={menuEntry.name} item md={6} xs={12}>
                             <Card>
-                                <CardActionArea onClick={dispatch(handleSelectEntryName(menuEntry.name))}>
+                                <CardActionArea
+                                    onClick={dispatch(handleSelectEntryName(menuEntry.name))}
+                                >
                                     {false && ( //todo: add image?
                                         <CardMedia
                                             className={classes.media}
@@ -27,7 +38,11 @@ const MenuEntries = ({ menu }) => {
                                     )}
                                     <CardContent>
                                         <MenuEntryTitle menuEntry={menuEntry} />
-                                        <Typography variant="body2" color="textSecondary" component="p">
+                                        <Typography
+                                            variant="body2"
+                                            color="textSecondary"
+                                            component="p"
+                                        >
                                             {menuEntry.summary}
                                         </Typography>
                                     </CardContent>

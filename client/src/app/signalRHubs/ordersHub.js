@@ -10,7 +10,8 @@ const connection = new HubConnectionBuilder()
 
 const initialState = {
     connected: false,
-    orders: []
+    orders: [],
+    activeMenuId: 0
 };
 
 const orderHubSlice = createSlice({

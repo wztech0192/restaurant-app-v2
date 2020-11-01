@@ -12,5 +12,6 @@ namespace RestaurantApp.BLL.Services
         IServiceMessage<MenuDTO> CreateOrUpdate(MenuDTO dto, bool updateStatus);
         IServiceMessage<MenuDTO> Get(int id);
         IServiceMessage<int> DeleteDraftMenu(int id);
+        IServiceMessage<MenuDTO> GetActive();
     }
 }

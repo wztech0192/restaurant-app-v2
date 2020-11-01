@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({ setTitle }) => {
+export default ({ setHeader }) => {
     const classes = useStyles();
 
     const role = useSelector(getAccountRole);
@@ -62,7 +62,7 @@ export default ({ setTitle }) => {
                             if (route.roleCheck && !route.roleCheck(role)) {
                                 return <Unauthorized />;
                             }
-                            return <route.component {...props} setTitle={setTitle} />;
+                            return <route.component {...props} setHeader={setHeader} />;
                         }}
                     />
                 ))}

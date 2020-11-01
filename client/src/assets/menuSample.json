@@ -1,614 +1,1032 @@
 {
+    "id": 8,
+    "name": "Menu-v1",
     "tax": 0.9,
-    "name": "Sample Menu",
+    "status": 3,
+    "menuEntries": [
+        {
+            "id": 12,
+            "name": "Lunch",
+            "active": false,
+            "summary": "Only For Mon-Sat 10:30-3:30. Served w. Frided Rice & Vegetables & White Sauce",
+            "menuItems": [
+                {
+                    "id": 80,
+                    "name": "L. Hibachi Chicken (White Meat)",
+                    "summary": null,
+                    "price": 6.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 131,
+                    "name": "L. 2-Ways Combo",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "meat",
+                        "meat"
+                    ]
+                },
+                {
+                    "id": 132,
+                    "name": "L. Teriyaki Shrimp",
+                    "summary": null,
+                    "price": 7.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 133,
+                    "name": "L. Hibachi Shrimp",
+                    "summary": null,
+                    "price": 7.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 134,
+                    "name": "L. Teriyaki Steak",
+                    "summary": null,
+                    "price": 7.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 136,
+                    "name": "L. Hibachi Spicy Chicken",
+                    "summary": null,
+                    "price": 6.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 137,
+                    "name": "L. Teriyaki Chicken",
+                    "summary": null,
+                    "price": 6.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 140,
+                    "name": "L. Hibachi Steak",
+                    "summary": null,
+                    "price": 7.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Hibachi Special",
+            "active": false,
+            "summary": "Served w. Frided Rice & Vegetables & White Sauce",
+            "menuItems": [
+                {
+                    "id": 121,
+                    "name": "3-Ways Combo",
+                    "summary": null,
+                    "price": 14.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "meat",
+                        "meat",
+                        "meat"
+                    ]
+                },
+                {
+                    "id": 122,
+                    "name": "2-Ways Combo",
+                    "summary": null,
+                    "price": 13.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "meat",
+                        "meat"
+                    ]
+                },
+                {
+                    "id": 123,
+                    "name": "Hibachi Vegetable",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 124,
+                    "name": "Teriyaki Jumbo Shrimp",
+                    "summary": null,
+                    "price": 11.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 125,
+                    "name": "Hibachi Jumbo Shrimp",
+                    "summary": null,
+                    "price": 11.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 126,
+                    "name": "Teriyaki Steak",
+                    "summary": null,
+                    "price": 11.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 127,
+                    "name": "Hibachi Steak",
+                    "summary": null,
+                    "price": 11.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 128,
+                    "name": "Hibachi Spicy Chicken",
+                    "summary": null,
+                    "price": 9.69,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 129,
+                    "name": "Teriyaki Chicken",
+                    "summary": null,
+                    "price": 9.69,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 130,
+                    "name": "Hibachi Chicken (White Meat)",
+                    "summary": null,
+                    "price": 9.69,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "name": "Bowls",
+            "active": false,
+            "summary": "Served w. One Type of Meat w. Rice or Veggie & White Sauce",
+            "menuItems": [
+                {
+                    "id": 138,
+                    "name": "Chicken W. Rice (No Veggie)",
+                    "summary": null,
+                    "price": 6.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 139,
+                    "name": "Chiken W. Veggie (No Rice)",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 141,
+                    "name": "Steak W. Veggie",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 142,
+                    "name": "Steak W. Rice",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 156,
+                    "name": "Shrimp W. Veggie",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 158,
+                    "name": "Shrimp W. Rice",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "name": "Kid's Plates",
+            "active": false,
+            "summary": "Served w. One Type of Meat w. Rice & White Sauce",
+            "menuItems": [
+                {
+                    "id": 152,
+                    "name": "Kid Salt & Pepper Chicken",
+                    "summary": null,
+                    "price": 5.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 153,
+                    "name": "Kid Steak Plate",
+                    "summary": null,
+                    "price": 6.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 154,
+                    "name": "Kid Shrimp Plate",
+                    "summary": null,
+                    "price": 6.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 155,
+                    "name": "Kid Chicken Plate",
+                    "summary": null,
+                    "price": 5.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "name": "Chicken Wings",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 120,
+                    "name": "50 Pcs Fried Wings",
+                    "summary": null,
+                    "price": 32.99,
+                    "optionPriceMultiplier": 5,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 143,
+                    "name": "30 Pcs Fried Wings",
+                    "summary": null,
+                    "price": 21.5,
+                    "optionPriceMultiplier": 3,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 144,
+                    "name": "10 Pcs Fried Wings",
+                    "summary": null,
+                    "price": 7.29,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 145,
+                    "name": "5 Pcs Fried Wings",
+                    "summary": null,
+                    "price": 4.15,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 146,
+                    "name": "8 Pcs W. Vegetable",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 147,
+                    "name": "8 Pcs W. Vegetable Fried Rice",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 148,
+                    "name": "8 Pcs W. Chicken Fried Rice",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 149,
+                    "name": "8 Pcs W. Ham Fried Rice",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 150,
+                    "name": "20 Pcs Fried Wings",
+                    "summary": null,
+                    "price": 14.35,
+                    "optionPriceMultiplier": 2,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 151,
+                    "name": "8 Pcs W. Fried Rice",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                },
+                {
+                    "id": 157,
+                    "name": "8 Pcs W. Shrimp Fried Rice",
+                    "summary": null,
+                    "price": 8.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "wing flavor"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "name": "Noodles",
+            "active": false,
+            "summary": "Served w. Grillded Noodle & Veggie",
+            "menuItems": [
+                {
+                    "id": 118,
+                    "name": "Hibachi Spicy Noodle",
+                    "summary": null,
+                    "price": 7.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 135,
+                    "name": "Hibachi Noodle",
+                    "summary": null,
+                    "price": 7.49,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "name": "Appetizers",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 94,
+                    "name": "Vegetable Tempura",
+                    "summary": null,
+                    "price": 6.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 95,
+                    "name": "Shirmp Tempura",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 96,
+                    "name": "Kani Pocket (8)",
+                    "summary": null,
+                    "price": 5.25,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 98,
+                    "name": "Haru Maki (2)",
+                    "summary": null,
+                    "price": 3.75,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "name": "Side Orders",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 83,
+                    "name": "Other",
+                    "summary": null,
+                    "price": 0,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 84,
+                    "name": "20 Oz White Sauce",
+                    "summary": null,
+                    "price": 4.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 85,
+                    "name": "4 Oz White Sauce",
+                    "summary": null,
+                    "price": 0.93,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 86,
+                    "name": "2 Oz White Sauce",
+                    "summary": null,
+                    "price": 0.65,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 87,
+                    "name": "Ranch Sauce",
+                    "summary": null,
+                    "price": 0.75,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 89,
+                    "name": "Spicy Sauce",
+                    "summary": null,
+                    "price": 0.8,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 90,
+                    "name": "Teriyaki Sauce",
+                    "summary": null,
+                    "price": 0.8,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 91,
+                    "name": "Fried Rice W.",
+                    "summary": null,
+                    "price": 7.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "rice"
+                    ]
+                },
+                {
+                    "id": 92,
+                    "name": "Large Rice",
+                    "summary": null,
+                    "price": 5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "rice type"
+                    ]
+                },
+                {
+                    "id": 93,
+                    "name": "Small Rice",
+                    "summary": null,
+                    "price": 3,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": true,
+                    "optionGroupNames": [
+                        "rice type"
+                    ]
+                },
+                {
+                    "id": 97,
+                    "name": "Ginger Sauce",
+                    "summary": null,
+                    "price": 0.6,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "name": "Beverage",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 82,
+                    "name": "Ice Tea",
+                    "summary": null,
+                    "price": 1.75,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 119,
+                    "name": "Soda",
+                    "summary": null,
+                    "price": 1.75,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "name": "Sushi Rolls",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 81,
+                    "name": "California Roll",
+                    "summary": null,
+                    "price": 4.95,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 88,
+                    "name": "Tuna Avocado Roll",
+                    "summary": null,
+                    "price": 5.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 99,
+                    "name": "Salmon Avocado Roll",
+                    "summary": null,
+                    "price": 5.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 100,
+                    "name": "Vegetable Roll",
+                    "summary": null,
+                    "price": 4.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 108,
+                    "name": "Philadelphia Roll",
+                    "summary": null,
+                    "price": 6.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 113,
+                    "name": "Tokyo Tempura Roll",
+                    "summary": null,
+                    "price": 12.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 114,
+                    "name": "Spider Tempura Roll",
+                    "summary": null,
+                    "price": 10.95,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 115,
+                    "name": "Phoenix Roll",
+                    "summary": null,
+                    "price": 11.95,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 116,
+                    "name": "Chop Chop Roll",
+                    "summary": null,
+                    "price": 5.5,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "name": "Party Special",
+            "active": false,
+            "summary": null,
+            "menuItems": [
+                {
+                    "id": 101,
+                    "name": "10 Pcs Japanese Spring Rolls",
+                    "summary": null,
+                    "price": 18.75,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 102,
+                    "name": "Party Hibachi Fried Rice",
+                    "summary": null,
+                    "price": 18.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 103,
+                    "name": "Party Hibachi Veg Fried Rice",
+                    "summary": null,
+                    "price": 23.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 104,
+                    "name": "Party Hibachi Steak Fried Rice",
+                    "summary": null,
+                    "price": 25.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 105,
+                    "name": "Party Ham Fried Rice",
+                    "summary": null,
+                    "price": 24.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 106,
+                    "name": "Party Chicken Fried Rice",
+                    "summary": null,
+                    "price": 24.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 107,
+                    "name": "Party Shrimp Fried Rice",
+                    "summary": null,
+                    "price": 25.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 109,
+                    "name": "Party Hibachi Vegetable",
+                    "summary": null,
+                    "price": 24.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 110,
+                    "name": "Party Steak W. Veggie",
+                    "summary": null,
+                    "price": 35.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 111,
+                    "name": "Party Chicken W. Veggie",
+                    "summary": null,
+                    "price": 29.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 112,
+                    "name": "Party Chicken, Shrimp & Steak Noodles",
+                    "summary": null,
+                    "price": 32.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                },
+                {
+                    "id": 117,
+                    "name": "Party Steak, Shrimp & Chicken Fried Rice",
+                    "summary": null,
+                    "price": 32.99,
+                    "optionPriceMultiplier": 0,
+                    "canAddSides": false,
+                    "optionGroupNames": []
+                }
+            ]
+        }
+    ],
     "optionGroups": {
         "rice type": [
             {
-                "name": "White"
+                "id": 60,
+                "name": "White",
+                "price": 0
             },
             {
-                "name": "Fried"
+                "id": 61,
+                "name": "Fried",
+                "price": 0
             }
         ],
         "rice": [
             {
-                "name": "Shrimp"
+                "id": 62,
+                "name": "Shrimp",
+                "price": 0
             },
             {
-                "name": "Ham"
+                "id": 63,
+                "name": "Ham",
+                "price": 0
             },
             {
-                "name": "Vegetable"
+                "id": 64,
+                "name": "Vegetable",
+                "price": 0
             },
             {
-                "name": "Steak"
+                "id": 65,
+                "name": "Steak",
+                "price": 0
             },
             {
-                "name": "Chicken"
+                "id": 66,
+                "name": "Chicken",
+                "price": 0
             },
             {
-                "name": "Egg"
+                "id": 67,
+                "name": "Egg",
+                "price": 0
             }
         ],
         "wing flavor": [
             {
-                "name": "No Flavor"
+                "id": 57,
+                "name": "No Flavor",
+                "price": 0
             },
             {
+                "id": 68,
                 "name": "Lemmon Pepper",
-                "price": 0.50
+                "price": 0.5
             },
             {
+                "id": 69,
                 "name": "Teriyaki",
-                "price": 0.50
+                "price": 0.5
             },
             {
+                "id": 70,
                 "name": "Hot Teriyaki",
-                "price": 0.50
+                "price": 0.5
             },
             {
+                "id": 71,
                 "name": "Bar-B-Q",
-                "price": 0.50
+                "price": 0.5
             },
             {
+                "id": 72,
                 "name": "Honey",
-                "price": 0.50
+                "price": 0.5
             },
             {
+                "id": 73,
                 "name": "Honey Mustard",
-                "price": 0.50
+                "price": 0.5
             }
         ],
         "meat": [
             {
-                "name": "Hi Chicken"
+                "id": 41,
+                "name": "Ty Steak",
+                "price": 0
             },
             {
-                "name": "Ty Chicken"
+                "id": 42,
+                "name": "Hi Shrimp",
+                "price": 0
             },
             {
-                "name": "Spicy Chicken"
+                "id": 43,
+                "name": "Ty Shrimp",
+                "price": 0
             },
             {
-                "name": "Hi Steak"
+                "id": 54,
+                "name": "Hi Steak",
+                "price": 0
             },
             {
-                "name": "Ty Steak"
+                "id": 56,
+                "name": "Spicy Chicken",
+                "price": 0
             },
             {
-                "name": "Hi Shrimp"
+                "id": 58,
+                "name": "Hi Chicken",
+                "price": 0
             },
             {
-                "name": "Ty Shrimp"
+                "id": 74,
+                "name": "Ty Chicken",
+                "price": 0
             }
         ],
         "side orders": [
             {
-                "name": "No Vegetable"
+                "id": 44,
+                "name": "No Vegetable",
+                "price": 0
             },
             {
-                "name": "No Rice"
+                "id": 45,
+                "name": "No Rice",
+                "price": 0
             },
             {
-                "name": "No Sauce"
+                "id": 46,
+                "name": "No Sauce",
+                "price": 0
             },
             {
-                "name": "Change Noodle",
-                "price": 2.00
-            },
-            {
-                "name": "Add Rice",
-                "price": 3.00
-            },
-            {
-                "name": "Add Chicken",
-                "price": 3.00
-            },
-            {
+                "id": 47,
                 "name": "Add Steak",
-                "price": 4.00
+                "price": 4
             },
             {
+                "id": 48,
+                "name": "Add Rice",
+                "price": 3
+            },
+            {
+                "id": 49,
+                "name": "Add Chicken",
+                "price": 3
+            },
+            {
+                "id": 50,
                 "name": "Add Shrimp",
-                "price": 3.00
+                "price": 3
             },
             {
+                "id": 51,
                 "name": "Add Vegetable",
-                "price": 3.00
+                "price": 3
             },
             {
+                "id": 52,
                 "name": "Add Egg",
-                "price": 1.50
+                "price": 1.5
             },
             {
-                "name": "W. Teriyaki"
+                "id": 53,
+                "name": "W. Teriyaki",
+                "price": 0
             },
             {
-                "name": "W. Hibachi"
+                "id": 55,
+                "name": "Change Noodle",
+                "price": 2
             },
             {
-                "name": "W. Spicy"
+                "id": 59,
+                "name": "W. Hibachi",
+                "price": 0
+            },
+            {
+                "id": 75,
+                "name": "W. Spicy",
+                "price": 0
             }
         ]
-    },
-    "menuEntries": [
-        {
-            "name": "Lunch",
-            "summary": "Only For Mon-Sat 10:30-3:30. Served w. Frided Rice & Vegetables & White Sauce",
-            "menuItems": [
-                {
-                    "name": "L. Hibachi Chicken (White Meat)",
-                    "price": 6.49,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Teriyaki Chicken",
-                    "price": 6.49,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Hibachi Spicy Chicken",
-                    "price": 6.49,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Hibachi Steak",
-                    "price": 7.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Teriyaki Steak",
-                    "price": 7.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Hibachi Shrimp",
-                    "price": 7.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. Teriyaki Shrimp",
-                    "price": 7.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "L. 2-Ways Combo",
-                    "price": 7.99,
-                    "optionGroupNames": [
-                        "meat",
-                        "meat"
-                    ],
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Hibachi Special",
-            "summary": "Served w. Frided Rice & Vegetables & White Sauce",
-            "menuItems": [
-                {
-                    "name": "Hibachi Chicken (White Meat)",
-                    "price": 9.69,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Teriyaki Chicken",
-                    "price": 9.69,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Hibachi Spicy Chicken",
-                    "price": 9.69,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Hibachi Steak",
-                    "price": 11.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Teriyaki Steak",
-                    "price": 11.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Hibachi Jumbo Shrimp",
-                    "price": 11.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Teriyaki Jumbo Shrimp",
-                    "price": 11.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Hibachi Vegetable",
-                    "price": 8.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "2-Ways Combo",
-                    "price": 13.49,
-                    "optionGroupNames": [
-                        "meat",
-                        "meat"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "3-Ways Combo",
-                    "price": 14.99,
-                    "optionGroupNames": [
-                        "meat",
-                        "meat",
-                        "meat"
-                    ],
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Bowls",
-            "summary": "Served w. One Type of Meat w. Rice or Veggie & White Sauce",
-            "menuItems": [
-                {
-                    "name": "Chicken W. Rice (No Veggie)",
-                    "price": 6.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Chiken W. Veggie (No Rice)",
-                    "price": 7.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Steak W. Rice",
-                    "price": 7.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Steak W. Veggie",
-                    "price": 8.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Shrimp W. Rice",
-                    "price": 7.99,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Shrimp W. Veggie",
-                    "price": 8.99,
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Kid's Plates",
-            "summary": "Served w. One Type of Meat w. Rice & White Sauce",
-            "menuItems": [
-                {
-                    "name": "Kid Chicken Plate",
-                    "price": 5.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Kid Shrimp Plate",
-                    "price": 6.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Kid Steak Plate",
-                    "price": 6.29,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Kid Salt & Pepper Chicken",
-                    "price": 5.29,
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Chicken Wings",
-            "menuItems": [
-                {
-                    "name": "8 Pcs W. Fried Rice",
-                    "price": 7.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "8 Pcs W. Shrimp Fried Rice",
-                    "price": 8.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "8 Pcs W. Ham Fried Rice",
-                    "price": 8.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "8 Pcs W. Chicken Fried Rice",
-                    "price": 8.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "8 Pcs W. Vegetable Fried Rice",
-                    "price": 8.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "8 Pcs W. Vegetable",
-                    "price": 8.99,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "5 Pcs Fried Wings",
-                    "price": 4.15,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "10 Pcs Fried Wings",
-                    "price": 7.29,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "20 Pcs Fried Wings",
-                    "price": 14.35,
-                    "optionPriceMultiplier": 2,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "30 Pcs Fried Wings",
-                    "price": 21.50,
-                    "optionPriceMultiplier": 3,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "50 Pcs Fried Wings",
-                    "price": 32.99,
-                    "optionPriceMultiplier": 5,
-                    "optionGroupNames": [
-                        "wing flavor"
-                    ],
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Noodles",
-            "summary": "Served w. Grillded Noodle & Veggie",
-            "menuItems": [
-                {
-                    "name": "Hibachi Noodle",
-                    "price": 7.49,
-                    "canAddSides": true
-                },
-                {
-                    "name": "Hibachi Spicy Noodle",
-                    "price": 7.49,
-                    "canAddSides": true
-                }
-            ]
-        },
-        {
-            "name": "Appetizers",
-            "menuItems": [
-                {
-                    "name": "Haru Maki (2)",
-                    "price": 3.75
-                },
-                {
-                    "name": "Kani Pocket (8)",
-                    "price": 5.25
-                },
-                {
-                    "name": "Shirmp Tempura",
-                    "price": 7.99
-                },
-                {
-                    "name": "Vegetable Tempura",
-                    "price": 6.99
-                }
-            ]
-        },
-        {
-            "name": "Side Orders",
-            "menuItems": [
-                {
-                    "name": "Small Rice",
-                    "price": 3.00,
-                    "optionGroupNames": [
-                        "rice type"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "Large Rice",
-                    "price": 5.00,
-                    "optionGroupNames": [
-                        "rice type"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "Fried Rice W.",
-                    "price": 7.99,
-                    "optionGroupNames": [
-                        "rice"
-                    ],
-                    "canAddSides": true
-                },
-                {
-                    "name": "Teriyaki Sauce",
-                    "price": 0.8
-                },
-                {
-                    "name": "Ginger Sauce",
-                    "price": 0.6
-                },
-                {
-                    "name": "Spicy Sauce",
-                    "price": 0.8
-                },
-                {
-                    "name": "Ranch Sauce",
-                    "price": 0.75
-                },
-                {
-                    "name": "2 Oz White Sauce",
-                    "price": 0.65
-                },
-                {
-                    "name": "4 Oz White Sauce",
-                    "price": 0.93
-                },
-                {
-                    "name": "20 Oz White Sauce",
-                    "price": 4.50
-                },
-                {
-                    "name": "Other",
-                    "price": 0.00
-                }
-            ]
-        },
-        {
-            "name": "Beverage",
-            "menuItems": [
-                {
-                    "name": "Soda",
-                    "price": 1.75
-                },
-                {
-                    "name": "Ice Tea",
-                    "price": 1.75
-                }
-            ]
-        },
-        {
-            "name": "Sushi Rolls",
-            "menuItems": [
-                {
-                    "name": "California Roll",
-                    "price": 4.95
-                },
-                {
-                    "name": "Tuna Avocado Roll",
-                    "price": 5.50
-                },
-                {
-                    "name": "Salmon Avocado Roll",
-                    "price": 5.50
-                },
-                {
-                    "name": "Philadelphia Roll",
-                    "price": 6.50
-                },
-                {
-                    "name": "Vegetable Roll",
-                    "price": 4.50
-                },
-                {
-                    "name": "Chop Chop Roll",
-                    "price": 5.50
-                },
-                {
-                    "name": "Phoenix Roll",
-                    "price": 11.95
-                },
-                {
-                    "name": "Spider Tempura Roll",
-                    "price": 10.95
-                },
-                {
-                    "name": "Tokyo Tempura Roll",
-                    "price": 12.50
-                }
-            ]
-        },
-        {
-            "name": "Party Special",
-            "menuItems": [
-                {
-                    "name": "Party Chicken, Shrimp & Steak Noodles",
-                    "price": 32.99
-                },
-                {
-                    "name": "Party Chicken W. Veggie",
-                    "price": 29.99
-                },
-                {
-                    "name": "Party Steak W. Veggie",
-                    "price": 35.99
-                },
-                {
-                    "name": "Party Steak, Shrimp & Chicken Fried Rice",
-                    "price": 32.99
-                },
-                {
-                    "name": "Party Hibachi Vegetable",
-                    "price": 24.99
-                },
-                {
-                    "name": "Party Shrimp Fried Rice",
-                    "price": 25.99
-                },
-                {
-                    "name": "Party Chicken Fried Rice",
-                    "price": 24.99
-                },
-                {
-                    "name": "Party Ham Fried Rice",
-                    "price": 24.99
-                },
-                {
-                    "name": "Party Hibachi Steak Fried Rice",
-                    "price": 25.99
-                },
-                {
-                    "name": "Party Hibachi Veg Fried Rice",
-                    "price": 23.99
-                },
-                {
-                    "name": "Party Hibachi Fried Rice",
-                    "price": 18.99
-                },
-                {
-                    "name": "10 Pcs Japanese Spring Rolls",
-                    "price": 18.75
-                }
-            ]
-        }
-    ]
+    }
 }

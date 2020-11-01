@@ -4,17 +4,13 @@ import { enqueueSnackbar, handleOpenModal } from "app/Indicator/indicatorSlice";
 import { asyncAction } from "app/sharedActions";
 import { prettyJsonStringify } from "common";
 
-const newOrder = {
-    id: -1,
-    name: "Place holder"
-};
-
 const initialState = {
     order: {
         tip: 0.0,
         total: 0.0,
         orderedItems: []
     },
+    itemCounter: {},
     selectedEntryName: ""
 };
 

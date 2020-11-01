@@ -35,10 +35,10 @@ const useStyles = makeStyles({
     }
 });
 
-const Home = ({ setTitle }) => {
+const Home = ({ setHeader }) => {
     React.useEffect(() => {
-        setTitle("Hibachi House");
-    }, [setTitle]);
+        setHeader({ title: "Hibachi House" });
+    }, [setHeader]);
 
     const classes = useStyles();
     return (

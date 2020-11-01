@@ -10,6 +10,8 @@ export const getAccount = () => apiCaller.get("account");
 
 export const postMenu = (menu, updateStatus) =>
     apiCaller.post(`menu?updateStatus=${updateStatus}`, menu);
+
 export const deleteMenu = menuID => apiCaller.delete(`menu/${menuID}`);
 export const getMenu = menuID => apiCaller.get(`menu/${menuID}`);
+export const getActiveMenu = () => apiCaller.get("menu/active");
 export const getAllMenu = () => apiCaller.get("menu/all");
