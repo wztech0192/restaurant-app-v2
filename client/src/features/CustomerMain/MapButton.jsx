@@ -2,9 +2,10 @@ import { Button } from "@material-ui/core";
 import React from "react";
 import MapIcon from "@material-ui/icons/Room";
 
-const MapButton = () => {
+const MapButton = ({ classes }) => {
     return (
         <Button
+            className={classes.maxWidth}
             align="center"
             fullWidth
             component="a"

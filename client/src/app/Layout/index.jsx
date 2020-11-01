@@ -14,6 +14,8 @@ import GlobalLoading from "app/Indicator/GlobalLoading";
 const Layout = () => {
     const dispatch = useDispatch();
 
+    const [title, setTitle] = React.useState("");
+
     React.useEffect(() => {
         dispatch(handleLoadLocalAccount);
         dispatch(handleStartOrderHub);
@@ -21,9 +23,9 @@ const Layout = () => {
 
     return (
         <Router history={history}>
-            <Header />
+            <Header title={title} />
             <AccountViewModal />
-            <Routes />
+            <Routes setTitle={setTitle} />
             <Notifier />
             <GlobalModal />
             <GlobalLoading />

@@ -10,9 +10,32 @@ import ManageMenu from "features/ManageMenu";
 import ManageOrders from "features/ManageOrders";
 import OrderMenu from "features/OrderMenu";
 import { Container, makeStyles } from "@material-ui/core";
-/**
- * From https://tylermcginnis.com/react-router-protected-routes-authentication/
- */
+
+const routes = [
+    {
+        path: "/",
+        component: CustomerMain
+    },
+    {
+        path: "/order",
+        component: OrderMenu
+    },
+    {
+        path: "/manage/menu",
+        component: ManageMenu,
+        roleCheck: isManager
+    },
+    {
+        path: "/manage/orders",
+        component: ManageOrders,
+        roleCheck: isManager
+    },
+    {
+        path: "/manage/status",
+        component: CustomerMain,
+        roleCheck: isManager
+    }
+];
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,46 +43,31 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.mixins.toolbar.minHeight
     }
 }));
-export default () => {
+
+export default ({ setTitle }) => {
     const classes = useStyles();
 
-    const isLogin = useSelector(getAccountToken);
     const role = useSelector(getAccountRole);
     const manager = isManager(role);
 
-    const isAuthorized = isLogin && manager;
     return (
-        <Container className={classes.root} maxWidth="md">
+        <Container className={classes.root} maxWidth="lg">
             <Switch>
-                <Route path="/" exact component={CustomerMain} />
-                <Route path="/order" exact component={OrderMenu} />
-                <PrivateRoute
-                    path="/manage/menu"
-                    exact
-                    component={ManageMenu}
-                    isAuthorized={isAuthorized}
-                />
-                <PrivateRoute
-                    path="/manage/orders"
-                    exact
-                    component={ManageOrders}
-                    isAuthorized={isAuthorized}
-                />
-                <PrivateRoute
-                    path="/manage/status"
-                    exact
-                    component={CustomerMain}
-                    isAuthorized={isAuthorized}
-                />
+                {routes.map(route => (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        exact
+                        render={props => {
+                            if (route.roleCheck && !route.roleCheck(role)) {
+                                return <Unauthorized />;
+                            }
+                            return <route.component {...props} setTitle={setTitle} />;
+                        }}
+                    />
+                ))}
             </Switch>
-            {isAuthorized && <ManagerTabs />}
+            {manager && <ManagerTabs />}
         </Container>
     );
 };
-
-const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
-    <Route
-        {...rest}
-        render={props => (isAuthorized ? <Component {...props} /> : <Unauthorized />)}
-    />
-);

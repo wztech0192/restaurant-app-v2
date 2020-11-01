@@ -6,9 +6,10 @@ import account, { tokenSubscribeListener } from "./Account/accountSlice";
 import indicator from "./Indicator/indicatorSlice";
 import orderHub from "./signalRHubs/ordersHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
+import order from "features/OrderMenu/orderSlice";
 
 //apply reducers here
-const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu });
+const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu, order });
 
 function configureAppStore(preloadedState) {
     const store = configureStore({

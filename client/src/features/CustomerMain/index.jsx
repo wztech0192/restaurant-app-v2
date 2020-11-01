@@ -6,15 +6,49 @@ import CheckIcon from "@material-ui/icons/CheckCircle";
 import OrderIcon from "@material-ui/icons/Store";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const maxWidth = 600;
+const useStyles = makeStyles({
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    makeOrderBtn: {
+        borderRadius: "24px !important",
+        height: 60,
+        maxWidth: maxWidth
+    },
+    imgContainer: {
+        marginTop: 10,
+        minHeight: "30vh",
+        textAlign: "center"
+    },
+    img: {
+        width: "100%",
+        maxWidth: maxWidth,
+        border: "1px solid black",
+        margin: "0 auto",
+        borderRadius: 24
+    },
+    maxWidth: {
+        maxWidth
+    }
+});
+
+const Home = ({ setTitle }) => {
+    React.useEffect(() => {
+        setTitle("Hibachi House");
+    }, [setTitle]);
+
+    const classes = useStyles();
     return (
         <Grow in>
-            <div>
-                <MapButton />
-                <MainImage />
+            <div className={classes.container}>
+                <MapButton classes={classes} />
+                <MainImage classes={classes} />
                 <br />
                 <Button
-                    className="mainPageButton"
+                    className={classes.makeOrderBtn}
                     variant="contained"
                     color="primary"
                     fullWidth
