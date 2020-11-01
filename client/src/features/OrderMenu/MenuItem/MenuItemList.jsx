@@ -31,7 +31,7 @@ const MenuItemList = ({ menuEntry }) => {
         <List dense disablePadding className={classes.foodGroup}>
             {menuEntry.menuItems.map(item => {
                 return (
-                    <ListItem divider className={classes.menuItemContainer}>
+                    <ListItem key={item.name} divider className={classes.menuItemContainer}>
                         <ListItemText
                             primary={
                                 <Typography>

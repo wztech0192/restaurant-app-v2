@@ -12,6 +12,7 @@ const MenuSingleEntry = ({ menu, selectedEntryName }) => {
     const classes = useStyles();
 
     const menuEntry = React.useMemo(() => {
+        document.getElementById("root").scrollTop = 0; //scroll to top
         return menu.menuEntries.find(me => me.name === selectedEntryName);
     }, [menu, selectedEntryName]);
 
@@ -32,7 +33,6 @@ const MenuSingleEntry = ({ menu, selectedEntryName }) => {
                     margin="dense"
                     fullWidth
                     select
-                    autoFocus
                     value={selectedEntryName || ""}
                     variant="outlined"
                     label="Selected Menu"
