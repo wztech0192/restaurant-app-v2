@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Typography, Grow, TextField, MenuItem, Divider } from "@material-ui/core";
 import useStyles from "../useStyles";
 import mainFrameImage from "assets/mainFrame.png";
-import { handleSelectEntryName } from "../orderSlice";
+import { handleSelectEntryName } from "../slices/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MenuEntryTitle from "./MenuEntryTitle";
 import MenuItemList from "../MenuItem/MenuItemList";

@@ -1,0 +1,93 @@
+import React from "react";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Divider,
+    Grid,
+    makeStyles,
+    Table,
+    TextField,
+    Typography
+} from "@material-ui/core";
+import { ShoppingCart } from "@material-ui/icons";
+import TextFieldWrapper from "common/TextFieldWrapper";
+import useSummaryStyles from "./useSummaryStyles";
+import NumberFormatCustom from "common/NumberCustomFormat";
+
+const InputProps = {
+    inputComponent: NumberFormatCustom
+};
+const inputProps = {
+    inputMode: "decimal",
+    style: {
+        textAlign: "right",
+        padding: 0
+    }
+};
+
+const useStyles = makeStyles({
+    root: {
+        marginTop: 0,
+        float: "right",
+        width: "80%"
+    }
+});
+
+const OrderPriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal = 0, tax = 0 }) => {
+    const tipFieldClasses = useStyles();
+
+    const taxedTotal = subtotal * tax;
+    return (
+        <Grid container className={classes.priceBox}>
+            <Grid item xs={6}>
+                <Typography align="right">Subtotal:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography align="right">{subtotal.toFixed(2)}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography align="right">Tax:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography align="right">{taxedTotal.toFixed(2)}</Typography>
+            </Grid>
+            {Boolean(canEdit || tip) && (
+                <>
+                    <Grid item xs={6}>
+                        <Typography align="right">Tip:</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextFieldWrapper
+                            disabled={!canEdit}
+                            fullWidth
+                            variant="standard"
+                            name="tip"
+                            value={tip.toFixed(2)}
+                            classes={tipFieldClasses}
+                            size="small"
+                            margin="dense"
+                            onChange={handleUpdateTip}
+                            InputProps={InputProps}
+                            inputProps={inputProps}
+                        />
+                    </Grid>
+                </>
+            )}
+            <Grid item xs={6}>
+                <Typography align="right">
+                    <b>Total:</b>
+                </Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography align="right">
+                    <b>{(subtotal + taxedTotal + tip).toFixed(2)}</b>
+                </Typography>
+            </Grid>
+        </Grid>
+    );
+};
+
+export default OrderPriceSummaryBox;

@@ -1,19 +1,19 @@
 import { Fab, Fade, Grid, IconButton, SwipeableDrawer, Zoom } from "@material-ui/core";
 import React from "react";
 import useStyles from "./useStyles";
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import MenuEntries from "./MenuEntry/MenuEntries";
 import MenuSearch from "./MenuSearch";
 import MenuEntrySingle from "./MenuEntry/MenuEntrySingle";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HomeIcon from "@material-ui/icons/Home";
-import { handleSelectEntryName } from "./orderSlice";
+import { handleSelectEntryName } from "./slices/orderSlice";
 import { Link } from "react-router-dom";
-import { handleFetchMenu } from "./menuSlice";
+import { handleFetchMenu } from "./slices/menuSlice";
 import { Skeleton } from "@material-ui/lab";
 import menu from "assets/menuSample";
 import CartFloatButton from "./Cart/CartFloatButton";
+
 const LoadingSkeleton = () => (
     <Grid container spacing={2}>
         <Grid item md={6} xs={12}>
@@ -73,13 +73,9 @@ const OrderMenu = ({ setHeader }) => {
     return (
         <Fade in>
             <div className={classes.menuBody}>
-                {hasMenu ? (
-                    <MenuView menu={menu} selectedEntryName={selectedEntryName} />
-                ) : (
-                    <LoadingSkeleton />
-                )}
+                {hasMenu ? <MenuView menu={menu} selectedEntryName={selectedEntryName} /> : <LoadingSkeleton />}
                 <Zoom in={hasMenu}>
-                    <CartFloatButton classes={classes} />
+                    <CartFloatButton classes={classes} menu={menu} />
                 </Zoom>
                 {/*<SwipeableDrawer
                     anchor="bottom"

@@ -13,3 +13,12 @@ export const shallowReplace = (state, replaceState) => {
 };
 
 export const prettyJsonStringify = obj => JSON.stringify(obj, null, 4);
+
+export const propCompare = keys => (prev, next) => {
+    for (let key of keys) {
+        if (prev[key] !== next[key]) {
+            return false;
+        }
+    }
+    return true;
+};

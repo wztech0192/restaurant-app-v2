@@ -6,8 +6,8 @@ import account, { tokenSubscribeListener } from "./Account/accountSlice";
 import indicator from "./Indicator/indicatorSlice";
 import orderHub from "./signalRHubs/ordersHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
-import order from "features/OrderMenu/orderSlice";
-import menu from "features/OrderMenu/menuSlice";
+import order from "features/OrderMenu/slices/orderSlice";
+import menu from "features/OrderMenu/slices/menuSlice";
 
 //apply reducers here
 const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu, order, menu });

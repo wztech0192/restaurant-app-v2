@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Chip } from "@material-ui/core";
-import { getQuantity } from "../orderSlice";
+import { getQuantity } from "../slices/orderSlice";
 import { useSelector } from "react-redux";
 
 const MenuEntryTitle = ({ menuEntry, variant = "h6" }) => {

@@ -1,17 +1,10 @@
 import React from "react";
-import {
-    Typography,
-    Chip,
-    IconButton,
-    ListItem,
-    ListItemText,
-    ListItemSecondaryAction
-} from "@material-ui/core";
+import { Typography, Chip, IconButton, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
 import useStyles from "../useStyles";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import MinusIcon from "@material-ui/icons/Remove";
-import { getQuantity, handleAddOrRemoveItem } from "../orderSlice";
+import { getQuantity, handleAddOrRemoveItem } from "../slices/orderSlice";
 
 const MenuItemSingle = ({ menuEntry, menuItem }) => {
     const dispatch = useDispatch();
@@ -34,7 +27,7 @@ const MenuItemSingle = ({ menuEntry, menuItem }) => {
                 <IconButton
                     size="small"
                     disabled={quantity <= 0}
-                    onClick={dispatch(handleAddOrRemoveItem(menuEntry, menuItem, -1))}
+                    onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, -1))}
                 >
                     <MinusIcon />
                 </IconButton>
@@ -42,7 +35,7 @@ const MenuItemSingle = ({ menuEntry, menuItem }) => {
                 <IconButton
                     size="small"
                     color="primary"
-                    onClick={dispatch(handleAddOrRemoveItem(menuEntry, menuItem, 1))}
+                    onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, 1))}
                 >
                     <AddIcon />
                 </IconButton>

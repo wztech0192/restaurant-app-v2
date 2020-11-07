@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import useStyles from "../useStyles";
 import mainFrameImage from "assets/mainFrame.png";
-import { handleSelectEntryName } from "../orderSlice";
+import { handleSelectEntryName } from "../slices/orderSlice";
 import { useDispatch } from "react-redux";
 import MenuEntryTitle from "./MenuEntryTitle";
 
