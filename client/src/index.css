@@ -6,8 +6,8 @@ html {
 }
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-        "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: rgb(0, 155, 160);
@@ -94,4 +94,8 @@ footer {
 
 * {
     touch-action: manipulation !important;
+}
+
+.margin-right-5 {
+    margin-right: 5px !important;
 }
