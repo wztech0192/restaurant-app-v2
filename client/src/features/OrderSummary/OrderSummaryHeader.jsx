@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Divider, Typography } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import React from "react";
 

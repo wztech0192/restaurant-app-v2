@@ -39,11 +39,15 @@ const useStyles = makeStyles({
     }
 });
 
-const SideOrderSelector = ({ orderedOptions = EMPTY_OBJECT, dispatch, sideOrders, defaultExpanded }) => {
+const SideOrderSelector = ({
+    orderedOptions = EMPTY_OBJECT,
+    dispatch,
+    sideOrders,
+    defaultExpanded
+}) => {
     const badgeClasses = useBadeStyles();
     const classes = useStyles();
     const [editQuantity, setEditQuantity] = React.useState(1);
-    console.log(orderedOptions);
     return (
         <Accordion elevation={5} defaultExpanded={defaultExpanded} className={classes.root}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>

@@ -23,5 +23,7 @@ export const propCompare = keys => (prev, next) => {
     return true;
 };
 
+export const phoneNum = "(803)226-0689";
+
 export const EMPTY_ARRAY = [];
 export const EMPTY_OBJECT = {};

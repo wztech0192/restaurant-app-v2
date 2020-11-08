@@ -12,7 +12,6 @@ const OptionsEditor = ({
     optionPriceMultiplier
 }) => {
     const dispatch = useDispatch();
-    console.log(menu);
     return (
         <div>
             {optionGroupNames.map((groupName, i) => {

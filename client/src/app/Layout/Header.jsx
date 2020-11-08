@@ -5,6 +5,7 @@ import AccountButton from "app/Account/AccountButton";
 import { useSelector } from "react-redux";
 import { checkIsOrderHubConnected } from "app/signalRHubs/ordersHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
+import { phoneNum } from "common";
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -15,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const phoneNum = "(803)226-0689";
 const Header = ({ header }) => {
     const classes = useStyles();
     const isOrderHubConnected = useSelector(checkIsOrderHubConnected);
@@ -25,7 +25,12 @@ const Header = ({ header }) => {
             <Toolbar className={classes.toolbar}>
                 {!header.action ? (
                     <Tooltip title={`Call us at ${phoneNum}`}>
-                        <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            component="a"
+                            href={`tel:+${phoneNum}`}
+                        >
                             <PhoneIcon />
                         </IconButton>
                     </Tooltip>

@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core";
 export default makeStyles(theme => ({
     header: {
         display: "flex",
-        marginBottom: 15
+        padding: "15px 0",
+        zIndex: 2,
+        background: "white",
+        position: "sticky",
+        top: 0,
+        boxShadow: "0px 3px 0px -2px lightgrey;"
     },
     flexGrow: {
         flexGrow: 1
@@ -26,7 +31,7 @@ export default makeStyles(theme => ({
         maxHeight: "45vh"
     },
     itemOptionSummary: {
-        paddingLeft: "50px",
+        paddingLeft: "40px",
         fontSize: "0.95em",
         display: "block"
     }

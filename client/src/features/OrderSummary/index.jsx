@@ -20,11 +20,10 @@ const OrderSummary = ({
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
+    console.log("test");
     return (
         <div>
-            <br />
             <OrderSummaryHeader classes={classes} totalItems={totalItems} />
-            <Divider />
             <div>
                 {totalItems === 0 ? (
                     <div>
@@ -68,5 +67,4 @@ const OrderSummary = ({
     );
 };
 
-const compareKeys = propCompare(["orderInfo", "canEdit", "tax"]);
-export default React.memo(OrderSummary, (prev, next) => !next.shouldUpdate || compareKeys(prev, next));
+export default React.memo(OrderSummary, (prev, next) => !next.shouldUpdate);

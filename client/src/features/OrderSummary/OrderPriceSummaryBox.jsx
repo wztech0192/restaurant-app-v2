@@ -22,7 +22,14 @@ const useStyles = makeStyles({
     }
 });
 
-const OrderPriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal = 0, tax = 0 }) => {
+const OrderPriceSummaryBox = ({
+    classes,
+    handleUpdateTip,
+    canEdit,
+    tip = 0,
+    subtotal = 0,
+    tax = 0
+}) => {
     const tipFieldClasses = useStyles();
 
     const taxedTotal = subtotal * tax;
