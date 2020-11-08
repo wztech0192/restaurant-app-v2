@@ -22,3 +22,6 @@ export const propCompare = keys => (prev, next) => {
     }
     return true;
 };
+
+export const EMPTY_ARRAY = [];
+export const EMPTY_OBJECT = {};

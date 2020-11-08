@@ -1,22 +1,32 @@
 import uid from "uid";
 
-export const itemCounterHelper = (itemCounter, name, added) => {
+const singleItemCounterHelper = (itemCounter, name, added) => {
     const quantity = (itemCounter[name] || 0) + added;
     itemCounter[name] = quantity > 0 ? quantity : 0;
 };
+export const itemCounterHelper = (itemCounter, menuEntryName, menuItemName, added) => {
+    singleItemCounterHelper(itemCounter, menuEntryName, added);
+    singleItemCounterHelper(itemCounter, menuItemName, added);
+};
 
 export const addOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
-    const orderedItem = {
-        uid: uid(),
-        entryName: menuEntryName,
-        name: menuItem.name,
-        total: menuItem.price,
-        itemId: menuItem.id,
-        quantity,
-        sides: [],
-        requiredOptions: []
-    };
-    cart.orderedItems.push(orderedItem);
+    let orderedItem = cart.orderedItems.find(x => x.name === menuItem.name && x.entryName === menuEntryName);
+    if (orderedItem) {
+        orderedItem.quantity += quantity;
+    } else {
+        orderedItem = {
+            uid: uid(),
+            entryName: menuEntryName,
+            name: menuItem.name,
+            total: menuItem.price,
+            itemId: menuItem.id,
+            quantity,
+            sides: [],
+            requiredOptions: []
+        };
+        cart.orderedItems.push(orderedItem);
+    }
+
     cart.total += orderedItem.total * quantity;
 };
 
@@ -24,7 +34,7 @@ export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) =
     //remove target ordered item
     if (menuItem.uid) {
         cart.orderedItems = cart.orderedItems.filter(oi => oi.uid !== menuItem.uid);
-        cart.total -= menuItem.total * quantity;
+        cart.total += menuItem.total * quantity;
     } else {
         //remove from the last
         //starting from the end, find the last added item based on entry name and item name
@@ -58,5 +68,4 @@ export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) =
     }
 };
 
-export const needEditModal = menuItem =>
-    menuItem.canAddSides || menuItem.optionGroupNames.length > 0;
+export const needEditModal = menuItem => menuItem.canAddSides || menuItem.optionGroupNames.length > 0;

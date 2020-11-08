@@ -1,5 +1,5 @@
 import React from "react";
-import { getAccountRole, getAccountToken } from "app/Account/accountSlice";
+import { getAccountRole } from "app/Account/accountSlice";
 import CustomerMain from "features/CustomerMain";
 import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
@@ -39,7 +39,7 @@ const routes = [
 
 const useStyles = makeStyles(theme => ({
     root: {
-        marginTop: theme.mixins.toolbar.minHeight + 30,
+        marginTop: theme.mixins.toolbar.minHeight + 10,
         marginBottom: theme.mixins.toolbar.minHeight
     }
 }));

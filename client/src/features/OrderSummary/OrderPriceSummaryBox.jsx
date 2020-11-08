@@ -1,20 +1,6 @@
 import React from "react";
-import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Grid,
-    makeStyles,
-    Table,
-    TextField,
-    Typography
-} from "@material-ui/core";
-import { ShoppingCart } from "@material-ui/icons";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import TextFieldWrapper from "common/TextFieldWrapper";
-import useSummaryStyles from "./useSummaryStyles";
 import NumberFormatCustom from "common/NumberCustomFormat";
 
 const InputProps = {

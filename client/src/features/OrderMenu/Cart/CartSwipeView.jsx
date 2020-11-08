@@ -2,7 +2,7 @@ import { Button, Container, SwipeableDrawer } from "@material-ui/core";
 import OrderSummary from "features/OrderSummary";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenCart, setTip, setAdditionalRequest, handleAddOrRemoveItem } from "../slices/orderSlice";
+import { setOpenCart, setTip, setAdditionalRequest, handleAddOrRemoveItem, setEditedItem } from "../slices/orderSlice";
 
 const CartSwipeView = ({ menu }) => {
     const dispatch = useDispatch();
@@ -30,6 +30,9 @@ const CartSwipeView = ({ menu }) => {
                     }}
                     handleRemoveOrder={item => {
                         dispatch(handleAddOrRemoveItem(item.entryName, item, -item.quantity))();
+                    }}
+                    handleEditOrder={item => {
+                        dispatch(setEditedItem(item));
                     }}
                     LeftBox={
                         <Button disabled={orderInfo.orderedItems.length <= 0} color="primary" variant="contained">

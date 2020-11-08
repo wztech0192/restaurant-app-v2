@@ -24,19 +24,19 @@ const MenuItemSingle = ({ menuEntry, menuItem }) => {
                 secondary={menuItem.price.toFixed(2)}
             />
             <ListItemSecondaryAction className={classes.menuItemActions}>
-                <IconButton
-                    size="small"
-                    disabled={quantity <= 0}
-                    onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, -1))}
-                >
-                    <MinusIcon />
-                </IconButton>
-                <Chip variant="outlined" size="small" label={quantity} />
-                <IconButton
-                    size="small"
-                    color="primary"
-                    onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, 1))}
-                >
+                {quantity > 0 && (
+                    <>
+                        <IconButton
+                            size="small"
+                            disabled={quantity <= 0}
+                            onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, -1))}
+                        >
+                            <MinusIcon />
+                        </IconButton>
+                        <Chip variant="outlined" size="small" label={quantity} />
+                    </>
+                )}
+                <IconButton color="primary" onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, 1))}>
                     <AddIcon />
                 </IconButton>
             </ListItemSecondaryAction>

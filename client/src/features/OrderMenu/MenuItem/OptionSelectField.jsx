@@ -1,10 +1,11 @@
 import { MenuItem, TextField, Typography } from "@material-ui/core";
+import { EMPTY_OBJECT } from "common";
 import React from "react";
 import { editedItemSelectOption } from "../slices/orderSlice";
 
 const OptionSelectField = ({
     options,
-    selectedOption = {},
+    selectedOption = EMPTY_OBJECT,
     groupName,
     selectedKey,
     dispatch,
@@ -16,9 +17,11 @@ const OptionSelectField = ({
             <TextField
                 fullWidth
                 select
-                variant="outlined"
+                variant="filled"
                 required
-                label={`SELECT A ${groupName.toUpperCase()}`}
+                size="small"
+                margin="dense"
+                label={groupName.toUpperCase()}
                 value={selectedOption.name || ""}
                 onChange={e =>
                     dispatch(
@@ -35,15 +38,12 @@ const OptionSelectField = ({
                         <Typography component="h2" className="full-width">
                             {opt.name}
                             {Boolean(opt.price) && (
-                                <span className="float-right">
-                                    {(opt.price * optionPriceMultiplier).toFixed(2)}
-                                </span>
+                                <span className="float-right">{(opt.price * optionPriceMultiplier).toFixed(2)}</span>
                             )}
                         </Typography>
                     </MenuItem>
                 ))}
             </TextField>
-            <br />
             <br />
         </>
     );

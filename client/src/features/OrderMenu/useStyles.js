@@ -134,5 +134,24 @@ export default makeStyles(theme => ({
     },
     menuItemContainer: {
         paddingRight: 85
+    },
+    editedItemQuantityAction: {
+        minWidth: 86
+    },
+    itemEditDialogContainer: {
+        padding: 8,
+        paddingTop: "8px !important"
+    },
+    optionsContainer: {
+        overflowX: "hidden",
+        overflowY: "auto",
+        maxHeight: "50vh"
+    },
+    singleEntreeHeader: {
+        display: "flex",
+        position: "sticky",
+        top: theme.mixins.toolbar.minHeight,
+        zIndex: 2,
+        marginTop: -10
     }
 }));

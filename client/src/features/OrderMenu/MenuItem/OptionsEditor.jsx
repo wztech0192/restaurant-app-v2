@@ -1,12 +1,13 @@
+import { EMPTY_ARRAY, EMPTY_OBJECT } from "common";
 import React from "react";
 import { useDispatch } from "react-redux";
 import OptionSelectField from "./OptionSelectField";
 import SideOrderSelector from "./SideOrderSelector";
 
 const OptionsEditor = ({
-    optionGroupNames,
+    optionGroupNames = EMPTY_ARRAY,
     canAddSides,
-    orderedOptions = {},
+    orderedOptions = EMPTY_OBJECT,
     menu,
     optionPriceMultiplier
 }) => {

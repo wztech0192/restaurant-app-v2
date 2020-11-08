@@ -18,10 +18,16 @@ export default makeStyles(theme => ({
     },
     itemList: {
         paddingLeft: 0,
-        paddingRight: 0
+        paddingRight: 0,
+        alignItems: "baseline"
     },
     itemsContainer: {
         overflow: "auto",
         maxHeight: "45vh"
+    },
+    itemOptionSummary: {
+        paddingLeft: "50px",
+        fontSize: "0.95em",
+        display: "block"
     }
 }));

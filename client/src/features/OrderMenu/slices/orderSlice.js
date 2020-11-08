@@ -1,14 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteMenu, getActiveMenu, getAllMenu, getMenu, postMenu } from "app/apiProvider";
-import { enqueueSnackbar, handleOpenModal } from "app/Indicator/indicatorSlice";
+import { getActiveMenu } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import uid from "uid";
-import {
-    itemCounterHelper,
-    addOrderItemHelper,
-    removeOrderItemHelper,
-    needEditModal
-} from "./helper";
+import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
 
 const initialState = {
     cart: {
@@ -33,6 +27,28 @@ const slice = createSlice({
             prepare(name, value) {
                 return { payload: { name, value } };
             }
+        },
+        saveEditedItem(state) {
+            const { cart, editedItem } = state;
+            if (editedItem) {
+                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
+                if (replaceItemIndex !== -1) {
+                    const replaceItem = cart.orderedItems[replaceItemIndex];
+                    cart.total -= replaceItem.total * replaceItem.quantity;
+                    itemCounterHelper(
+                        state.itemCounter,
+                        replaceItem.entryName,
+                        replaceItem.name,
+                        -replaceItem.quantity
+                    );
+                    cart.orderedItems[replaceItemIndex] = editedItem;
+                } else {
+                    cart.orderedItems.push(editedItem);
+                }
+                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
+                cart.total += editedItem.total * editedItem.quantity;
+            }
+            state.editedItem = false;
         },
         editedItemSelectOption(state, { payload }) {
             const { selectedKey, groupName, option, editQuantity } = payload;
@@ -76,15 +92,9 @@ const slice = createSlice({
         },
         addOrRemoveItem(state, { payload }) {
             const { menuEntryName, menuItem, quantity } = payload;
-            itemCounterHelper(state.itemCounter, menuEntryName, quantity);
-            itemCounterHelper(state.itemCounter, menuItem.name, quantity);
+            itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
-                state.cart,
-                menuEntryName,
-                menuItem,
-                quantity
-            );
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;
@@ -111,7 +121,8 @@ const {
     setAdditionalRequest,
     setEditedItem,
     setEditedItemMetadata,
-    editedItemSelectOption
+    editedItemSelectOption,
+    saveEditedItem
 } = slice.actions;
 
 export {
@@ -120,7 +131,12 @@ export {
     setAdditionalRequest,
     setEditedItem,
     setEditedItemMetadata,
-    editedItemSelectOption
+    editedItemSelectOption,
+    setSelectedEntryName
+};
+
+export const handleSaveEditedItem = dispatch => e => {
+    dispatch(saveEditedItem());
 };
 
 export const handleFetchMenu = dispatch => {
@@ -132,10 +148,6 @@ export const handleFetchMenu = dispatch => {
             }
         })
     );
-};
-
-export const handleSelectEntryName = entryName => dispatch => e => {
-    dispatch(setSelectedEntryName(entryName));
 };
 
 export const handleAddOrRemoveItem = (menuEntryName, menuItem, quantity) => dispatch => e => {

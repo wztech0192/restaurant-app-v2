@@ -9,6 +9,9 @@ import CloudOffIcon from "@material-ui/icons/CloudOff";
 const useStyles = makeStyles(theme => ({
     grow: {
         flexGrow: 1
+    },
+    toolbar: {
+        minHeight: "56px !important"
     }
 }));
 
@@ -19,15 +22,10 @@ const Header = ({ header }) => {
 
     return (
         <AppBar position="fixed">
-            <Toolbar>
+            <Toolbar className={classes.toolbar}>
                 {!header.action ? (
                     <Tooltip title={`Call us at ${phoneNum}`}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            component="a"
-                            href={`tel:+${phoneNum}`}
-                        >
+                        <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
                             <PhoneIcon />
                         </IconButton>
                     </Tooltip>

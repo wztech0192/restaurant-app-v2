@@ -1,8 +1,7 @@
 import React from "react";
-import { Typography, Button, Grid, Box, makeStyles, Grow } from "@material-ui/core";
+import { Typography, Button, makeStyles, Grow } from "@material-ui/core";
 import MapButton from "./MapButton";
 import MainImage from "./MainImage";
-import CheckIcon from "@material-ui/icons/CheckCircle";
 import OrderIcon from "@material-ui/icons/Store";
 import { Link } from "react-router-dom";
 

@@ -1,11 +1,9 @@
 import React from "react";
 import { List } from "@material-ui/core";
 import useStyles from "../useStyles";
-import { useDispatch } from "react-redux";
 import MenuItemSingle from "./MenuItemSingle";
 
 const MenuItemList = ({ menuEntry }) => {
-    const dispatch = useDispatch();
     const classes = useStyles();
 
     return (

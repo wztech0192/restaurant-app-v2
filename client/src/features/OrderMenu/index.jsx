@@ -1,4 +1,4 @@
-import { Fab, Fade, Grid, IconButton, SwipeableDrawer, Zoom } from "@material-ui/core";
+import { Fade, Grid, IconButton, Zoom } from "@material-ui/core";
 import React from "react";
 import useStyles from "./useStyles";
 import MenuEntries from "./MenuEntry/MenuEntries";
@@ -7,7 +7,7 @@ import MenuEntrySingle from "./MenuEntry/MenuEntrySingle";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HomeIcon from "@material-ui/icons/Home";
-import { handleSelectEntryName } from "./slices/orderSlice";
+import { setSelectedEntryName } from "./slices/orderSlice";
 import { Link } from "react-router-dom";
 import { handleFetchMenu } from "./slices/menuSlice";
 import { Skeleton } from "@material-ui/lab";
@@ -52,7 +52,7 @@ const OrderMenu = ({ setHeader }) => {
         setHeader({
             title: <MenuSearch classes={classes} />,
             action: isSelected ? (
-                <IconButton color="inherit" onClick={dispatch(handleSelectEntryName(""))}>
+                <IconButton color="inherit" onClick={e => dispatch(setSelectedEntryName(""))}>
                     <ArrowBackIcon />
                 </IconButton>
             ) : (
@@ -74,32 +74,11 @@ const OrderMenu = ({ setHeader }) => {
     return (
         <Fade in>
             <div className={classes.menuBody}>
-                {hasMenu ? (
-                    <MenuView menu={menu} selectedEntryName={selectedEntryName} />
-                ) : (
-                    <LoadingSkeleton />
-                )}
-
-                <MenuItemEditDialog menu={menu} />
+                {hasMenu ? <MenuView menu={menu} selectedEntryName={selectedEntryName} /> : <LoadingSkeleton />}
+                <MenuItemEditDialog menu={menu} classes={classes} />
                 <Zoom in={hasMenu}>
                     <CartFloatButton classes={classes} menu={menu} />
                 </Zoom>
-                {/*<SwipeableDrawer
-                    anchor="bottom"
-                    //open={orderCart.open}
-                    // onClose={e => actions.toggleOrderCart()}
-                    // onOpen={e => actions.toggleOrderCart()}
-                >
-                    <div>cart</div>
-                    <OrderCart
-                    isConnected={isConnected}
-                    orderCart={orderCart}
-                    settings={settings}
-                    openCart={orderCart.open}
-                    classes={classes}
-                    actions={actions}
-                />
-                </SwipeableDrawer>*/}
             </div>
         </Fade>
     );

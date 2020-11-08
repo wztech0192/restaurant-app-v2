@@ -10,11 +10,12 @@ import { handleLoadLocalAccount } from "app/Account/accountSlice";
 import { useDispatch } from "react-redux";
 import { handleStartOrderHub } from "app/signalRHubs/ordersHub";
 import GlobalLoading from "app/Indicator/GlobalLoading";
+import { EMPTY_OBJECT } from "common";
 
 const Layout = () => {
     const dispatch = useDispatch();
 
-    const [header, setHeader] = React.useState({});
+    const [header, setHeader] = React.useState(EMPTY_OBJECT);
 
     React.useEffect(() => {
         dispatch(handleLoadLocalAccount);

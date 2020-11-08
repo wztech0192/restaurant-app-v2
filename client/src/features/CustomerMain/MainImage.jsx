@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
 import mainFrameImage from "assets/mainFrame.png";
 
 const MainImage = ({ classes }) => {

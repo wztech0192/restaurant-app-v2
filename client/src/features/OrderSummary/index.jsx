@@ -1,6 +1,5 @@
-import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Table, Typography } from "@material-ui/core";
+import { Box, Divider, Typography } from "@material-ui/core";
 import React from "react";
-import { ShoppingCart } from "@material-ui/icons";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
 import OrderPriceSummaryBox from "./OrderPriceSummaryBox";

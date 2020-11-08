@@ -8,14 +8,16 @@ const MenuEntryTitle = ({ menuEntry, variant = "h6" }) => {
 
     return (
         <Typography variant={variant} component="h2" className="full-width">
-            <span>{menuEntry.name}</span>
-            <Chip
-                component="span"
-                className="float-right margin-top-5"
-                color="primary"
-                label={quantity}
-                size="small"
-            />
+            <b>{menuEntry.name}</b>
+            {quantity > 0 && (
+                <Chip
+                    component="span"
+                    className="float-right margin-top-5"
+                    color="primary"
+                    label={quantity}
+                    size="small"
+                />
+            )}
         </Typography>
     );
 };
