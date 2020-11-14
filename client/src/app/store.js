@@ -4,13 +4,13 @@ import loggerMiddleware from "./reduxStuff/reduxLogger";
 
 import account, { tokenSubscribeListener } from "./Account/accountSlice";
 import indicator from "./Indicator/indicatorSlice";
-import orderHub from "./signalRHubs/ordersHub";
+import hub from "./signalRHubs/centralHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
 import order from "features/OrderMenu/slices/orderSlice";
 import menu from "features/OrderMenu/slices/menuSlice";
 
 //apply reducers here
-const rootReducer = combineReducers({ account, indicator, orderHub, manageMenu, order, menu });
+const rootReducer = combineReducers({ account, indicator, hub, manageMenu, order, menu });
 
 function configureAppStore(preloadedState) {
     const store = configureStore({

@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const orderHubSlice = createSlice({
-    name: "orderHub",
+    name: "hub",
     initialState,
     reducers: {
         connect(state, { payload }) {
@@ -28,7 +28,23 @@ export default orderHubSlice.reducer;
 
 const { connect } = orderHubSlice.actions;
 
-export const checkIsOrderHubConnected = state => state.orderHub.connected;
+export const checkIsOrderHubConnected = state => state.hub.connected;
+
+const signalRRegisterCommands = (dispatch, getState) => {
+    /* connection.on("IncrementCounter", data => {
+       dispatch({ type: "INCREMENT_COUNT" });
+        console.log("Count has been incremented");
+    });
+
+    connection.on("DecrementCounter", data => {
+       dispatch({ type: "DECREMENT_COUNT" });
+        console.log("Count has been decremented");
+    });*/
+};
+
+export const invokeSomething = dispatch => {
+    //connection.invoke("IncrementCounter");
+};
 
 export const handleStartOrderHub = (dispatch, getState) => {
     const start = async () => {
@@ -60,20 +76,4 @@ export const handleStartOrderHub = (dispatch, getState) => {
 
     signalRRegisterCommands(dispatch, getState);
     start();
-};
-
-const signalRRegisterCommands = (dispatch, getState) => {
-    /* connection.on("IncrementCounter", data => {
-       dispatch({ type: "INCREMENT_COUNT" });
-        console.log("Count has been incremented");
-    });
-
-    connection.on("DecrementCounter", data => {
-       dispatch({ type: "DECREMENT_COUNT" });
-        console.log("Count has been decremented");
-    });*/
-};
-
-export const invokeSomething = dispatch => {
-    //connection.invoke("IncrementCounter");
 };

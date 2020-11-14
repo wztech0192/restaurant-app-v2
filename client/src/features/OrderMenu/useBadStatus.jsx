@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { checkIsOrderHubConnected } from "app/signalRHubs/ordersHub";
+import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
 import { phoneNum } from "common";
 
 const useBadStatus = () => {

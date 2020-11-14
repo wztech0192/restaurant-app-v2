@@ -32,7 +32,7 @@ const OrderItemsSummary = ({
                 const sides = item.orderedOptions
                     ? Object.entries(item.orderedOptions)
                     : EMPTY_ARRAY;
-                const noSideTotal = sides.reduce(reduceSideTotal, item.total);
+                const noSideTotal = sides.reduce(reduceSideTotal, item.price);
                 return (
                     <ListItem key={item.uid} dense className={classes.itemList}>
                         {canEdit && (

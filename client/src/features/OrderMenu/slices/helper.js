@@ -10,7 +10,9 @@ export const itemCounterHelper = (itemCounter, menuEntryName, menuItemName, adde
 };
 
 export const addOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
-    let orderedItem = cart.orderedItems.find(x => x.name === menuItem.name && x.entryName === menuEntryName);
+    let orderedItem = cart.orderedItems.find(
+        x => x.name === menuItem.name && x.entryName === menuEntryName
+    );
     if (orderedItem) {
         orderedItem.quantity += quantity;
     } else {
@@ -27,14 +29,14 @@ export const addOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
         cart.orderedItems.push(orderedItem);
     }
 
-    cart.total += orderedItem.total * quantity;
+    cart.price += orderedItem.price * quantity;
 };
 
 export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
     //remove target ordered item
     if (menuItem.uid) {
         cart.orderedItems = cart.orderedItems.filter(oi => oi.uid !== menuItem.uid);
-        cart.total += menuItem.total * quantity;
+        cart.price += menuItem.price * quantity;
     } else {
         //remove from the last
         //starting from the end, find the last added item based on entry name and item name
@@ -45,16 +47,16 @@ export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) =
 
                 if (newQuantity <= 0) {
                     //remove item
-                    cart.total -= item.total * item.quantity;
+                    cart.price -= item.price * item.quantity;
                     cart.orderedItems.splice(i, 1);
                 } else {
                     //decreate quantity of the item
-                    cart.total -= item.total * Math.abs(quantity);
+                    cart.price -= item.price * Math.abs(quantity);
                     item.quantity = newQuantity;
                 }
 
-                if (cart.total < 0) {
-                    cart.total = 0;
+                if (cart.price < 0) {
+                    cart.price = 0;
                 }
 
                 if (newQuantity < 0) {
@@ -68,4 +70,5 @@ export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) =
     }
 };
 
-export const needEditModal = menuItem => menuItem.canAddSides || menuItem.optionGroupNames.length > 0;
+export const needEditModal = menuItem =>
+    menuItem.canAddSides || menuItem.optionGroupNames.length > 0;

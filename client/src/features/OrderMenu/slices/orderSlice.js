@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getActiveMenu } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import uid from "uid";
-import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
+import {
+    itemCounterHelper,
+    addOrderItemHelper,
+    removeOrderItemHelper,
+    needEditModal
+} from "./helper";
 
 const initialState = {
     cart: {
@@ -31,10 +36,12 @@ const slice = createSlice({
         saveEditedItem(state) {
             const { cart, editedItem } = state;
             if (editedItem) {
-                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
+                const replaceItemIndex = cart.orderedItems.findIndex(
+                    item => item.uid === editedItem.uid
+                );
                 if (replaceItemIndex !== -1) {
                     const replaceItem = cart.orderedItems[replaceItemIndex];
-                    cart.total -= replaceItem.total * replaceItem.quantity;
+                    cart.price -= replaceItem.price * replaceItem.quantity;
                     itemCounterHelper(
                         state.itemCounter,
                         replaceItem.entryName,
@@ -45,8 +52,13 @@ const slice = createSlice({
                 } else {
                     cart.orderedItems.push(editedItem);
                 }
-                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
-                cart.total += editedItem.total * editedItem.quantity;
+                itemCounterHelper(
+                    state.itemCounter,
+                    editedItem.entryName,
+                    editedItem.name,
+                    editedItem.quantity
+                );
+                cart.price += editedItem.price * editedItem.quantity;
             }
             state.editedItem = false;
         },
@@ -56,7 +68,7 @@ const slice = createSlice({
             let existing = state.editedItem.orderedOptions[selectedKey];
 
             if (existing) {
-                state.editedItem.total -= existing.price * existing.quantity;
+                state.editedItem.price -= existing.price * existing.quantity;
             }
 
             if (!editQuantity || !existing) {
@@ -72,7 +84,7 @@ const slice = createSlice({
                     delete state.editedItem.orderedOptions[selectedKey];
                 }
             }
-            state.editedItem.total += existing.price * existing.quantity;
+            state.editedItem.price += existing.price * existing.quantity;
         },
         setEditedItem(state, { payload }) {
             state.editedItem =
@@ -94,7 +106,12 @@ const slice = createSlice({
             const { menuEntryName, menuItem, quantity } = payload;
             itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
+                state.cart,
+                menuEntryName,
+                menuItem,
+                quantity
+            );
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;

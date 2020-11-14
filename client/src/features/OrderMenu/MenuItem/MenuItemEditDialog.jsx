@@ -20,7 +20,7 @@ import OptionsEditor from "./OptionsEditor";
 const MenuitemEditContent = React.memo(
     ({ menu, editedItem, dispatch, handleClose, classes }) => {
         const quantity = editedItem.quantity;
-        const cost = editedItem.total * quantity;
+        const cost = editedItem.price * quantity;
 
         const canSave = React.useMemo(() => {
             for (let i in editedItem.optionGroupNames) {

@@ -11,7 +11,7 @@ import {
     setEditedItem
 } from "../slices/orderSlice";
 import SubmitPaymentAction from "./SubmitPaymentAction";
-import { checkIsOrderHubConnected } from "app/signalRHubs/ordersHub";
+import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
 import useBadStatus from "../useBadStatus";
 
 const PaperProps = {

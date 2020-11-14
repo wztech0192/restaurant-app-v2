@@ -6,7 +6,7 @@ import { setOpenCart } from "../slices/orderSlice";
 import CartSwipeView from "./CartSwipeView";
 
 const CartFloatButton = ({ classes, menu }) => {
-    const total = useSelector(state => state.order.cart.total);
+    const total = useSelector(state => state.order.cart.price);
     const dispatch = useDispatch();
     return (
         <>

@@ -18,9 +18,10 @@ namespace RestaurantApp.DAL.Models
 
         public double Tip { get; set; }
 
-        public double Total { get; set; }
+        public double Price { get; set; }
 
         public OrderStatus Status { get; set; }
+        public string AdditionalRequest { get; set; }
 
         [Required]
         public virtual Account Account { get;set;}

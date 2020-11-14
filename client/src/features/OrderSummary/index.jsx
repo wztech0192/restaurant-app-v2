@@ -59,7 +59,7 @@ const OrderSummary = ({
                     handleUpdateTip={handleUpdateTip}
                     tip={orderInfo.tip}
                     tax={tax || orderInfo.tax}
-                    subtotal={orderInfo.total}
+                    subtotal={orderInfo.price}
                 />
             </div>
             <br />
