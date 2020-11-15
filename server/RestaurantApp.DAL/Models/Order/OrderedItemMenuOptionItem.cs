@@ -15,7 +15,6 @@ namespace RestaurantApp.DAL.Models
 
         public int MenuOptionItemID { get; set; }
         public virtual MenuOptionItem MenuOptionItem { get; set; }
-
-
+        public string Key { get; set; }
     }
 }

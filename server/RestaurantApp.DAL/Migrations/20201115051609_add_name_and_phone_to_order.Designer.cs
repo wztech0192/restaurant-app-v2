@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201115051609_add_name_and_phone_to_order")]
+    partial class add_name_and_phone_to_order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,11 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -38,17 +45,13 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Phone")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Accounts");
@@ -57,10 +60,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 11, 15, 1, 21, 58, 667, DateTimeKind.Local).AddTicks(680),
+                            CreatedOn = new DateTime(2020, 11, 15, 0, 16, 8, 352, DateTimeKind.Local).AddTicks(2619),
+                            Email = "weijie0192@gmail.com",
                             Name = "Manager",
-                            Password = "$2a$11$uoJ7Er6iwAy2HbvH5jGwJ.FBQPGZau3VDiyMxzf5vHAABxUezme3K",
-                            Phone = "8032260689",
+                            Password = "$2a$11$PvdrTio/UyT8AEB2Q3dXhex3MN52SLOwW.Yj8riFZe4lD.otjRmQS",
                             Role = "Manager"
                         });
                 });
@@ -302,9 +305,6 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("MenuItemID");
@@ -321,9 +321,6 @@ namespace RestaurantApp.DAL.Migrations
 
                     b.Property<int>("OrderedItemID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

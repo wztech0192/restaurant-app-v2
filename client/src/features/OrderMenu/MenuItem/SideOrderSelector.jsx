@@ -39,12 +39,7 @@ const useStyles = makeStyles({
     }
 });
 
-const SideOrderSelector = ({
-    orderedOptions = EMPTY_OBJECT,
-    dispatch,
-    sideOrders,
-    defaultExpanded
-}) => {
+const SideOrderSelector = ({ orderedOptions = EMPTY_OBJECT, dispatch, sideOrders, defaultExpanded }) => {
     const badgeClasses = useBadeStyles();
     const classes = useStyles();
     const [editQuantity, setEditQuantity] = React.useState(1);
@@ -56,7 +51,7 @@ const SideOrderSelector = ({
             <AccordionDetails>
                 <span>
                     {sideOrders.map(sideOrder => {
-                        const selected = orderedOptions[sideOrder.name];
+                        const selected = orderedOptions[sideOrder.name.toLowerCase()];
                         const selectedQuantity = selected ? selected.quantity : 0;
                         return (
                             <Badge

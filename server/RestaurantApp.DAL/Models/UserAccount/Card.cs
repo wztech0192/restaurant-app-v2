@@ -18,7 +18,8 @@ namespace RestaurantApp.DAL.Models
 
         public bool UseAsDefault { get; set; }
 
-        public int LastFourDigit { get; set; }
+        [StringLength(4)]
+        public string LastFourDigit { get; set; }
 
         public virtual Account Account { get; set; }
     }

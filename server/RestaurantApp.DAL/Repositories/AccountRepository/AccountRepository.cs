@@ -14,9 +14,9 @@ namespace RestaurantApp.DAL.Repositories
         {
         }
 
-        public Account GetByEmail(string email)
+        public Account GetByPhone(string phone)
         {
-            return base.SingleOrDefault(acc => acc.Email == email);
+            return base.SingleOrDefault(acc => acc.Phone == phone);
         }
     }
 }

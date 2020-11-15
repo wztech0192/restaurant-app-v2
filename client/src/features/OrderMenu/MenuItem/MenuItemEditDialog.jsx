@@ -24,7 +24,7 @@ const MenuitemEditContent = React.memo(
 
         const canSave = React.useMemo(() => {
             for (let i in editedItem.optionGroupNames) {
-                if (!editedItem.orderedOptions[`${editedItem.optionGroupNames[i]}-${i}`]) {
+                if (!editedItem.orderedOptions[`${editedItem.optionGroupNames[i].toLowerCase()}-${i}`]) {
                     return false;
                 }
             }
@@ -45,12 +45,7 @@ const MenuitemEditContent = React.memo(
                                 disabled={quantity <= 1}
                                 onClick={e => {
                                     const newQuantity = quantity - 1;
-                                    dispatch(
-                                        setEditedItemMetadata(
-                                            "quantity",
-                                            newQuantity > 0 ? newQuantity : 1
-                                        )
-                                    );
+                                    dispatch(setEditedItemMetadata("quantity", newQuantity > 0 ? newQuantity : 1));
                                 }}
                             >
                                 <MinusIcon />
@@ -89,10 +84,7 @@ const MenuitemEditContent = React.memo(
                         }}
                         margin="dense"
                         label="Additional Request"
-                        helperText={
-                            editedItem.additionalRequest &&
-                            "Some request may require additional charge"
-                        }
+                        helperText={editedItem.additionalRequest && "Some request may require additional charge"}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -102,11 +94,7 @@ const MenuitemEditContent = React.memo(
                         </Typography>
                     </Box>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button
-                        disabled={!canSave}
-                        onClick={dispatch(handleSaveEditedItem)}
-                        color="primary"
-                    >
+                    <Button disabled={!canSave} onClick={dispatch(handleSaveEditedItem)} color="primary">
                         Save
                     </Button>
                 </DialogActions>

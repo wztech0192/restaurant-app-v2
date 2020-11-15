@@ -1,23 +1,23 @@
 import {
-    FormControl,
-    FormControlLabel,
-    FormLabel,
     IconButton,
     List,
     ListItem,
     ListItemIcon,
     ListItemSecondaryAction,
     ListItemText,
-    Radio,
-    RadioGroup
+    Radio
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-import { EMPTY_ARRAY, EMPTY_OBJECT } from "common";
+import { EMPTY_ARRAY, EMPTY_OBJECT, propCompare } from "common";
 import React from "react";
 
 const listStyle = { width: "100%" };
-const CardList = ({ account = EMPTY_OBJECT, onSelect, onRemove, canEdit }) => {
+const CardList = ({ account = EMPTY_OBJECT, onSelect, useCardId, onRemove, canEdit }) => {
     const { cards = EMPTY_ARRAY, defaultCardId } = account;
+
+    if (!useCardId) {
+        useCardId = defaultCardId;
+    }
     return (
         <List style={listStyle}>
             {cards.map(card => (
@@ -26,7 +26,7 @@ const CardList = ({ account = EMPTY_OBJECT, onSelect, onRemove, canEdit }) => {
                         <Radio
                             disabled={!canEdit}
                             color="primary"
-                            checked={defaultCardId === card.id}
+                            checked={useCardId === card.id}
                             onClick={() => onSelect(card.id)}
                         />
                     </ListItemIcon>
@@ -49,4 +49,5 @@ const CardList = ({ account = EMPTY_OBJECT, onSelect, onRemove, canEdit }) => {
     );
 };
 
-export default CardList;
+const propList = ["account", "useCardId", "canEdit"];
+export default React.memo(CardList, propCompare(propList));

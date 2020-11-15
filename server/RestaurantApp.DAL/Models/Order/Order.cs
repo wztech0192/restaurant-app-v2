@@ -16,6 +16,12 @@ namespace RestaurantApp.DAL.Models
 
         public string EncryptedCardInfo { get; set; }
 
+        [StringLength(10)]
+        public string Phone { get; set; }
+
+        [StringLength(40)]
+        public string Name { get; set; }
+
         public double Tip { get; set; }
 
         public double Price { get; set; }

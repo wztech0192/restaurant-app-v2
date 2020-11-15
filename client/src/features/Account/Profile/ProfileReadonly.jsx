@@ -1,13 +1,5 @@
 import React from "react";
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Box,
-    Button,
-    Chip,
-    Typography
-} from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "../accountSlice";
 import TextFieldWrapper from "common/TextFieldWrapper";
@@ -20,13 +12,8 @@ const ProfileReadonly = ({ accountInfo }) => {
     return (
         <>
             <TextFieldWrapper label="Name" value={accountInfo.name} disabled solid />
-            <TextFieldWrapper label="Email" value={accountInfo.email} disabled solid />
-            <TextFieldWrapper
-                label="Register Date"
-                value={getDateStr(accountInfo.createdOn)}
-                disabled
-                solid
-            />
+            <TextFieldWrapper phoneMask label="Phone Number" value={accountInfo.phone} disabled solid />
+            <TextFieldWrapper label="Register Date" value={getDateStr(accountInfo.createdOn)} disabled solid />
 
             <Accordion elevation={5}>
                 <AccordionSummary>

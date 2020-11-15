@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
 import { postLogin, postAccount, getAccount, putAccount } from "app/apiProvider";
-import { asyncAction } from "app/sharedActions";
-import {
-    enqueueSnackbar,
-    setErrors,
-    setGlobalLoading,
-    setLoading
-} from "app/Indicator/indicatorSlice";
+import { asyncAction, encryptionAction } from "app/sharedActions";
+import { enqueueSnackbar, setErrors, setGlobalLoading, setLoading } from "app/Indicator/indicatorSlice";
 import encryptionProvider from "common/encryptionProvider";
 import getUID from "common/getUID";
 
@@ -59,9 +54,7 @@ const slice = createSlice({
             state.editAccountInfo.cards.push(payload);
         },
         removeCard(state, { payload }) {
-            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(
-                card => card.id !== payload
-            );
+            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(card => card.id !== payload);
             if (state.editAccountInfo.defaultCardId === payload) {
                 if (state.editAccountInfo.cards.length > 0) {
                     state.editAccountInfo.defaultCardId = state.editAccountInfo.cards[0].id;
@@ -111,8 +104,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const getAccountToken = state => state.account.token;
-export const getAccountRole = state =>
-    state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS";
+export const getAccountRole = state => (state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS");
 
 const {
     setAccountView,
@@ -143,6 +135,13 @@ export const handleEditAccountInfo = dispatch => e =>
         editAccountInfo({
             name: e.target.name,
             value: e.target.value
+        })
+    );
+export const handleEditAccountInfoPhone = dispatch => e =>
+    dispatch(
+        editAccountInfo({
+            name: "phone",
+            value: e.target.value.replace(/[\D]/g, "")
         })
     );
 
@@ -226,7 +225,6 @@ export const handleUpdateAccount = changePassword => (dispatch, getState) => e =
             hideErrorModal: true,
             promise: () => putAccount(state),
             success: accountInfo => {
-                console.log(accountInfo);
                 dispatch(loadAccountInfo({ accountInfo, close: true }));
                 dispatch(
                     enqueueSnackbar({
@@ -255,23 +253,17 @@ export const handleUpdateAccount = changePassword => (dispatch, getState) => e =
 
 export const handleAddNewCard = paymentInfo => dispatch => {
     const json = JSON.stringify(paymentInfo);
+    const lastFourDigit = paymentInfo.card.slice(-4);
 
-    const lastFourDigit = parseInt(paymentInfo.card.slice(-4));
-    const encryptedCardInfo = encryptionProvider.encrypt(json);
-    if (encryptedCardInfo) {
-        dispatch(
-            addNewCard({
-                id: getUID(),
-                encryptedCardInfo,
-                lastFourDigit
-            })
-        );
-    } else {
-        dispatch(
-            enqueueSnackbar({
-                message: "Encrypt Credit Failed",
-                variant: "error"
-            })
-        );
-    }
+    dispatch(
+        encryptionAction(json, encryptedCardInfo => {
+            dispatch(
+                addNewCard({
+                    id: getUID(),
+                    encryptedCardInfo,
+                    lastFourDigit
+                })
+            );
+        })
+    );
 };

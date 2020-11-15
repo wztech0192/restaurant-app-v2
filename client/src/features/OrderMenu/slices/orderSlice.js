@@ -2,12 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getActiveMenu } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import uid from "uid";
-import {
-    itemCounterHelper,
-    addOrderItemHelper,
-    removeOrderItemHelper,
-    needEditModal
-} from "./helper";
+import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
 
 const initialState = {
     cart: {
@@ -36,9 +31,7 @@ const slice = createSlice({
         saveEditedItem(state) {
             const { cart, editedItem } = state;
             if (editedItem) {
-                const replaceItemIndex = cart.orderedItems.findIndex(
-                    item => item.uid === editedItem.uid
-                );
+                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
                 if (replaceItemIndex !== -1) {
                     const replaceItem = cart.orderedItems[replaceItemIndex];
                     cart.price -= replaceItem.price * replaceItem.quantity;
@@ -52,12 +45,7 @@ const slice = createSlice({
                 } else {
                     cart.orderedItems.push(editedItem);
                 }
-                itemCounterHelper(
-                    state.itemCounter,
-                    editedItem.entryName,
-                    editedItem.name,
-                    editedItem.quantity
-                );
+                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
                 cart.price += editedItem.price * editedItem.quantity;
             }
             state.editedItem = false;
@@ -65,23 +53,26 @@ const slice = createSlice({
         editedItemSelectOption(state, { payload }) {
             const { selectedKey, groupName, option, editQuantity } = payload;
 
-            let existing = state.editedItem.orderedOptions[selectedKey];
+            const _selectedKey = selectedKey.toLowerCase();
+            let existing = state.editedItem.orderedOptions[_selectedKey];
 
             if (existing) {
                 state.editedItem.price -= existing.price * existing.quantity;
             }
 
             if (!editQuantity || !existing) {
-                existing = state.editedItem.orderedOptions[selectedKey] = {
+                existing = state.editedItem.orderedOptions[_selectedKey] = {
                     groupName,
                     price: option.price || 0,
                     name: option.name,
-                    quantity: 1
+                    optionId: option.id,
+                    quantity: 1,
+                    key: _selectedKey
                 };
             } else {
                 existing.quantity += editQuantity;
                 if (existing.quantity === 0) {
-                    delete state.editedItem.orderedOptions[selectedKey];
+                    delete state.editedItem.orderedOptions[_selectedKey];
                 }
             }
             state.editedItem.price += existing.price * existing.quantity;
@@ -93,6 +84,7 @@ const slice = createSlice({
                     : {
                           //edit new
                           ...payload,
+                          itemId: payload.id,
                           uid: uid(),
                           price: payload.price,
                           orderedOptions: {},
@@ -106,12 +98,7 @@ const slice = createSlice({
             const { menuEntryName, menuItem, quantity } = payload;
             itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
-                state.cart,
-                menuEntryName,
-                menuItem,
-                quantity
-            );
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;

@@ -1,17 +1,9 @@
 import { Box, Button, Container, SwipeableDrawer } from "@material-ui/core";
 import OrderSummary from "features/OrderSummary";
-import CreditCardForm from "features/CreditCard/CreditCardForm";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    setOpenCart,
-    setTip,
-    setAdditionalRequest,
-    handleAddOrRemoveItem,
-    setEditedItem
-} from "../slices/orderSlice";
-import SubmitPaymentAction from "./SubmitPaymentAction";
-import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
+import { setOpenCart, setTip, setAdditionalRequest, handleAddOrRemoveItem, setEditedItem } from "../slices/orderSlice";
+import CartPayment from "./CartPayment";
 import useBadStatus from "../useBadStatus";
 
 const PaperProps = {
@@ -24,7 +16,6 @@ const CartSwipeView = ({ menu }) => {
     const dispatch = useDispatch();
     const open = useSelector(state => state.order.openCart);
     const orderInfo = useSelector(state => state.order.cart);
-    const account = useSelector(state => state.account.accountInfo);
 
     const BadStatus = useBadStatus();
 
@@ -87,17 +78,7 @@ const CartSwipeView = ({ menu }) => {
                         )
                     }
                 />
-                {openPayment &&
-                    (BadStatus || (
-                        <CreditCardForm
-                            account={account}
-                            payWithExistingCard={true}
-                            requiredPersonInfo
-                            action={(isValid, paymentInfo) => (
-                                <SubmitPaymentAction isValid={isValid} paymentInfo={paymentInfo} />
-                            )}
-                        />
-                    ))}
+                {openPayment && (BadStatus || <CartPayment />)}
             </Box>
         </SwipeableDrawer>
     );

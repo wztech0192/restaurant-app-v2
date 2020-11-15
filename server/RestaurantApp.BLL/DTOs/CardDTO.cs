@@ -21,6 +21,6 @@ namespace RestaurantApp.BLL.DTOs
         public int ID { get; set; }
         public string EncryptedCardInfo { get; set; }
         public DateTime CreatedOn { get; set; }
-        public int LastFourDigit { get; set; }
+        public string LastFourDigit { get; set; }
     }
 }

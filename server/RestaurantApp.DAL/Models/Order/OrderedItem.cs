@@ -11,6 +11,7 @@ namespace RestaurantApp.DAL.Models
         [Key]
         public int ID { get; set; }
 
+        public int Quantity { get; set; }
         public double Price { get; set; }
         public string AdditionalRequest { get; set; }
 

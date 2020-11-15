@@ -42,7 +42,7 @@ namespace RestaurantApp.BLL.Services
 
                 validateLoginAccount(dto);
 
-                var entity = base.UnitOfWork.Accounts.GetByEmail(dto.Email);
+                var entity = base.UnitOfWork.Accounts.GetByPhone(dto.Phone);
 
                 validAccountPassword(dto, entity);
 
@@ -110,8 +110,8 @@ namespace RestaurantApp.BLL.Services
 
         private void setAccountMetadata(AccountDTO dto, Account entity, bool useNewPassword = false)
         {
-            entity.Email = dto.Email;
             entity.Name = dto.Name;
+            entity.Phone = dto.Phone;
 
             if (useNewPassword)
             {
@@ -207,6 +207,12 @@ namespace RestaurantApp.BLL.Services
                     errors.Add("A name is required");
                 }
 
+
+                if (string.IsNullOrEmpty(dto.Phone))
+                {
+                    errors.Add("A phone number is required");
+                }
+
                 if (isUpdate && !string.IsNullOrEmpty(dto.NewPassword))
                 {
                     validatePassword(errors, dto.NewPassword);
@@ -214,15 +220,15 @@ namespace RestaurantApp.BLL.Services
 
                 if (!errors.Any())
                 {
-                    var existingEmail = base.UnitOfWork.Accounts.GetByEmail(dto.Email);
+                    var existingPhone = base.UnitOfWork.Accounts.GetByPhone(dto.Phone);
 
                     if (isUpdate && entity == null)
                     {
                         errors.Add("Account not found!");
                     }
-                    else if (existingEmail != null && (!isUpdate || existingEmail.ID != entity.ID))
+                    else if (existingPhone != null && (!isUpdate || existingPhone.ID != entity.ID))
                     {
-                        errors.Add("The email address is already registerd");
+                        errors.Add("The phone number is already registerd");
                     }
                 }
             });
@@ -277,18 +283,6 @@ namespace RestaurantApp.BLL.Services
                     }
                 }
 
-                if (string.IsNullOrEmpty(dto.Email))
-                {
-                    errors.Add("A email is required");
-                }
-                else
-                {
-                    var check = new EmailAddressAttribute();
-                    if (!check.IsValid(dto.Email))
-                    {
-                        errors.Add("Incorrect email format");
-                    }
-                }
             }
         }
 

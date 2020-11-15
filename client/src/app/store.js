@@ -4,7 +4,7 @@ import loggerMiddleware from "./reduxStuff/reduxLogger";
 
 import account, { tokenSubscribeListener } from "../features/Account/accountSlice";
 import indicator from "./Indicator/indicatorSlice";
-import hub from "./signalRHubs/centralHub";
+import hub from "app/centralHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
 import order from "features/OrderMenu/slices/orderSlice";
 import menu from "features/OrderMenu/slices/menuSlice";

@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, TextField } from "@material-ui/core";
+import PhoneMask from "./phoneMask";
 
 const useStyles = makeStyles(theme => ({
     solid: {
@@ -13,7 +14,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const phoneMaskInputProps = {
+    inputComponent: PhoneMask
+};
+
 const TextFieldWrapper = ({
+    phoneMask,
     value,
     variant,
     error,
@@ -22,6 +28,7 @@ const TextFieldWrapper = ({
     margin,
     fullWidth = true,
     solid,
+    InputProps,
     ...props
 }) => {
     const classes = useStyles();
@@ -33,15 +40,17 @@ const TextFieldWrapper = ({
         variant = "standard";
     }
 
+    const _helperText = error || helperText;
     return (
         <TextField
             {...props}
+            InputProps={InputProps || (phoneMask ? phoneMaskInputProps : undefined)}
             className={solid ? classes.solid : undefined}
             value={value || ""}
             variant={variant || "outlined"}
             name={name}
-            error={!!error}
-            helperText={error || helperText}
+            error={Boolean(error)}
+            helperText={typeof _helperText === "string" ? _helperText : ""}
             margin={margin || "normal"}
             fullWidth={fullWidth}
         />

@@ -31,9 +31,9 @@ namespace RestaurantApp.DAL
                 {
                     ID = 1,
                     CreatedOn = DateTime.Now,
-                    Email = "weijie0192@gmail.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("weijie0192"),
                     Name = "Manager",
+                    Phone = "8032260689",
                     Role = "Manager"
                 }
             );
@@ -43,7 +43,7 @@ namespace RestaurantApp.DAL
         {
 
             modelBuilder.Entity<Account>()
-                .HasIndex(a => a.Email)
+                .HasIndex(a => a.Phone)
                 .IsUnique();
 
             modelBuilder.Entity<OrderedItemMenuOptionItem>()

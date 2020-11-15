@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using RestaurantApp.BLL.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace RestaurantApp.Hubs
 {
     public class OrderHub: Hub
     {
-        public async Task SendMessage(string user, string message)
+        public async Task SubmitOrder(OrderDTO)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+           // await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
 }

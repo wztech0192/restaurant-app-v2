@@ -1,16 +1,27 @@
 {
-    "id": 1,
-    "tip": 0.0,
-    "total": 10.0,
+    "tip": 0,
+    "price": 30.98,
     "orderedItems": [
         {
-            "total": 5.0,
-            "itemId": 1,
+            "id": 147,
+            "name": "8 Pcs W. Vegetable Fried Rice",
+            "price": 15.49,
+            "optionPriceMultiplier": 0,
+            "canAddSides": true,
+            "optionGroupNames": ["wing flavor"],
+            "entryName": "Chicken Wings",
+            "uid": "bych1tw9tzx",
+            "orderedOptions": {
+                "wing flavor-0": { "groupName": "wing flavor", "price": 0.5, "name": "Lemmon Pepper", "quantity": 1 },
+                "add vegetable": { "groupName": "Add Vegetable", "price": 3, "name": "Add Vegetable", "quantity": 2 },
+                "no sauce": { "groupName": "No Sauce", "price": 0, "name": "No Sauce", "quantity": 1 }
+            },
             "quantity": 2,
-            "entryName": "testEntry",
-            "name": "testItem",
-            "sides": [],
-            "requiredOptions": []
+            "additionalRequest": "testest"
         }
-    ]
+    ],
+    "name": "test",
+    "phone": "6462806697",
+    "cardId": 4,
+    "saveCard": false
 }

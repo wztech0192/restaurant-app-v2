@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     ACCOUNT_VIEW,
     handleEditAccountInfo,
+    handleEditAccountInfoPhone,
     handleLoginAccount,
     handleSetAccountView
 } from "./accountSlice";
@@ -32,12 +33,13 @@ const Login = ({ handleClose, loading, errors }) => {
                 <form>
                     <TextFieldWrapper
                         required
-                        label="Email"
+                        phoneMask
+                        label="Phone"
                         disabled={loading}
-                        name="email"
-                        value={state.email}
-                        onChange={handleUpdateState}
-                        autoComplete="email"
+                        name="phone"
+                        value={state.phone}
+                        onChange={dispatch(handleEditAccountInfoPhone)}
+                        autoComplete="tel"
                     />
                     <TextFieldWrapper
                         required
@@ -73,7 +75,7 @@ const Login = ({ handleClose, loading, errors }) => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                disabled={loading || !state.email || !state.password}
+                                disabled={loading || !state.phone || !state.password}
                                 onClick={dispatch(handleLoginAccount(state, "login"))}
                             >
                                 {loading ? "Processing..." : "Sign In"}

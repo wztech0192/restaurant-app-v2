@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     ACCOUNT_VIEW,
     handleEditAccountInfo,
+    handleEditAccountInfoPhone,
     handleLoginAccount,
     handleSetAccountView
 } from "./accountSlice";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
-import { validEmailRegex } from "common";
 import AccountHeader from "./AccountHeader";
 
 const progessBarStyle = {
@@ -24,20 +24,12 @@ const Register = ({ handleClose, loading, errors }) => {
 
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
-    const emailCheck = state.email && !state.email.match(validEmailRegex) && "Invalid email format";
-    const passwordCheck =
-        state.password && state.password.length < 6 && "Minimum 6 characters required";
+    const passwordCheck = state.password && state.password.length < 6 && "Minimum 6 characters required";
     const confirmPasswordCheck =
         state.confirmPassword && state.confirmPassword !== state.password && "Password not match";
 
     const canSignUp =
-        state.password &&
-        state.email &&
-        state.confirmPassword &&
-        state.name &&
-        !emailCheck &&
-        !passwordCheck &&
-        !confirmPasswordCheck;
+        state.password && state.confirmPassword && state.name && state.phone && !passwordCheck && !confirmPasswordCheck;
 
     return (
         <Fade in>
@@ -54,15 +46,16 @@ const Register = ({ handleClose, loading, errors }) => {
                         value={state.name}
                         onChange={handleUpdateState}
                     />
+
                     <TextFieldWrapper
                         required
-                        label="Email"
-                        name="email"
-                        error={emailCheck}
-                        value={state.email}
+                        label="Phone Number"
+                        phoneMask
+                        name="phone"
+                        error={state.phone && state.phone.length !== 10}
+                        value={state.phone}
                         disabled={loading}
-                        helperText="example@mail.com"
-                        onChange={handleUpdateState}
+                        onChange={dispatch(handleEditAccountInfoPhone)}
                     />
                     <TextFieldWrapper
                         required

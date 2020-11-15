@@ -8,7 +8,7 @@ import Notifier from "app/Indicator/Notifier";
 import GlobalModal from "app/Indicator/GlobalModal";
 import { handleLoadLocalAccount } from "features/Account/accountSlice";
 import { useDispatch } from "react-redux";
-import { handleStartOrderHub } from "app/signalRHubs/centralHub";
+import { handleStartOrderHub } from "app/centralHub";
 import GlobalLoading from "app/Indicator/GlobalLoading";
 import { EMPTY_OBJECT } from "common";
 

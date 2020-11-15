@@ -5,15 +5,12 @@ using System.Security.Claims;
 using System.Text;
 
 namespace RestaurantApp.DAL.Models
-{
+
+
     public class Account
     {
         [Key]
         public int ID { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string Email { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 6)]
@@ -21,13 +18,16 @@ namespace RestaurantApp.DAL.Models
 
         [Required]
         public string Name { get; set; }
+        [Required]
+        public string Phone { get; set; }
 
         [Required]
         public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; } = new List<Card>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
-        [Required]
+        Required]
         public string Role { get; set; }
     }
 }

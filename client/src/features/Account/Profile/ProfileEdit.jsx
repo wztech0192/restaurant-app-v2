@@ -20,12 +20,12 @@ import {
     handleEditAccountInfo,
     handleUpdateAccount,
     setCardAsDefault,
-    removeCard
+    removeCard,
+    handleEditAccountInfoPhone
 } from "../accountSlice";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import UndoIcon from "@material-ui/icons/Undo";
-import { validEmailRegex } from "common";
 import CardList from "features/CreditCard/CardList";
 import AddCardModal from "features/CreditCard/AddCardModal";
 
@@ -42,24 +42,15 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
     const dispatch = useDispatch();
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
-    const emailCheck = state.email && !state.email.match(validEmailRegex) && "Invalid email format";
-    const passwordCheck =
-        state.newPassword && state.newPassword.length < 6 && "Minimum 6 characters required";
+    const passwordCheck = state.newPassword && state.newPassword.length < 6 && "Minimum 6 characters required";
     const confirmPasswordCheck =
-        state.confirmPassword &&
-        state.confirmPassword !== state.newPassword &&
-        "Password not match";
+        state.confirmPassword && state.confirmPassword !== state.newPassword && "Password not match";
 
     const canSave =
-        state.email &&
+        state.phone &&
         state.name &&
-        !emailCheck &&
         (!changePassword ||
-            (state.confirmPassword &&
-                state.newPassword &&
-                state.password &&
-                !passwordCheck &&
-                !confirmPasswordCheck));
+            (state.confirmPassword && state.newPassword && state.password && !passwordCheck && !confirmPasswordCheck));
 
     return (
         <form>
@@ -74,13 +65,13 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
                 />
                 <TextFieldWrapper
                     required
-                    label="Email"
-                    name="email"
-                    error={emailCheck}
-                    value={state.email}
+                    label="Phone Number"
+                    phoneMask
+                    name="phone"
+                    error={state.phone && state.phone.length !== 10}
+                    value={state.phone}
                     disabled={loading}
-                    placeholder="example@mail.com"
-                    onChange={handleUpdateState}
+                    onChange={dispatch(handleEditAccountInfoPhone)}
                 />
 
                 <br />

@@ -15,8 +15,8 @@ namespace RestaurantApp.BLL.DTOs
 
         internal AccountDTO(Account entity)
         {
-            Email = entity.Email;
             Name = entity.Name;
+            Phone = entity.Phone;
             CreatedOn = entity.CreatedOn;
             Role = entity.Role;
 
@@ -27,8 +27,6 @@ namespace RestaurantApp.BLL.DTOs
 
         public string Token { get; set; }
 
-        public string Email { get; set; }
-
         public string Name { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -38,6 +36,8 @@ namespace RestaurantApp.BLL.DTOs
         public string NewPassword { get; set; }
 
         public string Role { get; set; }
+
+        public string Phone { get; set; }
 
         public int DefaultCardId { get; set; }
         public IEnumerable<CardDTO> Cards { get; set; } = new List<CardDTO>();

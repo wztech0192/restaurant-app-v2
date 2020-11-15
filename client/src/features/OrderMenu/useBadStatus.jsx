@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
+import { checkIsOrderHubConnected } from "app/centralHub";
 import { phoneNum } from "common";
 
 const useBadStatus = () => {
@@ -11,8 +11,8 @@ const useBadStatus = () => {
         return (
             <Box padding="10px">
                 <Typography color="error">
-                    The online service is currently unavailable, please try refresh the page or call
-                    us at <a href={`tel:+${phoneNum}`}>{phoneNum}</a>!
+                    The online service is currently unavailable, please try refresh the page or call us at{" "}
+                    <a href={`tel:+${phoneNum}`}>{phoneNum}</a>!
                 </Typography>
             </Box>
         );

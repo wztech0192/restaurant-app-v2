@@ -1,4 +1,19 @@
-import { handleOpenModal, setLoading } from "./Indicator/indicatorSlice";
+import encryptionProvider from "common/encryptionProvider";
+import { enqueueSnackbar, handleOpenModal, setLoading } from "./Indicator/indicatorSlice";
+
+export const encryptionAction = (json, success) => dispatch => {
+    const encryptedInfo = encryptionProvider.encrypt(json);
+    if (encryptedInfo) {
+        success(encryptedInfo);
+    } else {
+        dispatch(
+            enqueueSnackbar({
+                message: "Encryption Failed",
+                variant: "error"
+            })
+        );
+    }
+};
 
 export const asyncAction = ({
     promise,

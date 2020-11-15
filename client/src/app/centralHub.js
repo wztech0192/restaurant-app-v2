@@ -1,12 +1,12 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { createSlice } from "@reduxjs/toolkit";
+import orderHubMiddleware from "features/OrderMenu/slices/orderHubMiddleware";
+
+const hubMiddalewares = [orderHubMiddleware];
 
 const url = process.env.REACT_APP_API_URL + "/orders";
 
-const connection = new HubConnectionBuilder()
-    .withUrl(url)
-    .configureLogging(LogLevel.Information)
-    .build();
+const connection = new HubConnectionBuilder().withUrl(url).configureLogging(LogLevel.Information).build();
 
 const initialState = {
     connected: false,
@@ -30,20 +30,8 @@ const { connect } = orderHubSlice.actions;
 
 export const checkIsOrderHubConnected = state => state.hub.connected;
 
-const signalRRegisterCommands = (dispatch, getState) => {
-    /* connection.on("IncrementCounter", data => {
-       dispatch({ type: "INCREMENT_COUNT" });
-        console.log("Count has been incremented");
-    });
-
-    connection.on("DecrementCounter", data => {
-       dispatch({ type: "DECREMENT_COUNT" });
-        console.log("Count has been decremented");
-    });*/
-};
-
-export const invokeSomething = dispatch => {
-    //connection.invoke("IncrementCounter");
+export const invoke = (name, ...args) => {
+    connection.invoke(name, ...args);
 };
 
 export const handleStartOrderHub = (dispatch, getState) => {
@@ -74,6 +62,12 @@ export const handleStartOrderHub = (dispatch, getState) => {
         setTimeout(start, 5000);
     });
 
-    signalRRegisterCommands(dispatch, getState);
+    for (let middleware of hubMiddalewares) {
+        const receivers = middleware(dispatch, getState, invoke);
+        if (receivers)
+            for (let key in receivers) {
+                connection.on(key, receivers[key]);
+            }
+    }
     start();
 };

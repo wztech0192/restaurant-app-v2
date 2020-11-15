@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, Tooltip, makeStyles } from "@m
 import PhoneIcon from "@material-ui/icons/Phone";
 import AccountButton from "features/Account/AccountButton";
 import { useSelector } from "react-redux";
-import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
+import { checkIsOrderHubConnected } from "app/centralHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
 import { phoneNum } from "common";
 
@@ -25,12 +25,7 @@ const Header = ({ header }) => {
             <Toolbar className={classes.toolbar}>
                 {!header.action ? (
                     <Tooltip title={`Call us at ${phoneNum}`}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            component="a"
-                            href={`tel:+${phoneNum}`}
-                        >
+                        <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
                             <PhoneIcon />
                         </IconButton>
                     </Tooltip>

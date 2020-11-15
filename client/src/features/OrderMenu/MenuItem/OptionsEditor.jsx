@@ -15,7 +15,7 @@ const OptionsEditor = ({
     return (
         <div>
             {optionGroupNames.map((groupName, i) => {
-                const selectedKey = `${groupName}-${i}`;
+                const selectedKey = `${groupName.toLowerCase()}-${i}`;
                 return (
                     <OptionSelectField
                         optionPriceMultiplier={optionPriceMultiplier}

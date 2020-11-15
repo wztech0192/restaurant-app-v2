@@ -1,12 +1,4 @@
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Typography
-} from "@material-ui/core";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
 import React from "react";
 import CreditCardForm from "./CreditCardForm";
 
@@ -15,7 +7,7 @@ const AddCardModalContent = React.memo(
         return (
             <>
                 <DialogTitle>
-                    <Typography variant="subtitl2" component="span">
+                    <Typography variant="subtitle2" component="span">
                         Add New Card
                     </Typography>
                 </DialogTitle>

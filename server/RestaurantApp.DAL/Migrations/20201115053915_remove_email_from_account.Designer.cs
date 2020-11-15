@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    partial class RestaurantAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201115053915_remove_email_from_account")]
+    partial class remove_email_from_account
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +59,9 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 11, 15, 1, 21, 58, 667, DateTimeKind.Local).AddTicks(680),
+                            CreatedOn = new DateTime(2020, 11, 15, 0, 39, 14, 144, DateTimeKind.Local).AddTicks(138),
                             Name = "Manager",
-                            Password = "$2a$11$uoJ7Er6iwAy2HbvH5jGwJ.FBQPGZau3VDiyMxzf5vHAABxUezme3K",
+                            Password = "$2a$11$QdKSOZGlDcZBl0kCBYhiMups3Ys.BW9xo7OEKA.t6xCEkVMIX9ZKi",
                             Phone = "8032260689",
                             Role = "Manager"
                         });
@@ -302,9 +304,6 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("MenuItemID");
@@ -321,9 +320,6 @@ namespace RestaurantApp.DAL.Migrations
 
                     b.Property<int>("OrderedItemID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
