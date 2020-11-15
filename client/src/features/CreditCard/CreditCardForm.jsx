@@ -5,28 +5,40 @@ import {
     FormLabel,
     RadioGroup,
     FormControlLabel,
-    Radio
+    Radio,
+    Typography,
+    Box
 } from "@material-ui/core";
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "common";
 import PhoneMask from "common/phoneMask";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import React from "react";
 import cardValidator from "card-validator";
+import CardList from "./CardList";
 
 const phoneMaskInputProps = {
     inputComponent: PhoneMask
 };
 
-const CreditCardForm = ({ existingCards = EMPTY_ARRAY, action }) => {
-    const [paymentInfo, setPaymentInfo] = React.useState(EMPTY_OBJECT);
+const CreditCardForm = ({
+    account = EMPTY_OBJECT,
+    payWithExistingCard,
+    action,
+    requiredPersonInfo
+}) => {
+    const [paymentInfo, setPaymentInfo] = React.useState({
+        cardId: account.defaultCardId
+    });
 
     const ref = React.useRef();
     React.useEffect(() => {
         if (ref.current) {
             ref.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
         }
-        setPaymentInfo(EMPTY_OBJECT);
-    }, [ref]);
+        setPaymentInfo({
+            cardId: account.defaultCardId
+        });
+    }, [ref, account]);
 
     const updatePaymentInfo = (name, value) => {
         setPaymentInfo({
@@ -48,38 +60,42 @@ const CreditCardForm = ({ existingCards = EMPTY_ARRAY, action }) => {
     );
 
     const isValid =
-        (paymentInfo.encryptedCardInfo ||
-            (cardValidation.isValid && expireDateValidation.isValid)) &&
-        paymentInfo.phone &&
-        paymentInfo.phone.length === 10 &&
-        paymentInfo.name;
-
+        (paymentInfo.cardId || (cardValidation.isValid && expireDateValidation.isValid)) &&
+        (!requiredPersonInfo ||
+            (paymentInfo.phone && paymentInfo.phone.length === 10 && paymentInfo.name));
     return (
         <Fade in>
             <div ref={ref}>
-                <TextFieldWrapper
-                    InputProps={phoneMaskInputProps}
-                    required
-                    error={paymentInfo.phone && paymentInfo.phone.length !== 10}
-                    value={paymentInfo.phone}
-                    name="phone"
-                    onChange={e => {
-                        updatePaymentInfo(e.target.name, e.target.value.replace(/[\D]/g, ""));
-                    }}
-                    margin="dense"
-                    size="small"
-                    label="Contact Phone Number"
-                />
-                <TextFieldWrapper
-                    required
-                    value={paymentInfo.name}
-                    name="name"
-                    onChange={handleUpdatePaymentInfo}
-                    margin="dense"
-                    size="small"
-                    label="Pick Up Name"
-                />
-                {existingCards.length <= 0 ? (
+                {requiredPersonInfo && (
+                    <>
+                        <TextFieldWrapper
+                            InputProps={phoneMaskInputProps}
+                            required
+                            error={paymentInfo.phone && paymentInfo.phone.length !== 10}
+                            value={paymentInfo.phone}
+                            name="phone"
+                            onChange={e => {
+                                updatePaymentInfo(
+                                    e.target.name,
+                                    e.target.value.replace(/[\D]/g, "")
+                                );
+                            }}
+                            margin="dense"
+                            size="small"
+                            label="Contact Phone Number"
+                        />
+                        <TextFieldWrapper
+                            required
+                            value={paymentInfo.name}
+                            name="name"
+                            onChange={handleUpdatePaymentInfo}
+                            margin="dense"
+                            size="small"
+                            label="Pick Up Name"
+                        />
+                    </>
+                )}
+                {!payWithExistingCard ? (
                     <div>
                         <TextFieldWrapper
                             required
@@ -105,31 +121,22 @@ const CreditCardForm = ({ existingCards = EMPTY_ARRAY, action }) => {
                         />
                     </div>
                 ) : (
-                    <div>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Existing Cards</FormLabel>
-                            <RadioGroup
-                                name="encryptedCardInfo"
-                                value={paymentInfo.encryptedCardInfo}
-                                onChange={handleUpdatePaymentInfo}
-                                color="primary"
-                            >
-                                {existingCards.map(card => (
-                                    <FormControlLabel
-                                        key={card.id}
-                                        value={card.encryptedCardInfo}
-                                        control={<Radio />}
-                                        label={`Card End With ${card.lastFourDigit}`}
-                                    />
-                                ))}
-                            </RadioGroup>
-                        </FormControl>
-                    </div>
+                    <Box display="flex" justifyContent="flex-start" alignItems="center">
+                        <Box minWith="100px">
+                            <Typography variant="subtitle2">Pay with:</Typography>
+                        </Box>
+                        <CardList
+                            account={account}
+                            canEdit
+                            onSelect={id => {
+                                updatePaymentInfo("cardId", id);
+                            }}
+                            defaultCardId={paymentInfo.cardId}
+                        />
+                    </Box>
                 )}
                 <br />
-                <br />
                 {action(isValid, paymentInfo)}
-                <br />
                 <br />
             </div>
         </Fade>

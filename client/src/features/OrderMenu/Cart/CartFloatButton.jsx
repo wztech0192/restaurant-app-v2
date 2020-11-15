@@ -6,7 +6,7 @@ import { setOpenCart } from "../slices/orderSlice";
 import CartSwipeView from "./CartSwipeView";
 
 const CartFloatButton = ({ classes, menu }) => {
-    const total = useSelector(state => state.order.cart.price);
+    const price = useSelector(state => state.order.cart.price);
     const dispatch = useDispatch();
     return (
         <>
@@ -17,7 +17,7 @@ const CartFloatButton = ({ classes, menu }) => {
                 onClick={e => dispatch(setOpenCart(true))}
             >
                 <ShoppingCart className={classes.extendedIcon} />
-                &nbsp;&nbsp; ${total.toFixed(2)}
+                &nbsp;&nbsp; ${price.toFixed(2)}
             </Fab>
             <CartSwipeView menu={menu} />
         </>

@@ -1,9 +1,18 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Box,
+    Button,
+    Chip,
+    Typography
+} from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "../accountSlice";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import { getDateStr } from "common";
+import CardList from "features/CreditCard/CardList";
 
 const ProfileReadonly = ({ accountInfo }) => {
     const dispatch = useDispatch();
@@ -18,6 +27,20 @@ const ProfileReadonly = ({ accountInfo }) => {
                 disabled
                 solid
             />
+
+            <Accordion elevation={5}>
+                <AccordionSummary>
+                    <Box flexGrow="1"> Manage Credit Cards</Box>
+                    <Chip size="small" label={accountInfo.cards.length} />
+                </AccordionSummary>
+                <AccordionDetails>
+                    {accountInfo.cards.length > 0 ? (
+                        <CardList account={accountInfo} />
+                    ) : (
+                        <Typography variant="caption">Empty...</Typography>
+                    )}
+                </AccordionDetails>
+            </Accordion>
             <br />
             <br />
 

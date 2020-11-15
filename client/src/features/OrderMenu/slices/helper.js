@@ -20,7 +20,7 @@ export const addOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
             uid: uid(),
             entryName: menuEntryName,
             name: menuItem.name,
-            total: menuItem.price,
+            price: menuItem.price,
             itemId: menuItem.id,
             quantity,
             sides: [],

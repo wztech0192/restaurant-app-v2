@@ -24,6 +24,7 @@ const CartSwipeView = ({ menu }) => {
     const dispatch = useDispatch();
     const open = useSelector(state => state.order.openCart);
     const orderInfo = useSelector(state => state.order.cart);
+    const account = useSelector(state => state.account.accountInfo);
 
     const BadStatus = useBadStatus();
 
@@ -89,6 +90,9 @@ const CartSwipeView = ({ menu }) => {
                 {openPayment &&
                     (BadStatus || (
                         <CreditCardForm
+                            account={account}
+                            payWithExistingCard={true}
+                            requiredPersonInfo
                             action={(isValid, paymentInfo) => (
                                 <SubmitPaymentAction isValid={isValid} paymentInfo={paymentInfo} />
                             )}

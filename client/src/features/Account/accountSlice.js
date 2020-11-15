@@ -8,6 +8,8 @@ import {
     setGlobalLoading,
     setLoading
 } from "app/Indicator/indicatorSlice";
+import encryptionProvider from "common/encryptionProvider";
+import getUID from "common/getUID";
 
 //save/retrieve token from local storage
 const TOKEN_KEY = "TOKEN_KEY";
@@ -37,7 +39,9 @@ const initialState = {
     token: undefined,
     accountInfo: undefined,
     viewMode: ACCOUNT_VIEW.CLOSE,
-    editAccountInfo: {}
+    editAccountInfo: {
+        cards: []
+    }
 };
 
 const slice = createSlice({
@@ -46,6 +50,35 @@ const slice = createSlice({
     reducers: {
         reset() {
             return initialState;
+        },
+        addNewCard(state, { payload }) {
+            if (state.editAccountInfo.cards.length === 0) {
+                payload.useAsDefault = true;
+                state.editAccountInfo.defaultCardId = payload.id;
+            }
+            state.editAccountInfo.cards.push(payload);
+        },
+        removeCard(state, { payload }) {
+            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(
+                card => card.id !== payload
+            );
+            if (state.editAccountInfo.defaultCardId === payload) {
+                if (state.editAccountInfo.cards.length > 0) {
+                    state.editAccountInfo.defaultCardId = state.editAccountInfo.cards[0].id;
+                } else {
+                    state.editAccountInfo.defaultCardId = 0;
+                }
+            }
+        },
+        setCardAsDefault(state, { payload }) {
+            for (let card of state.editAccountInfo.cards) {
+                if (card.id === payload) {
+                    card.useAsDefault = true;
+                } else {
+                    card.useAsDefault = false;
+                }
+            }
+            state.editAccountInfo.defaultCardId = payload;
         },
         setToken(state, { payload }) {
             state.token = payload;
@@ -85,13 +118,16 @@ const {
     setAccountView,
     setAccountInfo,
     editAccountInfo,
+    addNewCard,
     loadAccountInfo,
     setToken,
     reset,
-    setEditAccountInfo
+    setEditAccountInfo,
+    setCardAsDefault,
+    removeCard
 } = slice.actions;
 
-export { setEditAccountInfo };
+export { setEditAccountInfo, removeCard, setCardAsDefault };
 
 export const handleLogout = dispatch => e => {
     dispatch(reset());
@@ -190,6 +226,7 @@ export const handleUpdateAccount = changePassword => (dispatch, getState) => e =
             hideErrorModal: true,
             promise: () => putAccount(state),
             success: accountInfo => {
+                console.log(accountInfo);
                 dispatch(loadAccountInfo({ accountInfo, close: true }));
                 dispatch(
                     enqueueSnackbar({
@@ -214,4 +251,27 @@ export const handleUpdateAccount = changePassword => (dispatch, getState) => e =
             }
         })
     );
+};
+
+export const handleAddNewCard = paymentInfo => dispatch => {
+    const json = JSON.stringify(paymentInfo);
+
+    const lastFourDigit = parseInt(paymentInfo.card.slice(-4));
+    const encryptedCardInfo = encryptionProvider.encrypt(json);
+    if (encryptedCardInfo) {
+        dispatch(
+            addNewCard({
+                id: getUID(),
+                encryptedCardInfo,
+                lastFourDigit
+            })
+        );
+    } else {
+        dispatch(
+            enqueueSnackbar({
+                message: "Encrypt Credit Failed",
+                variant: "error"
+            })
+        );
+    }
 };

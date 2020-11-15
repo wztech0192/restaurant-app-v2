@@ -1,10 +1,10 @@
 import React from "react";
-import { getAccountRole } from "app/Account/accountSlice";
+import { getAccountRole } from "features/Account/accountSlice";
 import CustomerMain from "features/CustomerMain";
 import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import Unauthorized from "./Unauthorized";
-import { isManager } from "app/Account/roleChecker";
+import { isManager } from "features/Account/roleChecker";
 import ManagerTabs from "./ManagerTabs";
 import ManageMenu from "features/ManageMenu";
 import ManageOrders from "features/ManageOrders";

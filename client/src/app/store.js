@@ -2,7 +2,7 @@ import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/
 import monitorReducersEnhancer from "./reduxStuff/monitorReducersEnhancer";
 import loggerMiddleware from "./reduxStuff/reduxLogger";
 
-import account, { tokenSubscribeListener } from "./Account/accountSlice";
+import account, { tokenSubscribeListener } from "../features/Account/accountSlice";
 import indicator from "./Indicator/indicatorSlice";
 import hub from "./signalRHubs/centralHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";

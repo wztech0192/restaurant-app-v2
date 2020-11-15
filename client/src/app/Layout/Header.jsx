@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, Tooltip, makeStyles } from "@material-ui/core";
 import PhoneIcon from "@material-ui/icons/Phone";
-import AccountButton from "app/Account/AccountButton";
+import AccountButton from "features/Account/AccountButton";
 import { useSelector } from "react-redux";
 import { checkIsOrderHubConnected } from "app/signalRHubs/centralHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";

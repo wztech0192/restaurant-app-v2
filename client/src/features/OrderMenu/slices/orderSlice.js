@@ -12,7 +12,7 @@ import {
 const initialState = {
     cart: {
         tip: 0.0,
-        total: 0.0,
+        price: 0.0,
         orderedItems: []
     },
     editedItem: false,
@@ -94,7 +94,7 @@ const slice = createSlice({
                           //edit new
                           ...payload,
                           uid: uid(),
-                          total: payload.price,
+                          price: payload.price,
                           orderedOptions: {},
                           quantity: 1
                       };

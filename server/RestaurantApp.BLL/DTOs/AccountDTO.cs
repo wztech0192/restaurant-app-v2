@@ -1,6 +1,7 @@
 ﻿using RestaurantApp.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RestaurantApp.BLL.DTOs
@@ -18,6 +19,9 @@ namespace RestaurantApp.BLL.DTOs
             Name = entity.Name;
             CreatedOn = entity.CreatedOn;
             Role = entity.Role;
+
+            Cards = entity.Cards.Select(c => new CardDTO(c));
+            DefaultCardId = entity.Cards.FirstOrDefault(x => x.UseAsDefault)?.ID ?? 0;
         }
 
 
@@ -34,6 +38,9 @@ namespace RestaurantApp.BLL.DTOs
         public string NewPassword { get; set; }
 
         public string Role { get; set; }
+
+        public int DefaultCardId { get; set; }
+        public IEnumerable<CardDTO> Cards { get; set; } = new List<CardDTO>();
 
     }
 }

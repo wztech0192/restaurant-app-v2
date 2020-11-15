@@ -7,6 +7,16 @@ const theme = createMuiTheme({
             main: "rgb(0, 155, 160)",
             dark: "rgb(124, 194, 200)"
         }
+    },
+    overrides: {
+        MuiAccordionSummary: {
+            root: {
+                minHeight: "auto !important",
+                "& .MuiAccordionSummary-content.Mui-expanded": {
+                    margin: "12px 0px !important"
+                }
+            }
+        }
     }
 });
 

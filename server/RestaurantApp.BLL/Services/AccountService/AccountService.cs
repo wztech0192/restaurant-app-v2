@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using RestaurantApp.BLL.DTOs;
+using RestaurantApp.BLL.Helpers;
 using RestaurantApp.BLL.Infrastructures;
 using RestaurantApp.BLL.Infrastructures.Exceptions;
 using RestaurantApp.DAL;
@@ -60,10 +61,11 @@ namespace RestaurantApp.BLL.Services
                 var entity = base.JWTService.GetCurrentAccount();
 
                 validateCreateOrUpdateAccount(dto, entity, true);
-                validAccountPassword(dto, entity);
-
+                if(!string.IsNullOrEmpty(dto.NewPassword))
+                    validAccountPassword(dto, entity);
                 setAccountMetadata(dto, entity, true);
-
+                createOrUpdateCards(dto.Cards, entity.Cards);
+                computeDefaultCard(entity.Cards);
                 base.UnitOfWork.Complete();
 
                 msg.Data = new AccountDTO(entity);
@@ -96,7 +98,7 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
-
+   
         public IServiceMessage<IEnumerable<AccountDTO>> GetAll()
         {
             return base.ProcessMessage<IEnumerable<AccountDTO>>(msg =>
@@ -113,7 +115,7 @@ namespace RestaurantApp.BLL.Services
 
             if (useNewPassword)
             {
-                if(!string.IsNullOrEmpty(dto.NewPassword))
+                if (!string.IsNullOrEmpty(dto.NewPassword))
                     entity.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
             }
             else
@@ -122,11 +124,65 @@ namespace RestaurantApp.BLL.Services
             }
         }
 
+        private void computeDefaultCard(ICollection<Card> entities)
+        {
+            //set card default
+            if (entities.Any())
+            {
+                var hasDefaultCard = false;
+                foreach (var card in entities)
+                {
+                    if (!hasDefaultCard)
+                    {
+                        if (card.UseAsDefault)
+                        {
+                            hasDefaultCard = true;
+                        }
+                    }
+                    else
+                    {
+                        card.UseAsDefault = false;
+                    }
+                }
+                if (!hasDefaultCard)
+                {
+                    entities.First().UseAsDefault = true;
+                }
+            }
+        }
+
+        private void createOrUpdateCards(IEnumerable<CardDTO> dtos, ICollection<Card> entities)
+        {
+            entities.CreateUpdateDelete(
+                dtos: dtos,
+                dtoKey: dto => dto.ID,
+                entityKey: entity => entity.ID,
+                create: dto =>
+                {
+                    entities.Add(new Card()
+                    {
+                        CreatedOn = DateTime.Now,
+                        EncryptedCardInfo = dto.EncryptedCardInfo,
+                        LastFourDigit = dto.LastFourDigit,
+                        UseAsDefault = dto.UseAsDefault
+                    });
+                },
+                update: (entity, dto) =>
+                {
+                    entity.UseAsDefault = dto.UseAsDefault;
+                },
+                delete: entity =>
+                {
+                    entities.Remove(entity);
+                });
+        }
+
+
         #region validator
 
         private void validatePassword(List<string> errors, string password)
         {
-            if(password.Length < 6 || password.Length > 100)
+            if (password.Length < 6 || password.Length > 100)
             {
                 errors.Add("Password length must between 6 and 100");
             }
@@ -144,14 +200,14 @@ namespace RestaurantApp.BLL.Services
         {
             base.HandleValidation(errors =>
             {
-                validateAccountDTO(errors, dto);
+                validateAccountDTO(errors, dto, !isUpdate || !string.IsNullOrEmpty(dto.NewPassword));
 
                 if (string.IsNullOrEmpty(dto.Name))
                 {
                     errors.Add("A name is required");
                 }
 
-                if(isUpdate && !string.IsNullOrEmpty(dto.NewPassword))
+                if (isUpdate && !string.IsNullOrEmpty(dto.NewPassword))
                 {
                     validatePassword(errors, dto.NewPassword);
                 }
@@ -180,7 +236,22 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
-        private void validateAccountDTO(List<string> errors, AccountDTO dto)
+        private void validateCardDTO(List<string> errors, CardDTO dto)
+        {
+            if (dto == null)
+            {
+                errors.Add("Card dto cannot be null");
+            }
+            else if (dto.ID <= 0)
+            {
+                if (string.IsNullOrEmpty(dto.EncryptedCardInfo))
+                {
+                    errors.Add("Card information is required for new card");
+                }
+            }
+        }
+
+        private void validateAccountDTO(List<string> errors, AccountDTO dto, bool shouldValidatePassword = true)
         {
             if (dto == null)
             {
@@ -189,15 +260,22 @@ namespace RestaurantApp.BLL.Services
             else
             {
 
-                if (string.IsNullOrEmpty(dto.Password))
+                foreach (var card in dto.Cards)
                 {
-                    errors.Add("A password is required");
+                    validateCardDTO(errors, card);
                 }
-                else
+
+                if (shouldValidatePassword)
                 {
-                    validatePassword(errors, dto.Password);
+                    if (string.IsNullOrEmpty(dto.Password))
+                    {
+                        errors.Add("A password is required");
+                    }
+                    else
+                    {
+                        validatePassword(errors, dto.Password);
+                    }
                 }
-          
 
                 if (string.IsNullOrEmpty(dto.Email))
                 {

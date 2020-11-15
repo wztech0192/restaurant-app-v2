@@ -97,22 +97,22 @@ const SideOrderSelector = ({
                 </span>
             </AccordionDetails>
             <AccordionActions>
-                <ButtonGroup size="small">
-                    <Button
-                        color="primary"
-                        variant={editQuantity > 0 ? "contained" : "text"}
-                        onClick={e => setEditQuantity(1)}
-                    >
-                        <AddIcon />
-                    </Button>
-                    <Button
-                        color="secondary"
-                        onClick={e => setEditQuantity(-1)}
-                        variant={editQuantity < 0 ? "contained" : "text"}
-                    >
-                        <MinusIcon />
-                    </Button>
-                </ButtonGroup>
+                <Button
+                    size="small"
+                    color="primary"
+                    variant={editQuantity > 0 ? "outlined" : "text"}
+                    onClick={e => setEditQuantity(1)}
+                >
+                    Add Side
+                </Button>
+                <Button
+                    size="small"
+                    color="secondary"
+                    onClick={e => setEditQuantity(-1)}
+                    variant={editQuantity < 0 ? "outlined" : "text"}
+                >
+                    Remove Side
+                </Button>
             </AccordionActions>
         </Accordion>
     );

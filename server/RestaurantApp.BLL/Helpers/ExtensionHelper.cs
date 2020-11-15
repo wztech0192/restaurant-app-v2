@@ -13,9 +13,9 @@ namespace RestaurantApp.BLL.Helpers
             IEnumerable<TDto> dtos,
             Func<TDto, TKey> dtoKey,
             Func<TEntity, TKey> entityKey,
-            Action<TDto> create,
-            Action<TEntity, TDto> update,
-            Action<TEntity> delete)
+            Action<TDto> create = null,
+            Action<TEntity, TDto> update = null,
+            Action<TEntity> delete = null)
         {
             var entityDictionary = entities.ToDictionary(en => entityKey(en));
             foreach (var dto in dtos)
@@ -24,21 +24,26 @@ namespace RestaurantApp.BLL.Helpers
                 //exist in both entities and dtos: should UPDATE entity based on dto
                 if (entityDictionary.TryGetValue(dtoKey(dto), out TEntity entity))
                 {
-                    update(entity, dto);
+                    update?.Invoke(entity, dto);
                     entityDictionary.Remove(key);
                 }
                 else
                 {
                     //exist only in dtos: should CREATE based on dto
-                    create(dto);
+                    create?.Invoke(dto);
                 }
             };
-            //rest entities not exist in the dto
-            foreach(var entity in entityDictionary.Values.ToList())
-            {
-                //exist only in entities: should REMOVE entity
-                delete(entity);
+
+            if(delete != null)
+            {  
+                //rest entities not exist in the dto
+                foreach (var entity in entityDictionary.Values.ToList())
+                {
+                    //exist only in entities: should REMOVE entity
+                    delete(entity);
+                }
             }
+          
         }
     }
 }

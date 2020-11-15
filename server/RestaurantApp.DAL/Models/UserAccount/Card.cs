@@ -16,7 +16,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public DateTime CreatedOn { get; set; }
 
-        public string HolderName { get; set; }
+        public bool UseAsDefault { get; set; }
 
         public int LastFourDigit { get; set; }
 
