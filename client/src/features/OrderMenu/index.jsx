@@ -11,7 +11,6 @@ import { setSelectedEntryName } from "./slices/orderSlice";
 import { Link } from "react-router-dom";
 import { handleFetchMenu } from "./slices/menuSlice";
 import { Skeleton } from "@material-ui/lab";
-import menu from "assets/menuSample";
 import CartFloatButton from "./Cart/CartFloatButton";
 import MenuItemEditDialog from "./MenuItem/MenuItemEditDialog";
 import useBadStatus from "./useBadStatus";
@@ -43,7 +42,7 @@ const OrderMenu = ({ setHeader }) => {
     const classes = useStyles();
     const selectedEntryName = useSelector(state => state.order.selectedEntryName);
 
-    // const menu = useSelector(state => state.menu);
+    const menu = useSelector(state => state.menu);
     const hasMenu = Boolean(menu);
 
     const dispatch = useDispatch();
@@ -83,10 +82,14 @@ const OrderMenu = ({ setHeader }) => {
                 ) : (
                     <LoadingSkeleton />
                 )}
-                <MenuItemEditDialog menu={menu} classes={classes} />
-                <Zoom in={hasMenu}>
-                    <CartFloatButton classes={classes} menu={menu} />
-                </Zoom>
+                {hasMenu && (
+                    <div>
+                        <Zoom in>
+                            <CartFloatButton classes={classes} menu={menu} />
+                        </Zoom>
+                        <MenuItemEditDialog menu={menu} classes={classes} />
+                    </div>
+                )}
             </div>
         </Fade>
     );

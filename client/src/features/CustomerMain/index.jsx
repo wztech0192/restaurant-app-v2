@@ -4,6 +4,7 @@ import MapButton from "./MapButton";
 import MainImage from "./MainImage";
 import OrderIcon from "@material-ui/icons/Store";
 import { Link } from "react-router-dom";
+import OrderHistory from "features/OrderHistory";
 
 const maxWidth = 600;
 const useStyles = makeStyles({
@@ -58,6 +59,9 @@ const Home = ({ setHeader }) => {
                         <OrderIcon className="sub" /> Make Order
                     </Typography>
                 </Button>
+
+                <hr />
+                <OrderHistory />
             </div>
         </Grow>
     );

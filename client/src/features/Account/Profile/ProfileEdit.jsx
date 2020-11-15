@@ -42,19 +42,26 @@ const ProfileEdit = ({ loading, errors, handleToggleEdit }) => {
     const dispatch = useDispatch();
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
-    const passwordCheck = state.newPassword && state.newPassword.length < 6 && "Minimum 6 characters required";
+    const passwordCheck =
+        state.newPassword && state.newPassword.length < 6 && "Minimum 6 characters required";
     const confirmPasswordCheck =
-        state.confirmPassword && state.confirmPassword !== state.newPassword && "Password not match";
+        state.confirmPassword &&
+        state.confirmPassword !== state.newPassword &&
+        "Password not match";
 
     const canSave =
         state.phone &&
         state.name &&
         (!changePassword ||
-            (state.confirmPassword && state.newPassword && state.password && !passwordCheck && !confirmPasswordCheck));
+            (state.confirmPassword &&
+                state.newPassword &&
+                state.password &&
+                !passwordCheck &&
+                !confirmPasswordCheck));
 
     return (
         <form>
-            <Box overflow="auto" width="100%" maxHeight="60vh">
+            <Box overflow="auto" width="100%" maxHeight="60vh" padding="10px" marginLeft="-10px">
                 <TextFieldWrapper
                     required
                     label="Name"

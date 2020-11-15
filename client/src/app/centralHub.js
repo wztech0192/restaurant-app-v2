@@ -1,12 +1,15 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { createSlice } from "@reduxjs/toolkit";
-import orderHubMiddleware from "features/OrderMenu/slices/orderHubMiddleware";
+import { orderHubMiddleware } from "features/OrderHistory/orderHistorySlice";
 
 const hubMiddalewares = [orderHubMiddleware];
 
 const url = process.env.REACT_APP_API_URL + "/orders";
 
-const connection = new HubConnectionBuilder().withUrl(url).configureLogging(LogLevel.Information).build();
+const connection = new HubConnectionBuilder()
+    .withUrl(url)
+    .configureLogging(LogLevel.Information)
+    .build();
 
 const initialState = {
     connected: false,

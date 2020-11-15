@@ -21,7 +21,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public virtual MenuItem MenuItem { get; set; }
 
-        public virtual IEnumerable<OrderedItemMenuOptionItem> OrderedOptions { get; set; }
+        public virtual ICollection<OrderedItemMenuOptionItem> OrderedOptions { get; set; }
 
 
     }

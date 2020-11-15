@@ -2,9 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
 import { postLogin, postAccount, getAccount, putAccount } from "app/apiProvider";
 import { asyncAction, encryptionAction } from "app/sharedActions";
-import { enqueueSnackbar, setErrors, setGlobalLoading, setLoading } from "app/Indicator/indicatorSlice";
+import {
+    enqueueSnackbar,
+    setErrors,
+    setGlobalLoading,
+    setLoading
+} from "app/Indicator/indicatorSlice";
 import encryptionProvider from "common/encryptionProvider";
 import getUID from "common/getUID";
+import history from "app/history";
 
 //save/retrieve token from local storage
 const TOKEN_KEY = "TOKEN_KEY";
@@ -54,7 +60,9 @@ const slice = createSlice({
             state.editAccountInfo.cards.push(payload);
         },
         removeCard(state, { payload }) {
-            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(card => card.id !== payload);
+            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(
+                card => card.id !== payload
+            );
             if (state.editAccountInfo.defaultCardId === payload) {
                 if (state.editAccountInfo.cards.length > 0) {
                     state.editAccountInfo.defaultCardId = state.editAccountInfo.cards[0].id;
@@ -104,7 +112,8 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const getAccountToken = state => state.account.token;
-export const getAccountRole = state => (state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS");
+export const getAccountRole = state =>
+    state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS";
 
 const {
     setAccountView,
@@ -128,6 +137,7 @@ export const handleLogout = dispatch => e => {
             message: `You are signed out`
         })
     );
+    history.push("/");
 };
 
 export const handleEditAccountInfo = dispatch => e =>
@@ -152,7 +162,14 @@ export const handleGetAccountInfo = dispatch => {
         asyncAction({
             promise: getAccount,
             success: accountInfo => dispatch(loadAccountInfo({ accountInfo })),
-            failed: e => dispatch(setAccountView(ACCOUNT_VIEW.CLOSE)),
+            failed: e => {
+                if (e !== "TypeError: Failed to fetch") {
+                    FetchWrapper.setToken("");
+                    //todo: fetch current account?
+                    dispatch(reset());
+                    dispatch(setAccountView(ACCOUNT_VIEW.CLOSE));
+                }
+            },
             completed: () => {
                 dispatch(setGlobalLoading(false));
             }

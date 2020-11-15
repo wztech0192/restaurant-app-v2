@@ -15,18 +15,22 @@ import { EMPTY_OBJECT } from "common";
 const Layout = () => {
     const dispatch = useDispatch();
 
+    const [loaded, setLoaded] = React.useState(false);
     const [header, setHeader] = React.useState(EMPTY_OBJECT);
 
     React.useEffect(() => {
-        dispatch(handleLoadLocalAccount);
-        dispatch(handleStartOrderHub);
-    }, [dispatch]);
+        if (!loaded) {
+            dispatch(handleLoadLocalAccount);
+            dispatch(handleStartOrderHub);
+            setLoaded(true);
+        }
+    }, [dispatch, loaded]);
 
     return (
         <Router history={history}>
             <Header header={header} />
             <AccountViewModal />
-            <Routes setHeader={setHeader} />
+            {loaded && <Routes setHeader={setHeader} />}
             <Notifier />
             <GlobalModal />
             <GlobalLoading />

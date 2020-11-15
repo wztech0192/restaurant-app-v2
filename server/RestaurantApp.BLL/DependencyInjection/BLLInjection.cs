@@ -17,6 +17,7 @@ namespace RestaurantApp.BLL.DependencyInjection
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
     }
 }

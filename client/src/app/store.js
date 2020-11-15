@@ -8,9 +8,20 @@ import hub from "app/centralHub";
 import manageMenu from "features/ManageMenu/manageMenuSlice";
 import order from "features/OrderMenu/slices/orderSlice";
 import menu from "features/OrderMenu/slices/menuSlice";
+import orderHistory, {
+    orderHistorySubscribeListener
+} from "features/OrderHistory/orderHistorySlice";
 
 //apply reducers here
-const rootReducer = combineReducers({ account, indicator, hub, manageMenu, order, menu });
+const rootReducer = combineReducers({
+    account,
+    indicator,
+    hub,
+    manageMenu,
+    order,
+    menu,
+    orderHistory
+});
 
 function configureAppStore(preloadedState) {
     const store = configureStore({
@@ -20,7 +31,7 @@ function configureAppStore(preloadedState) {
         enhancers: [monitorReducersEnhancer]
     });
 
-    const subscribeListeners = [tokenSubscribeListener];
+    const subscribeListeners = [tokenSubscribeListener, orderHistorySubscribeListener];
     if (subscribeListeners.length > 0) {
         store.subscribe(() => {
             for (var subscribeListener of subscribeListeners) {

@@ -1,8 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getActiveMenu } from "app/apiProvider";
-import { asyncAction } from "app/sharedActions";
+import { getActiveMenu, postOrder } from "app/apiProvider";
+import history from "app/history";
+import { handleOpenModal, LOADING } from "app/Indicator/indicatorSlice";
+import { asyncAction, encryptionAction } from "app/sharedActions";
+import { appendOrderHistory } from "features/OrderHistory/orderHistorySlice";
 import uid from "uid";
-import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
+import OrderSubmitMessage from "../OrderSubmitMessage";
+import {
+    itemCounterHelper,
+    addOrderItemHelper,
+    removeOrderItemHelper,
+    needEditModal
+} from "./helper";
 
 const initialState = {
     cart: {
@@ -20,6 +29,9 @@ const slice = createSlice({
     name: "order",
     initialState,
     reducers: {
+        clearOrder() {
+            return initialState;
+        },
         setEditedItemMetadata: {
             reducer(state, { payload }) {
                 state.editedItem[payload.name] = payload.value;
@@ -31,7 +43,9 @@ const slice = createSlice({
         saveEditedItem(state) {
             const { cart, editedItem } = state;
             if (editedItem) {
-                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
+                const replaceItemIndex = cart.orderedItems.findIndex(
+                    item => item.uid === editedItem.uid
+                );
                 if (replaceItemIndex !== -1) {
                     const replaceItem = cart.orderedItems[replaceItemIndex];
                     cart.price -= replaceItem.price * replaceItem.quantity;
@@ -45,7 +59,12 @@ const slice = createSlice({
                 } else {
                     cart.orderedItems.push(editedItem);
                 }
-                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
+                itemCounterHelper(
+                    state.itemCounter,
+                    editedItem.entryName,
+                    editedItem.name,
+                    editedItem.quantity
+                );
                 cart.price += editedItem.price * editedItem.quantity;
             }
             state.editedItem = false;
@@ -98,7 +117,12 @@ const slice = createSlice({
             const { menuEntryName, menuItem, quantity } = payload;
             itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
+                state.cart,
+                menuEntryName,
+                menuItem,
+                quantity
+            );
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;
@@ -126,7 +150,8 @@ const {
     setEditedItem,
     setEditedItemMetadata,
     editedItemSelectOption,
-    saveEditedItem
+    saveEditedItem,
+    clearOrder
 } = slice.actions;
 
 export {
@@ -171,4 +196,54 @@ export const handleAddOrRemoveItem = (menuEntryName, menuItem, quantity) => disp
             })
         );
     }
+};
+
+export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) => (
+    dispatch,
+    getState
+) => e => {
+    const order = getState().order.cart;
+    const payload = {
+        ...order,
+        name: paymentInfo.name,
+        phone: paymentInfo.phone
+    };
+
+    if (payWithExistingCard) {
+        payload.cardId = paymentInfo.cardId;
+        payload.saveCard = saveCard;
+    } else {
+        const json = JSON.stringify({
+            card: paymentInfo.card,
+            expireDate: paymentInfo.expireDate
+        });
+        payload.lastFourDigit = paymentInfo.card.slice(-4);
+        dispatch(
+            encryptionAction(json, encryptedCardInfo => {
+                payload.encryptedCardInfo = encryptedCardInfo;
+            })
+        );
+
+        if (!payload.encryptedCardInfo) {
+            return;
+        }
+    }
+
+    dispatch(
+        asyncAction({
+            toggleLoadingFor: LOADING.GLOBAL,
+            promise: () => postOrder(payload),
+            success: order => {
+                dispatch(clearOrder());
+                dispatch(
+                    handleOpenModal({
+                        title: "Order Submitted!",
+                        content: OrderSubmitMessage(order.id)
+                    })
+                );
+                history.push("/");
+                dispatch(appendOrderHistory(order));
+            }
+        })
+    );
 };

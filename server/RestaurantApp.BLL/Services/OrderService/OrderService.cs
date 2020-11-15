@@ -44,7 +44,7 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
-        public IServiceMessage<IEnumerable<OrderDTO>> GetLastFiveOfAccount()
+        public IServiceMessage<IEnumerable<OrderDTO>> GetRecent(int num)
         {
             return base.ProcessMessage<IEnumerable<OrderDTO>>(msg =>
             {
@@ -56,7 +56,10 @@ namespace RestaurantApp.BLL.Services
                 }
                 else
                 {
-                    msg.Data = account.Orders.TakeLast(5).Select(x => new OrderDTO(x, false));
+                    msg.Data = account.Orders
+                    .OrderByDescending(x=>x.CreatedOn)
+                    .Take(num)
+                    .Select(x => new OrderDTO(x, false));
                     msg.Success = true;
 
                 }
@@ -75,6 +78,7 @@ namespace RestaurantApp.BLL.Services
                 var menu = base.UnitOfWork.Menus.GetActive();
 
                 var allMenuItems = menu.MenuEntries.SelectMany(x => x.MenuItems).ToDictionary(x => x.ID);
+                var allOptionItems = menu.OptionGroups.SelectMany(x => x.MenuOptionItems).ToDictionary(x => x.ID);
 
                 var entity = new Order()
                 {
@@ -97,9 +101,9 @@ namespace RestaurantApp.BLL.Services
                         {
                             Key = orderedOptionDto.Value.Key,
                             Quantity = orderedOptionDto.Value.Quantity,
-                            MenuOptionItemID = orderedOptionDto.Value.OptionId
-                        })
-                    })
+                            MenuOptionItem = allOptionItems[orderedOptionDto.Value.OptionId]
+                        }).ToList()
+                    }).ToList()
                 };
 
 
@@ -124,6 +128,7 @@ namespace RestaurantApp.BLL.Services
                 }
 
 
+                base.UnitOfWork.Orders.Add(entity);
                 base.UnitOfWork.Complete();
 
                 msg.Data = new OrderDTO(entity);

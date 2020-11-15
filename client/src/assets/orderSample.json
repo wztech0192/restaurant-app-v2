@@ -1,27 +1,75 @@
 {
     "tip": 0,
-    "price": 30.98,
+    "price": 18.28,
     "orderedItems": [
         {
-            "id": 147,
-            "name": "8 Pcs W. Vegetable Fried Rice",
-            "price": 15.49,
+            "id": 58,
+            "name": "L. 2-Ways Combo",
+            "summary": null,
+            "price": 10.99,
             "optionPriceMultiplier": 0,
             "canAddSides": true,
-            "optionGroupNames": ["wing flavor"],
-            "entryName": "Chicken Wings",
-            "uid": "bych1tw9tzx",
+            "optionGroupNames": [
+                "meat",
+                "meat"
+            ],
+            "entryName": "Lunch",
+            "itemId": 58,
+            "uid": "9pq9252hqqm",
             "orderedOptions": {
-                "wing flavor-0": { "groupName": "wing flavor", "price": 0.5, "name": "Lemmon Pepper", "quantity": 1 },
-                "add vegetable": { "groupName": "Add Vegetable", "price": 3, "name": "Add Vegetable", "quantity": 2 },
-                "no sauce": { "groupName": "No Sauce", "price": 0, "name": "No Sauce", "quantity": 1 }
+                "meat-0": {
+                    "groupName": "meat",
+                    "price": 0,
+                    "name": "Hi Chicken",
+                    "optionId": 2,
+                    "quantity": 1,
+                    "key": "meat-0"
+                },
+                "meat-1": {
+                    "groupName": "meat",
+                    "price": 0,
+                    "name": "Ty Chicken",
+                    "optionId": 3,
+                    "quantity": 1,
+                    "key": "meat-1"
+                },
+                "w. spicy": {
+                    "groupName": "W. Spicy",
+                    "price": 0,
+                    "name": "W. Spicy",
+                    "optionId": 35,
+                    "quantity": 1,
+                    "key": "w. spicy"
+                },
+                "add egg": {
+                    "groupName": "Add Egg",
+                    "price": 1.5,
+                    "name": "Add Egg",
+                    "optionId": 11,
+                    "quantity": 2,
+                    "key": "add egg"
+                }
             },
-            "quantity": 2,
-            "additionalRequest": "testest"
+            "quantity": 1,
+            "additionalRequest": "rawsa"
+        },
+        {
+            "id": 57,
+            "name": "L. Teriyaki Shrimp",
+            "summary": null,
+            "price": 7.29,
+            "optionPriceMultiplier": 0,
+            "canAddSides": true,
+            "optionGroupNames": [],
+            "entryName": "Lunch",
+            "itemId": 57,
+            "uid": "xw4w726bjpn",
+            "orderedOptions": {},
+            "quantity": 1
         }
     ],
-    "name": "test",
+    "name": "Test",
     "phone": "6462806697",
-    "cardId": 4,
+    "cardId": 1,
     "saveCard": false
 }

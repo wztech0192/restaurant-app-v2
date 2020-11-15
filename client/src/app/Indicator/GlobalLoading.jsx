@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import { getLoading, LOADING } from "./indicatorSlice";
 
 const loadingEl = document.getElementById("global-loading");
-loadingEl.addEventListener("transitionend", function () {
-    loadingEl.style.visibility = "hidden";
-});
+
 const GlobalLoading = () => {
     const loading = useSelector(getLoading(LOADING.GLOBAL));
     React.useEffect(() => {
@@ -15,6 +13,15 @@ const GlobalLoading = () => {
         } else if (!loading && !loadingEl.classList.contains("fade")) {
             loadingEl.classList.add("fade");
         }
+        const transtion = () => {
+            if (!loading) {
+                loadingEl.style.visibility = "hidden";
+            }
+        };
+        loadingEl.addEventListener("transitionend", transtion);
+        return () => {
+            loadingEl.removeEventListener("transitionend", transtion);
+        };
     }, [loading]);
 
     return null;

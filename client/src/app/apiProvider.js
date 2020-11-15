@@ -15,3 +15,7 @@ export const deleteMenu = menuID => apiCaller.delete(`menu/${menuID}`);
 export const getMenu = menuID => apiCaller.get(`menu/${menuID}`);
 export const getActiveMenu = () => apiCaller.get("menu/active");
 export const getAllMenu = () => apiCaller.get("menu/all");
+
+export const postOrder = data => apiCaller.post("order", data);
+export const getOrder = id => apiCaller.get(`order/${id}`);
+export const getRecentOrder = () => apiCaller.get(`order/recent/10`);
