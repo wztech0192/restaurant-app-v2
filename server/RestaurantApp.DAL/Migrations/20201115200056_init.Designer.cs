@@ -10,8 +10,8 @@ using RestaurantApp.DAL;
 namespace RestaurantApp.DAL.Migrations
 {
     [DbContext(typeof(RestaurantAppContext))]
-    [Migration("20201025211451_menu-structure-add-cascade-delete-2")]
-    partial class menustructureaddcascadedelete2
+    [Migration("20201115200056_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,11 +31,6 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,13 +40,17 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("Phone")
                         .IsUnique();
 
                     b.ToTable("Accounts");
@@ -60,10 +59,10 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 10, 25, 17, 14, 50, 494, DateTimeKind.Local).AddTicks(4233),
-                            Email = "weijie0192@gmail.com",
+                            CreatedOn = new DateTime(2020, 11, 15, 15, 0, 56, 15, DateTimeKind.Local).AddTicks(7827),
                             Name = "Manager",
-                            Password = "$2a$11$A1cjIxmAoqtrtlJPuY/6M.VbhzyhyhGnQCqKyczCPC9v0x4/OP1oe",
+                            Password = "$2a$11$77z1fQ6IDOJKHbmvYpR6V.Q3yEPiBhrsdof7n9ufqFgLJioJkIsbu",
+                            Phone = "8032260689",
                             Role = "Manager"
                         });
                 });
@@ -85,11 +84,12 @@ namespace RestaurantApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("HolderName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("LastFourDigit")
+                        .HasColumnType("nvarchar(4)")
+                        .HasMaxLength(4);
 
-                    b.Property<int>("LastFourDigit")
-                        .HasColumnType("int");
+                    b.Property<bool>("UseAsDefault")
+                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -247,6 +247,9 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<int>("AccountID")
                         .HasColumnType("int");
 
+                    b.Property<string>("AdditionalRequest")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -256,13 +259,21 @@ namespace RestaurantApp.DAL.Migrations
                     b.Property<int>("MenuID")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<double>("Tip")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Total")
                         .HasColumnType("float");
 
                     b.HasKey("ID");
@@ -281,14 +292,20 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AdditionalRequest")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MenuItemID")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
-                    b.Property<double>("Total")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -305,6 +322,12 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("OrderedItemID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("MenuOptionItemID", "OrderedItemID");
@@ -360,7 +383,7 @@ namespace RestaurantApp.DAL.Migrations
             modelBuilder.Entity("RestaurantApp.DAL.Models.Order", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -377,13 +400,13 @@ namespace RestaurantApp.DAL.Migrations
                     b.HasOne("RestaurantApp.DAL.Models.MenuItem", "MenuItem")
                         .WithMany("OrderedItems")
                         .HasForeignKey("MenuItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RestaurantApp.DAL.Models.Order", "Order")
                         .WithMany("OrderedItems")
                         .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

@@ -57,9 +57,9 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 11, 15, 1, 21, 58, 667, DateTimeKind.Local).AddTicks(680),
+                            CreatedOn = new DateTime(2020, 11, 15, 15, 0, 56, 15, DateTimeKind.Local).AddTicks(7827),
                             Name = "Manager",
-                            Password = "$2a$11$uoJ7Er6iwAy2HbvH5jGwJ.FBQPGZau3VDiyMxzf5vHAABxUezme3K",
+                            Password = "$2a$11$77z1fQ6IDOJKHbmvYpR6V.Q3yEPiBhrsdof7n9ufqFgLJioJkIsbu",
                             Phone = "8032260689",
                             Role = "Manager"
                         });
@@ -381,7 +381,7 @@ namespace RestaurantApp.DAL.Migrations
             modelBuilder.Entity("RestaurantApp.DAL.Models.Order", b =>
                 {
                     b.HasOne("RestaurantApp.DAL.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -398,13 +398,13 @@ namespace RestaurantApp.DAL.Migrations
                     b.HasOne("RestaurantApp.DAL.Models.MenuItem", "MenuItem")
                         .WithMany("OrderedItems")
                         .HasForeignKey("MenuItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RestaurantApp.DAL.Models.Order", "Order")
                         .WithMany("OrderedItems")
                         .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

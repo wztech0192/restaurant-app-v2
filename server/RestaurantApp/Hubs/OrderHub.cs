@@ -9,7 +9,7 @@ namespace RestaurantApp.Hubs
 {
     public class OrderHub: Hub
     {
-        public async Task SubmitOrder(OrderDTO)
+        public async Task SubmitOrder(OrderDTO order)
         {
            // await Clients.All.SendAsync("ReceiveMessage", user, message);
         }

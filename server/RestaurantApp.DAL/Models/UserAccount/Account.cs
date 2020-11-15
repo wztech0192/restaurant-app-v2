@@ -4,9 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 
-namespace RestaurantApp.DAL.Models
-
-
+namespace RestaurantApp.DAL.Models { 
     public class Account
     {
         [Key]
@@ -27,7 +25,7 @@ namespace RestaurantApp.DAL.Models
         public virtual ICollection<Card> Cards { get; set; } = new List<Card>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
-        Required]
+        [Required]
         public string Role { get; set; }
     }
 }

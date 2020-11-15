@@ -13,27 +13,15 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(maxLength: 100, nullable: false),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
+                    Phone = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    Role = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MenuOptionGroups",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuOptionGroups", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,8 +30,10 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Version = table.Column<string>(nullable: false),
-                    Tax = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Tax = table.Column<double>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -59,8 +49,8 @@ namespace RestaurantApp.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EncryptedCardInfo = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    HolderName = table.Column<string>(nullable: true),
-                    LastFourDigit = table.Column<int>(nullable: false),
+                    UseAsDefault = table.Column<bool>(nullable: false),
+                    LastFourDigit = table.Column<string>(maxLength: 4, nullable: true),
                     AccountID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -83,7 +73,7 @@ namespace RestaurantApp.DAL.Migrations
                     Name = table.Column<string>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
                     Summary = table.Column<string>(nullable: true),
-                    MenuID = table.Column<int>(nullable: true)
+                    MenuID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,35 +83,27 @@ namespace RestaurantApp.DAL.Migrations
                         column: x => x.MenuID,
                         principalTable: "Menus",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuOptionItems",
+                name: "MenuOptionGroups",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    MenuOptionGroupID = table.Column<int>(nullable: true),
-                    MenuID = table.Column<int>(nullable: true)
+                    MenuID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenuOptionItems", x => x.ID);
+                    table.PrimaryKey("PK_MenuOptionGroups", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_MenuOptionItems_Menus_MenuID",
+                        name: "FK_MenuOptionGroups_Menus_MenuID",
                         column: x => x.MenuID,
                         principalTable: "Menus",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MenuOptionItems_MenuOptionGroups_MenuOptionGroupID",
-                        column: x => x.MenuOptionGroupID,
-                        principalTable: "MenuOptionGroups",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,11 +114,14 @@ namespace RestaurantApp.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     EncryptedCardInfo = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(maxLength: 10, nullable: true),
+                    Name = table.Column<string>(maxLength: 40, nullable: true),
                     Tip = table.Column<double>(nullable: false),
-                    Total = table.Column<double>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    AccountID = table.Column<int>(nullable: true),
-                    MenuID = table.Column<int>(nullable: true)
+                    AdditionalRequest = table.Column<string>(nullable: true),
+                    AccountID = table.Column<int>(nullable: false),
+                    MenuID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,13 +131,13 @@ namespace RestaurantApp.DAL.Migrations
                         column: x => x.AccountID,
                         principalTable: "Accounts",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Menus_MenuID",
                         column: x => x.MenuID,
                         principalTable: "Menus",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,7 +152,8 @@ namespace RestaurantApp.DAL.Migrations
                     Price = table.Column<double>(nullable: false),
                     OptionPriceMultiplier = table.Column<double>(nullable: false),
                     CanAddSides = table.Column<bool>(nullable: false),
-                    MenuEntryID = table.Column<int>(nullable: true)
+                    MenuEntryID = table.Column<int>(nullable: false),
+                    MenuOptionGroups = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,7 +163,28 @@ namespace RestaurantApp.DAL.Migrations
                         column: x => x.MenuEntryID,
                         principalTable: "MenuEntries",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuOptionItems",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    GroupID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuOptionItems", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MenuOptionItems_MenuOptionGroups_GroupID",
+                        column: x => x.GroupID,
+                        principalTable: "MenuOptionGroups",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,59 +193,25 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    EncryptedCardInfo = table.Column<string>(nullable: true),
-                    Tip = table.Column<double>(nullable: false),
-                    Total = table.Column<double>(nullable: false),
-                    AccountID = table.Column<int>(nullable: true),
-                    MenuID = table.Column<int>(nullable: true),
-                    OrderID = table.Column<int>(nullable: true)
+                    Quantity = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    AdditionalRequest = table.Column<string>(nullable: true),
+                    OrderID = table.Column<int>(nullable: false),
+                    MenuItemID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderedItems", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_OrderedItems_Accounts_AccountID",
-                        column: x => x.AccountID,
-                        principalTable: "Accounts",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OrderedItems_Menus_MenuID",
-                        column: x => x.MenuID,
-                        principalTable: "Menus",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_OrderedItems_MenuItems_MenuItemID",
+                        column: x => x.MenuItemID,
+                        principalTable: "MenuItems",
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_OrderedItems_Orders_OrderID",
                         column: x => x.OrderID,
                         principalTable: "Orders",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MenuItemMenuOptionGroups",
-                columns: table => new
-                {
-                    MenuItemID = table.Column<int>(nullable: false),
-                    MenuOptionGroupID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuItemMenuOptionGroups", x => new { x.MenuItemID, x.MenuOptionGroupID });
-                    table.ForeignKey(
-                        name: "FK_MenuItemMenuOptionGroups_MenuItems_MenuItemID",
-                        column: x => x.MenuItemID,
-                        principalTable: "MenuItems",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MenuItemMenuOptionGroups_MenuOptionGroups_MenuOptionGroupID",
-                        column: x => x.MenuOptionGroupID,
-                        principalTable: "MenuOptionGroups",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -246,7 +219,9 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     OrderedItemID = table.Column<int>(nullable: false),
-                    MenuOptionItemID = table.Column<int>(nullable: false)
+                    MenuOptionItemID = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Key = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -267,8 +242,14 @@ namespace RestaurantApp.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Accounts",
-                columns: new[] { "ID", "CreatedOn", "Email", "Name", "Password" },
-                values: new object[] { 1, new DateTime(2020, 9, 30, 18, 40, 56, 267, DateTimeKind.Local).AddTicks(6730), "weijie0192@gmail.com", "Manager", "$2a$11$EUS5tspPIQF8P0W32W7FBOS/H3tlPahiTo4AU9tIfP3.2pTqvZmRi" });
+                columns: new[] { "ID", "CreatedOn", "Name", "Password", "Phone", "Role" },
+                values: new object[] { 1, new DateTime(2020, 11, 15, 15, 0, 56, 15, DateTimeKind.Local).AddTicks(7827), "Manager", "$2a$11$77z1fQ6IDOJKHbmvYpR6V.Q3yEPiBhrsdof7n9ufqFgLJioJkIsbu", "8032260689", "Manager" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accounts_Phone",
+                table: "Accounts",
+                column: "Phone",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cards_AccountID",
@@ -281,24 +262,19 @@ namespace RestaurantApp.DAL.Migrations
                 column: "MenuID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuItemMenuOptionGroups_MenuOptionGroupID",
-                table: "MenuItemMenuOptionGroups",
-                column: "MenuOptionGroupID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_MenuEntryID",
                 table: "MenuItems",
                 column: "MenuEntryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuOptionItems_MenuID",
-                table: "MenuOptionItems",
+                name: "IX_MenuOptionGroups_MenuID",
+                table: "MenuOptionGroups",
                 column: "MenuID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuOptionItems_MenuOptionGroupID",
+                name: "IX_MenuOptionItems_GroupID",
                 table: "MenuOptionItems",
-                column: "MenuOptionGroupID");
+                column: "GroupID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderedItemMenuOptionItems_OrderedItemID",
@@ -306,14 +282,9 @@ namespace RestaurantApp.DAL.Migrations
                 column: "OrderedItemID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderedItems_AccountID",
+                name: "IX_OrderedItems_MenuItemID",
                 table: "OrderedItems",
-                column: "AccountID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderedItems_MenuID",
-                table: "OrderedItems",
-                column: "MenuID");
+                column: "MenuItemID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderedItems_OrderID",
@@ -337,13 +308,7 @@ namespace RestaurantApp.DAL.Migrations
                 name: "Cards");
 
             migrationBuilder.DropTable(
-                name: "MenuItemMenuOptionGroups");
-
-            migrationBuilder.DropTable(
                 name: "OrderedItemMenuOptionItems");
-
-            migrationBuilder.DropTable(
-                name: "MenuItems");
 
             migrationBuilder.DropTable(
                 name: "MenuOptionItems");
@@ -352,13 +317,16 @@ namespace RestaurantApp.DAL.Migrations
                 name: "OrderedItems");
 
             migrationBuilder.DropTable(
-                name: "MenuEntries");
-
-            migrationBuilder.DropTable(
                 name: "MenuOptionGroups");
 
             migrationBuilder.DropTable(
+                name: "MenuItems");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "MenuEntries");
 
             migrationBuilder.DropTable(
                 name: "Accounts");

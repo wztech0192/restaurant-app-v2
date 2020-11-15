@@ -62,7 +62,12 @@ namespace RestaurantApp.DAL
             modelBuilder.Entity<OrderedItem>()
                 .HasOne(x => x.MenuItem)
                 .WithMany(x => x.OrderedItems)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<OrderedItem>()
+              .HasOne(x => x.Order)
+              .WithMany(x => x.OrderedItems)
+              .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<MenuOptionGroup>()
               .HasOne(x => x.Menu)
@@ -83,6 +88,8 @@ namespace RestaurantApp.DAL
             .HasOne(x => x.MenuEntry)
             .WithMany(x => x.MenuItems)
             .OnDelete(DeleteBehavior.Cascade);
+
+
 
             seeding(modelBuilder);
 

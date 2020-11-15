@@ -30,6 +30,11 @@ namespace RestaurantApp.BLL.Services
             return base.ProcessMessage<AccountDTO>(msg =>
             {
                 var entity = base.JWTService.GetCurrentAccount();
+
+                if(entity == null)
+                {
+                    throw new ServiceException("Unauthorized, please try to login in again", HttpStatusCode.Unauthorized);
+                }
                 msg.Data = new AccountDTO(entity);
                 msg.Success = true;
             });
