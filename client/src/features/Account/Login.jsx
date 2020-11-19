@@ -6,11 +6,13 @@ import {
     handleEditAccountInfo,
     handleEditAccountInfoPhone,
     handleLoginAccount,
-    handleSetAccountView
+    handleSetAccountView,
+    editAccountInfo
 } from "./accountSlice";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import ErrorDisplayer from "common/ErrorDisplayer";
 import AccountHeader from "./AccountHeader";
+import { parseLocalStorageOrDefault } from "common";
 
 const progessBarStyle = {
     width: "90%",
@@ -22,6 +24,17 @@ const Login = ({ handleClose, loading, errors }) => {
     const dispatch = useDispatch();
     const state = useSelector(state => state.account.editAccountInfo);
 
+    React.useEffect(() => {
+        const previousPhone = parseLocalStorageOrDefault("previousLoginPhone", "");
+        if (previousPhone) {
+            dispatch(
+                editAccountInfo({
+                    name: "phone",
+                    value: previousPhone + ""
+                })
+            );
+        }
+    }, []);
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
     return (

@@ -29,7 +29,6 @@ namespace RestaurantApp.DAL.Models
         public OrderStatus Status { get; set; }
         public string AdditionalRequest { get; set; }
 
-        [Required]
         public virtual Account Account { get;set;}
 
         [Required]

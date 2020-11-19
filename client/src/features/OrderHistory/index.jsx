@@ -1,6 +1,5 @@
 import {
     Chip,
-    Grow,
     List,
     ListItem,
     ListItemSecondaryAction,
@@ -11,10 +10,11 @@ import { Skeleton } from "@material-ui/lab";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { EMPTY_ARRAY } from "common";
 import SkeletonWrapper from "common/SkeletonWrapper";
-import { getAccountToken } from "features/Account/accountSlice";
+import { isAccountLogin } from "features/Account/accountSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchOrderHistory } from "./orderHistorySlice";
+import { getDateStr } from "common";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -26,18 +26,18 @@ const OrderHistory = () => {
     const classes = useStyles();
     const _orders = useSelector(state => state.orderHistory);
 
-    const accountToken = useSelector(getAccountToken);
+    const isLogin = useSelector(isAccountLogin);
     const loading = useSelector(getLoading("orderHistory"));
 
     const dispatch = useDispatch();
 
-    const tokenRef = React.useRef(accountToken);
+    const loginRef = React.useRef(isLogin);
     React.useEffect(() => {
-        if (!_orders || tokenRef.current !== accountToken) {
-            tokenRef.current = accountToken;
-            dispatch(handleFetchOrderHistory(accountToken));
+        if (!_orders || loginRef.current !== isLogin) {
+            loginRef.current = isLogin;
+            dispatch(handleFetchOrderHistory(isLogin));
         }
-    }, [_orders, dispatch, accountToken]);
+    }, [_orders, dispatch, isLogin]);
 
     const orders = _orders || EMPTY_ARRAY;
     return (
@@ -55,14 +55,18 @@ const OrderHistory = () => {
             >
                 <List dense>
                     {orders.map((order, i) => (
-                        <ListItem button key={i} onClick={() => {}}>
+                        <ListItem divider button key={i} onClick={() => {}}>
                             <ListItemText
-                                primary={`Ticket #${order.ticketID}`}
-                                secondary={order.orderDate}
+                                primary={
+                                    <span>
+                                        <b>Ticket {order.id}</b>
+                                    </span>
+                                }
+                                secondary={getDateStr(order.createdOn)}
                             />
                             <ListItemSecondaryAction>
-                                <Chip color="primary" label="Today" size="small" />$
-                                {order.price.toFixed(2)}
+                                <Chip color="primary" label="Today" size="small" />
+                                &nbsp; &nbsp;&nbsp; ${order.price.toFixed(2)}
                             </ListItemSecondaryAction>
                         </ListItem>
                     ))}

@@ -1,30 +1,36 @@
+import { Fade } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { getLoading, LOADING } from "./indicatorSlice";
 
-const loadingEl = document.getElementById("global-loading");
+const timeout = { enter: 0, exit: 500 };
+let loadingEl = document.getElementById("global-loading");
 
 const GlobalLoading = () => {
     const loading = useSelector(getLoading(LOADING.GLOBAL));
+
     React.useEffect(() => {
-        if (loading && loadingEl.classList.contains("fade")) {
-            loadingEl.classList.remove("fade");
-            loadingEl.style.visibility = "visible";
-        } else if (!loading && !loadingEl.classList.contains("fade")) {
-            loadingEl.classList.add("fade");
+        if (!loading && loadingEl) {
+            loadingEl.parentElement.removeChild(loadingEl);
+            loadingEl = null;
         }
-        const transtion = () => {
-            if (!loading) {
-                loadingEl.style.visibility = "hidden";
-            }
-        };
-        loadingEl.addEventListener("transitionend", transtion);
-        return () => {
-            loadingEl.removeEventListener("transitionend", transtion);
-        };
     }, [loading]);
 
-    return null;
+    return (
+        <Fade in={loading} timeout={timeout}>
+            <div id="global-loading">
+                <div className="ball-container">
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                    <div className="ball"></div>
+                </div>
+            </div>
+        </Fade>
+    );
 };
 
 export default GlobalLoading;

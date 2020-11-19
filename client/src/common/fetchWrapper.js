@@ -2,10 +2,13 @@ class FetchWrapper {
     token = undefined;
     baseURL = "";
 
-    getHeader = () => ({
-        Authorization: `Bearer ${this.token}`,
-        "Content-Type": "application/json"
-    });
+    getHeader = () => {
+        const header = { "Content-Type": "application/json" };
+        if (this.token) {
+            header.Authorization = `Bearer ${this.token}`;
+        }
+        return header;
+    };
 
     setToken = token => {
         this.token = token;

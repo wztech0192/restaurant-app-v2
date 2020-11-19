@@ -26,14 +26,16 @@ const CartPayment = () => {
                     {payWithExistingCard ? (
                         <br />
                     ) : (
-                        <div>
-                            <Checkbox
-                                color="primary"
-                                checked={saveCard}
-                                onClick={e => setSaveCard(e.target.checked)}
-                            />
-                            Save This Card
-                        </div>
+                        account && (
+                            <div>
+                                <Checkbox
+                                    color="primary"
+                                    checked={saveCard}
+                                    onClick={e => setSaveCard(e.target.checked)}
+                                />
+                                Save This Card
+                            </div>
+                        )
                     )}
                     <Button
                         disabled={!isValid}

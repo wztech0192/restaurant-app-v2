@@ -1,16 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getRecentOrder } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
-import { getAccountToken } from "features/Account/accountSlice";
+import { parseLocalStorageOrDefault } from "common";
+import { getAccountToken, isAccountLogin } from "features/Account/accountSlice";
+import { isManager } from "features/Account/roleChecker";
 
-export const orderHistorySubscribeListener = store => {
-    const state = store.getState();
-    const token = getAccountToken(state);
-    if (!token) {
-        //todo: this is too heavy
-        //  localStorage.setItem("orderHistory", state.orderHistory);
-    }
-};
+let storedHistory = parseLocalStorageOrDefault("orderHistory", []);
 
 const initialState = null;
 
@@ -43,14 +38,25 @@ export default orderHubSlice.reducer;
 const {
     clearOrderHistory,
     fetchOrderHistory,
-    appendOrderHistory,
+    appendOrderHistory: appendOrderHistoryAction,
     updateOrderStatus
 } = orderHubSlice.actions;
 
-export { appendOrderHistory };
+export const appendOrderHistory = payload => (dispatch, getState) => {
+    const state = getState();
+    const isLogin = isAccountLogin(state);
 
-export const handleFetchOrderHistory = accountToken => (dispatch, getState) => {
-    if (accountToken)
+    if (!isLogin) {
+        storedHistory = [payload, ...storedHistory];
+        localStorage.setItem("orderHistory", JSON.stringify(storedHistory.slice(-10)));
+        dispatch(fetchOrderHistory(storedHistory));
+    } else {
+        dispatch(appendOrderHistoryAction(payload));
+    }
+};
+
+export const handleFetchOrderHistory = isLogin => dispatch => {
+    if (isLogin) {
         dispatch(
             asyncAction({
                 toggleLoadingFor: "orderHistory",
@@ -60,8 +66,8 @@ export const handleFetchOrderHistory = accountToken => (dispatch, getState) => {
                 }
             })
         );
-    else {
-        dispatch(fetchOrderHistory(JSON.parse(localStorage.getItem("orderHistory"))));
+    } else {
+        dispatch(fetchOrderHistory(storedHistory));
     }
 };
 
@@ -73,7 +79,7 @@ export const orderHubMiddleware = (dispatch, getState, _invoke) => {
     invoke = _invoke;
     return {
         [RECEIVE_ORDER]: order => {
-            dispatch(appendOrderHistory(order));
+            if (isManager(getState())) dispatch(appendOrderHistory(order));
         }
     };
 };

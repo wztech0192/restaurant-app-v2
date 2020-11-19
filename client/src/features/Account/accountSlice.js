@@ -112,6 +112,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const getAccountToken = state => state.account.token;
+export const isAccountLogin = state => Boolean(state.account.token && state.account.accountInfo);
 export const getAccountRole = state =>
     state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS";
 
@@ -128,7 +129,7 @@ const {
     removeCard
 } = slice.actions;
 
-export { setEditAccountInfo, removeCard, setCardAsDefault };
+export { setEditAccountInfo, editAccountInfo, removeCard, setCardAsDefault };
 
 export const handleLogout = dispatch => e => {
     dispatch(reset());
@@ -200,6 +201,8 @@ export const handleLoginAccount = (accountData, actionType) => dispatch => e => 
             promise: () => apiCall(accountData),
             success: accountInfo => {
                 dispatch(setAccountInfo(accountInfo));
+                console.log("test", accountInfo.phone);
+                localStorage.setItem("previousLoginPhone", accountInfo.phone);
                 dispatch(
                     enqueueSnackbar({
                         message: `Hello, ${accountInfo.name}!`,
