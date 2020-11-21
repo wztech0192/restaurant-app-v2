@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from "@material-ui/core";
+import { Box, Divider, Grid, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
@@ -12,7 +12,6 @@ const OrderSummary = ({
     canEdit,
     LeftBox,
     tax,
-
     handleUpdateTip,
     handleRemoveOrder,
     handleEditOrder,
@@ -20,49 +19,83 @@ const OrderSummary = ({
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
-    console.log("test");
     return (
         <div>
-            <OrderSummaryHeader classes={classes} totalItems={totalItems} />
-            <div>
-                {totalItems === 0 ? (
-                    <div>
-                        <br />
-                        <Typography>Empty Cart...</Typography>
-                    </div>
-                ) : (
-                    <OrderItemsSummary
-                        orderedItems={orderInfo.orderedItems}
-                        canEdit={canEdit}
-                        handleRemoveOrder={handleRemoveOrder}
-                        handleEditOrder={handleEditOrder}
-                        classes={classes}
+            <OrderSummaryHeader orderInfo={orderInfo} classes={classes} totalItems={totalItems} />
+
+            <Grid container alignItems="center">
+                <Grid item xs={12} sm={7} className={classes.summaryItemsGrid}>
+                    {totalItems === 0 ? (
+                        <div>
+                            <br />
+                            <Typography>Empty Cart...</Typography>
+                        </div>
+                    ) : (
+                        <OrderItemsSummary
+                            orderedItems={orderInfo.orderedItems}
+                            canEdit={canEdit}
+                            handleRemoveOrder={handleRemoveOrder}
+                            handleEditOrder={handleEditOrder}
+                            classes={classes}
+                        />
+                    )}
+                    <TextFieldWrapper
+                        solid
+                        margin="dense"
+                        variant="standard"
+                        label={!canEdit && !orderInfo.additionalRequest ? "" : "Additional Request"}
+                        disabled={!canEdit}
+                        value={orderInfo.additionalRequest}
+                        onChange={handleUpdateAdditionalRequest}
                     />
-                )}
-            </div>
-
-            <TextFieldWrapper
-                margin="dense"
-                variant="standard"
-                label="Additional Request"
-                disabled={!canEdit}
-                value={orderInfo.additionalRequest}
-                onChange={handleUpdateAdditionalRequest}
-            />
-
-            <div className={classes.paymentActionBox}>
-                {LeftBox}
-                <Box flexGrow="1" />
-                <OrderPriceSummaryBox
-                    classes={classes}
-                    canEdit={canEdit}
-                    handleUpdateTip={handleUpdateTip}
-                    tip={orderInfo.tip}
-                    tax={tax || orderInfo.tax}
-                    subtotal={orderInfo.price}
-                />
-            </div>
-            <br />
+                </Grid>
+                <Grid item xs={4} sm={12} className={classes.summaryActionGrid}>
+                    {LeftBox}
+                </Grid>
+                <Grid item xs={8} sm={5}>
+                    <Box display="flex" justifyContent="flex-end">
+                        <OrderPriceSummaryBox
+                            classes={classes}
+                            orderInfo={orderInfo}
+                            canEdit={canEdit}
+                            handleUpdateTip={handleUpdateTip}
+                            tip={orderInfo.tip}
+                            tax={tax || orderInfo.tax}
+                            subtotal={orderInfo.price}
+                        />
+                    </Box>
+                    {orderInfo.id && (
+                        <>
+                            <br />
+                            <Box display="flex" justifyContent="flex-end">
+                                <Paper elevation={5}>
+                                    <Grid container className={classes.priceBox}>
+                                        <Grid item xs={6}>
+                                            <Typography align="right">Order Name:</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography align="right">
+                                                {" "}
+                                                <b>{orderInfo.name}</b>
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography align="right">Phone:</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography align="right">
+                                                <b>
+                                                    {orderInfo.phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3")}
+                                                </b>
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Paper>
+                            </Box>
+                        </>
+                    )}
+                </Grid>
+            </Grid>
         </div>
     );
 };

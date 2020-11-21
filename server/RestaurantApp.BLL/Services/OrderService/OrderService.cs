@@ -44,6 +44,18 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
+        public IServiceMessage<IDictionary<int, OrderStatus>> GetStatus(IEnumerable<int> ids)
+        {
+            return base.ProcessMessage<IDictionary<int, OrderStatus>>(msg =>
+            {
+                msg.Data = base.UnitOfWork.Orders
+                    .Find(order => ids.Contains(order.ID))
+                    .ToDictionary(order=>order.ID, order=>order.Status);
+                msg.Success = true;
+            });
+        }
+
+
         public IServiceMessage<IEnumerable<OrderDTO>> GetRecent(int num)
         {
             return base.ProcessMessage<IEnumerable<OrderDTO>>(msg =>

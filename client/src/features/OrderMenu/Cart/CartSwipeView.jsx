@@ -40,6 +40,7 @@ const CartSwipeView = ({ menu }) => {
     );
     return (
         <SwipeableDrawer
+            disableDiscovery
             anchor="bottom"
             open={open}
             onClose={e => dispatch(setOpenCart(false))}
@@ -79,6 +80,7 @@ const CartSwipeView = ({ menu }) => {
                     }
                 />
                 {openPayment && (BadStatus || <CartPayment />)}
+                <br />
             </Box>
         </SwipeableDrawer>
     );

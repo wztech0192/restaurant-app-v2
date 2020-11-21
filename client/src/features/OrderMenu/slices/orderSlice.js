@@ -3,15 +3,11 @@ import { getActiveMenu, postOrder } from "app/apiProvider";
 import history from "app/history";
 import { handleOpenModal, LOADING } from "app/Indicator/indicatorSlice";
 import { asyncAction, encryptionAction } from "app/sharedActions";
+import { handleGetAccountInfo } from "features/Account/accountSlice";
 import { appendOrderHistory } from "features/OrderHistory/orderHistorySlice";
 import uid from "uid";
 import OrderSubmitMessage from "../OrderSubmitMessage";
-import {
-    itemCounterHelper,
-    addOrderItemHelper,
-    removeOrderItemHelper,
-    needEditModal
-} from "./helper";
+import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
 
 const initialState = {
     cart: {
@@ -43,9 +39,7 @@ const slice = createSlice({
         saveEditedItem(state) {
             const { cart, editedItem } = state;
             if (editedItem) {
-                const replaceItemIndex = cart.orderedItems.findIndex(
-                    item => item.uid === editedItem.uid
-                );
+                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
                 if (replaceItemIndex !== -1) {
                     const replaceItem = cart.orderedItems[replaceItemIndex];
                     cart.price -= replaceItem.price * replaceItem.quantity;
@@ -59,12 +53,7 @@ const slice = createSlice({
                 } else {
                     cart.orderedItems.push(editedItem);
                 }
-                itemCounterHelper(
-                    state.itemCounter,
-                    editedItem.entryName,
-                    editedItem.name,
-                    editedItem.quantity
-                );
+                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
                 cart.price += editedItem.price * editedItem.quantity;
             }
             state.editedItem = false;
@@ -117,12 +106,7 @@ const slice = createSlice({
             const { menuEntryName, menuItem, quantity } = payload;
             itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
-                state.cart,
-                menuEntryName,
-                menuItem,
-                quantity
-            );
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;
@@ -198,10 +182,7 @@ export const handleAddOrRemoveItem = (menuEntryName, menuItem, quantity) => disp
     }
 };
 
-export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) => (
-    dispatch,
-    getState
-) => e => {
+export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) => (dispatch, getState) => e => {
     const order = getState().order.cart;
     const payload = {
         ...order,
@@ -211,8 +192,9 @@ export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) =>
 
     if (payWithExistingCard) {
         payload.cardId = paymentInfo.cardId;
-        payload.saveCard = saveCard;
     } else {
+        payload.saveCard = saveCard;
+
         const json = JSON.stringify({
             card: paymentInfo.card,
             expireDate: paymentInfo.expireDate
@@ -243,6 +225,9 @@ export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) =>
                 );
                 history.push("/");
                 dispatch(appendOrderHistory(order));
+                if (saveCard) {
+                    dispatch(handleGetAccountInfo);
+                }
             }
         })
     );

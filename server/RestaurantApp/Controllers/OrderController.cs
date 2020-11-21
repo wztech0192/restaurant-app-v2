@@ -50,6 +50,16 @@ namespace RestaurantApp.Controllers
         }
 
         /// <summary>
+        /// Get status of provided order ids
+        /// </summary>
+        /// <returns>list of id/status pair</returns>
+        [HttpGet("status")]
+        public IActionResult GetStatus([FromQuery] IEnumerable<int> ids)
+        {
+            return base.ProcessService(_service.GetStatus(ids));
+        }
+
+        /// <summary>
         /// Get recent 5 orders.
         /// </summary>
         /// <returns>list of orders</returns>

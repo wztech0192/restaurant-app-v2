@@ -14,6 +14,7 @@ import { Skeleton } from "@material-ui/lab";
 import CartFloatButton from "./Cart/CartFloatButton";
 import MenuItemEditDialog from "./MenuItem/MenuItemEditDialog";
 import useBadStatus from "./useBadStatus";
+import menu from "assets/menuSample.json";
 
 const LoadingSkeleton = () => (
     <Grid container spacing={2}>
@@ -42,7 +43,7 @@ const OrderMenu = ({ setHeader }) => {
     const classes = useStyles();
     const selectedEntryName = useSelector(state => state.order.selectedEntryName);
 
-    const menu = useSelector(state => state.menu);
+    //const menu = useSelector(state => state.menu);
     const hasMenu = Boolean(menu);
 
     const dispatch = useDispatch();
@@ -77,11 +78,7 @@ const OrderMenu = ({ setHeader }) => {
         <Fade in>
             <div className={classes.menuBody}>
                 {BadStatus}
-                {hasMenu ? (
-                    <MenuView menu={menu} selectedEntryName={selectedEntryName} />
-                ) : (
-                    <LoadingSkeleton />
-                )}
+                {hasMenu ? <MenuView menu={menu} selectedEntryName={selectedEntryName} /> : <LoadingSkeleton />}
                 {hasMenu && (
                     <div>
                         <Zoom in>

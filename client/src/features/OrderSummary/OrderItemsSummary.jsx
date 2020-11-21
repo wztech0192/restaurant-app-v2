@@ -1,12 +1,4 @@
-import {
-    Chip,
-    IconButton,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Typography
-} from "@material-ui/core";
+import { Chip, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -19,39 +11,24 @@ const reduceSideTotal = (total, [_, opt]) => {
     return total;
 };
 
-const OrderItemsSummary = ({
-    handleRemoveOrder,
-    handleEditOrder,
-    canEdit,
-    orderedItems,
-    classes
-}) => {
+const OrderItemsSummary = ({ handleRemoveOrder, handleEditOrder, canEdit, orderedItems, classes }) => {
     return (
         <List className={classes.itemsContainer}>
             {orderedItems.map(item => {
-                const sides = item.orderedOptions
-                    ? Object.entries(item.orderedOptions)
-                    : EMPTY_ARRAY;
+                const sides = item.orderedOptions ? Object.entries(item.orderedOptions) : EMPTY_ARRAY;
                 const noSideTotal = sides.reduce(reduceSideTotal, item.price);
                 return (
-                    <ListItem key={item.uid} dense className={classes.itemList}>
+                    <ListItem divider key={item.uid || item.id} dense className={classes.itemList}>
                         {canEdit && (
                             <ListItemAvatar>
                                 <div>
                                     {handleEditOrder && (
-                                        <IconButton
-                                            size="small"
-                                            color="primary"
-                                            onClick={() => handleEditOrder(item)}
-                                        >
+                                        <IconButton size="small" color="primary" onClick={() => handleEditOrder(item)}>
                                             <EditIcon />
                                         </IconButton>
                                     )}
                                     {handleRemoveOrder && (
-                                        <IconButton
-                                            size="small"
-                                            onClick={() => handleRemoveOrder(item)}
-                                        >
+                                        <IconButton size="small" onClick={() => handleRemoveOrder(item)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     )}
@@ -62,17 +39,10 @@ const OrderItemsSummary = ({
                             primary={
                                 <Typography color={false ? "error" : "textPrimary"}>
                                     &nbsp;
-                                    <Chip
-                                        label={item.quantity}
-                                        component="span"
-                                        color="primary"
-                                        size="small"
-                                    />
+                                    <Chip label={item.quantity} component="span" color="primary" size="small" />
                                     &nbsp;&nbsp;
                                     {item.name}
-                                    <span className="float-right">
-                                        {(noSideTotal * item.quantity).toFixed(2)}
-                                    </span>
+                                    <span className="float-right">{(noSideTotal * item.quantity).toFixed(2)}</span>
                                 </Typography>
                             }
                             secondary={

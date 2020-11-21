@@ -2,12 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import FetchWrapper from "common/fetchWrapper";
 import { postLogin, postAccount, getAccount, putAccount } from "app/apiProvider";
 import { asyncAction, encryptionAction } from "app/sharedActions";
-import {
-    enqueueSnackbar,
-    setErrors,
-    setGlobalLoading,
-    setLoading
-} from "app/Indicator/indicatorSlice";
+import { enqueueSnackbar, setErrors, setGlobalLoading, setLoading } from "app/Indicator/indicatorSlice";
 import encryptionProvider from "common/encryptionProvider";
 import getUID from "common/getUID";
 import history from "app/history";
@@ -60,9 +55,7 @@ const slice = createSlice({
             state.editAccountInfo.cards.push(payload);
         },
         removeCard(state, { payload }) {
-            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(
-                card => card.id !== payload
-            );
+            state.editAccountInfo.cards = state.editAccountInfo.cards.filter(card => card.id !== payload);
             if (state.editAccountInfo.defaultCardId === payload) {
                 if (state.editAccountInfo.cards.length > 0) {
                     state.editAccountInfo.defaultCardId = state.editAccountInfo.cards[0].id;
@@ -113,8 +106,7 @@ export default slice.reducer;
 
 export const getAccountToken = state => state.account.token;
 export const isAccountLogin = state => Boolean(state.account.token && state.account.accountInfo);
-export const getAccountRole = state =>
-    state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS";
+export const getAccountRole = state => (state.account.accountInfo ? state.account.accountInfo.role : "ANONYMOUS");
 
 const {
     setAccountView,
@@ -201,7 +193,6 @@ export const handleLoginAccount = (accountData, actionType) => dispatch => e => 
             promise: () => apiCall(accountData),
             success: accountInfo => {
                 dispatch(setAccountInfo(accountInfo));
-                console.log("test", accountInfo.phone);
                 localStorage.setItem("previousLoginPhone", accountInfo.phone);
                 dispatch(
                     enqueueSnackbar({

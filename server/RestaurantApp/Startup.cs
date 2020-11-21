@@ -40,7 +40,7 @@ namespace RestaurantApp
 
             var appSettings = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettings);
-
+            services.AddControllers().AddNewtonsoftJson();
             services.UseCustomCors();
             services.AddSignalR();
             services.AddControllers();

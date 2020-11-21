@@ -19,20 +19,39 @@ export default makeStyles(theme => ({
         marginTop: 15
     },
     priceBox: {
-        width: 120
+        padding: 5
     },
     itemList: {
         paddingLeft: 0,
         paddingRight: 0,
         alignItems: "baseline"
     },
-    itemsContainer: {
-        overflow: "auto",
-        maxHeight: "45vh"
-    },
     itemOptionSummary: {
         paddingLeft: "40px",
         fontSize: "0.95em",
         display: "block"
+    },
+    summaryActionGrid: {
+        order: 0,
+        marginTop: 10,
+        [theme.breakpoints.up("sm")]: {
+            order: 2,
+            justifyContent: "space-evenly"
+        }
+    },
+    itemsContainer: {
+        overflow: "auto",
+        maxHeight: "45vh",
+        paddingRight: 13,
+        marginRight: -13,
+        [theme.breakpoints.up("sm")]: {
+            maxHeight: "70vh"
+        }
+    },
+    summaryItemsGrid: {
+        [theme.breakpoints.up("sm")]: {
+            borderRight: `1px solid ${theme.palette.divider}`,
+            paddingRight: 10
+        }
     }
 }));

@@ -30,7 +30,13 @@ const CardList = ({ account = EMPTY_OBJECT, onSelect, useCardId, onRemove, canEd
                             onClick={() => onSelect(card.id)}
                         />
                     </ListItemIcon>
-                    <ListItemText primary={`Card End With ${card.lastFourDigit}`} />
+                    <ListItemText
+                        primary={
+                            <span>
+                                Card End With <b>{card.lastFourDigit}</b>
+                            </span>
+                        }
+                    />
                     {onRemove && (
                         <ListItemSecondaryAction>
                             <IconButton

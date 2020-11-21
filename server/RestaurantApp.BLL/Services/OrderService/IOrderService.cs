@@ -12,5 +12,6 @@ namespace RestaurantApp.BLL.Services
         IServiceMessage<IEnumerable<OrderDTO>> GetAll();
         IServiceMessage<OrderDTO> Create(OrderDTO dto);
         IServiceMessage<OrderDTO> Get(int id);
+        IServiceMessage<IDictionary<int, OrderStatus>> GetStatus(IEnumerable<int> ids);
     }
 }
