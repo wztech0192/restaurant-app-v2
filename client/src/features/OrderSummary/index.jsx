@@ -23,8 +23,8 @@ const OrderSummary = ({
         <div>
             <OrderSummaryHeader orderInfo={orderInfo} classes={classes} totalItems={totalItems} />
 
-            <Grid container alignItems="center">
-                <Grid item xs={12} sm={7} className={classes.summaryItemsGrid}>
+            <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} md={7} className={classes.summaryItemsGrid}>
                     {totalItems === 0 ? (
                         <div>
                             <br />
@@ -49,10 +49,10 @@ const OrderSummary = ({
                         onChange={handleUpdateAdditionalRequest}
                     />
                 </Grid>
-                <Grid item xs={4} sm={12} className={classes.summaryActionGrid}>
+                <Grid item xs={4} md={12} className={classes.summaryActionGrid}>
                     {LeftBox}
                 </Grid>
-                <Grid item xs={8} sm={5}>
+                <Grid item xs={8} md={5}>
                     <Box display="flex" justifyContent="flex-end">
                         <OrderPriceSummaryBox
                             classes={classes}
@@ -75,7 +75,6 @@ const OrderSummary = ({
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography align="right">
-                                                {" "}
                                                 <b>{orderInfo.name}</b>
                                             </Typography>
                                         </Grid>
@@ -85,7 +84,10 @@ const OrderSummary = ({
                                         <Grid item xs={6}>
                                             <Typography align="right">
                                                 <b>
-                                                    {orderInfo.phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3")}
+                                                    {orderInfo.phone.replace(
+                                                        /^(\d{3})(\d{3})(\d{4})$/,
+                                                        "($1) $2-$3"
+                                                    )}
                                                 </b>
                                             </Typography>
                                         </Grid>

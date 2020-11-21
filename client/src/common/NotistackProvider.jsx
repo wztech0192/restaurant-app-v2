@@ -1,26 +1,38 @@
 import React from "react";
 import { SnackbarProvider } from "notistack";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import { Button } from "@material-ui/core";
 
 const notistackRef = React.createRef();
 const onClickDismiss = key => () => {
     notistackRef.current.closeSnackbar(key);
 };
 
-const customAction = key => (
-    <IconButton color="inherit" onClick={onClickDismiss(key)}>
-        <CloseIcon color="inherit" />
-    </IconButton>
-);
-
 const customClasses = {
     containerAnchorOriginBottomLeft: "snackbar"
 };
 
+const action = key => (
+    <Button
+        onClick={() => onClickDismiss(key)(key)}
+        style={{
+            height: "100%",
+            left: 0,
+            position: "absolute",
+            width: "100%",
+            top: 0
+        }}
+        styleType="link"
+    />
+);
 const NotistackProvider = ({ children }) => {
     return (
-        <SnackbarProvider classes={customClasses} ref={notistackRef} action={customAction}>
+        <SnackbarProvider
+            preventDuplicate
+            dense
+            action={action}
+            classes={customClasses}
+            ref={notistackRef}
+        >
             {children}
         </SnackbarProvider>
     );

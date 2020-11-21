@@ -18,12 +18,16 @@ export default slice.reducer;
 
 const { fetchMenu } = slice.actions;
 
-export const handleFetchMenu = dispatch => {
+export const handleFetchMenu = (loadingTarget, onSuccess) => dispatch => {
     dispatch(
         asyncAction({
+            loadingTarget,
             promise: getActiveMenu,
             success: menuInfo => {
                 dispatch(fetchMenu(menuInfo));
+                if (onSuccess) {
+                    onSuccess(menuInfo);
+                }
             }
         })
     );

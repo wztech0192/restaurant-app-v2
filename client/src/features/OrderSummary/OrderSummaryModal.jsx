@@ -16,7 +16,7 @@ import { setOrderSummary } from "./orderSummarySlice";
 
 const useStyles = makeStyles(theme => ({
     action: {
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             flexDirection: "row-reverse"
         }
     },
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 const OrderSummaryModalContent = React.memo(
-    ({ handleClose, selectedOrder }) => {
+    ({ handleClose, selectedOrder, children }) => {
         const classes = useStyles();
         return (
             <DialogContent className={classes.content}>
@@ -35,15 +35,17 @@ const OrderSummaryModalContent = React.memo(
                     shouldUpdate
                     orderInfo={selectedOrder}
                     LeftBox={
-                        <Grid container justify="space-between" alignItems="stretch" className={classes.action}>
-                            <Grid item xs={12} sm="auto">
-                                <Button color="primary" variant="contained" onClick={e => {}}>
-                                    Buy Again!
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} sm="auto">
-                                <Button onClick={handleClose}>Close</Button>
-                            </Grid>
+                        <Grid
+                            container
+                            justify="space-between"
+                            alignItems="stretch"
+                            className={classes.action}
+                        >
+                            {React.Children.map(children, child => (
+                                <Grid item xs={12} md="auto">
+                                    {child}
+                                </Grid>
+                            ))}
                         </Grid>
                     }
                 />
@@ -60,7 +62,11 @@ const OrderSummaryModal = props => {
     };
     return (
         <Dialog open={Boolean(selectedOrder)} onClose={handleClose} maxWidth="md">
-            <OrderSummaryModalContent selectedOrder={selectedOrder} handleClose={handleClose} {...props} />
+            <OrderSummaryModalContent
+                selectedOrder={selectedOrder}
+                handleClose={handleClose}
+                {...props}
+            />
         </Dialog>
     );
 };

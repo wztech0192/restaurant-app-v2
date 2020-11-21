@@ -1,4 +1,12 @@
-import { Chip, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
+import {
+    Button,
+    Chip,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+    makeStyles
+} from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { EMPTY_ARRAY } from "common";
@@ -6,12 +14,17 @@ import SkeletonWrapper from "common/SkeletonWrapper";
 import { getAccountToken } from "features/Account/accountSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFetchOrderHistory, handleSyncOrderStatus, handleUnSyncOrderStatus } from "./orderHistorySlice";
+import {
+    handleFetchOrderHistory,
+    handleSyncOrderStatus,
+    handleUnSyncOrderStatus
+} from "./orderHistorySlice";
 import { getDateStr } from "common";
 import { checkIsOrderHubConnected } from "app/centralHub";
 import OrderStatus, { getStatusChipProps } from "./orderStatus";
 import OrderSummaryModal from "features/OrderSummary/OrderSummaryModal";
 import { setOrderSummary } from "features/OrderSummary/orderSummarySlice";
+import { handleBuyAgain } from "features/OrderMenu/slices/orderSlice";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -85,7 +98,24 @@ const OrderHistory = () => {
                     ))}
                 </List>
             </SkeletonWrapper>
-            <OrderSummaryModal />
+            <OrderSummaryModal>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={e => {
+                        dispatch(handleBuyAgain);
+                    }}
+                >
+                    Buy Again!
+                </Button>
+                <Button
+                    onClick={() => {
+                        dispatch(setOrderSummary());
+                    }}
+                >
+                    Close
+                </Button>
+            </OrderSummaryModal>
         </div>
     );
 };

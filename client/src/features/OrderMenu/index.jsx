@@ -66,7 +66,7 @@ const OrderMenu = ({ setHeader }) => {
 
     React.useEffect(() => {
         if (!hasMenu) {
-            dispatch(handleFetchMenu);
+            dispatch(handleFetchMenu());
         }
     }, [hasMenu, dispatch]);
 
@@ -78,7 +78,11 @@ const OrderMenu = ({ setHeader }) => {
         <Fade in>
             <div className={classes.menuBody}>
                 {BadStatus}
-                {hasMenu ? <MenuView menu={menu} selectedEntryName={selectedEntryName} /> : <LoadingSkeleton />}
+                {hasMenu ? (
+                    <MenuView menu={menu} selectedEntryName={selectedEntryName} />
+                ) : (
+                    <LoadingSkeleton />
+                )}
                 {hasMenu && (
                     <div>
                         <Zoom in>

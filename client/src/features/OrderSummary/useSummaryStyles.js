@@ -34,7 +34,7 @@ export default makeStyles(theme => ({
     summaryActionGrid: {
         order: 0,
         marginTop: 10,
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             order: 2,
             justifyContent: "space-evenly"
         }
@@ -44,12 +44,12 @@ export default makeStyles(theme => ({
         maxHeight: "45vh",
         paddingRight: 13,
         marginRight: -13,
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             maxHeight: "70vh"
         }
     },
     summaryItemsGrid: {
-        [theme.breakpoints.up("sm")]: {
+        [theme.breakpoints.up("md")]: {
             borderRight: `1px solid ${theme.palette.divider}`,
             paddingRight: 10
         }

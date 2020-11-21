@@ -99,3 +99,7 @@ footer {
 .margin-right-5 {
     margin-right: 5px !important;
 }
+
+.MuiListItem-divider:last-child {
+    border-bottom: none !important;
+}
