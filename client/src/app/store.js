@@ -10,6 +10,7 @@ import order from "features/OrderMenu/slices/orderSlice";
 import menu from "features/OrderMenu/slices/menuSlice";
 import orderHistory from "features/OrderHistory/orderHistorySlice";
 import orderSummary from "features/OrderSummary/orderSummarySlice";
+import orderRules from "features/OrderRules/orderRuleSlice";
 
 //apply reducers here
 const rootReducer = combineReducers({
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     order,
     menu,
     orderHistory,
-    orderSummary
+    orderSummary,
+    orderRules
 });
 
 function configureAppStore(preloadedState) {

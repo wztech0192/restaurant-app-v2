@@ -9,6 +9,7 @@ import ManagerTabs from "./ManagerTabs";
 import ManageMenu from "features/ManageMenu";
 import ManageOrders from "features/ManageOrders";
 import OrderMenu from "features/OrderMenu";
+import ManageRules from "features/OrderRules/ManageRules";
 import { Container, makeStyles } from "@material-ui/core";
 
 const routes = [
@@ -31,8 +32,8 @@ const routes = [
         roleCheck: isManager
     },
     {
-        path: "/manage/status",
-        component: CustomerMain,
+        path: "/manage/rules",
+        component: ManageRules,
         roleCheck: isManager
     }
 ];

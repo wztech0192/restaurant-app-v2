@@ -17,8 +17,8 @@ const routes = [
         label: "Orders"
     },
     {
-        to: "/manage/status",
-        label: "Status"
+        to: "/manage/rules",
+        label: "Rules"
     },
     {
         to: "/manage/menu",

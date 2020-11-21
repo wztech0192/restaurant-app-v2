@@ -24,6 +24,10 @@ namespace RestaurantApp.DAL
         public DbSet<MenuOptionGroup> MenuOptionGroups { get; set; }
         public DbSet<MenuOptionItem> MenuOptionItems { get; set; }
 
+        public DbSet<OrderRule> OrderRules { get; set; }
+        public DbSet<OrderRuleTimeRange> OrderRuleTimeRanges { get; set; }
+
+
         private void seeding(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().HasData(
@@ -37,6 +41,13 @@ namespace RestaurantApp.DAL
                     Role = "Manager"
                 }
             );
+
+            modelBuilder.Entity<OrderRule>().HasData(new OrderRule
+            {
+                ID = 1,
+                ActiveTarget = true,
+                Name = "Global"
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

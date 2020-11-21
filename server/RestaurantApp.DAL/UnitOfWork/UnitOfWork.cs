@@ -18,12 +18,13 @@ namespace RestaurantApp.DAL
             Accounts = new AccountRepository(_context);
             Menus = new MenuRepository(_context);
             Orders = new OrderRepository(_context);
+            OrderRules = new OrderRuleRepository(_context);
         }
 
         public IAccountRepository Accounts { get; private set; }
         public IMenuRepository Menus { get; private set; }
         public IOrderRepository Orders { get; private set; }
-
+        public IOrderRuleRepository OrderRules { get; private set; }
         public int Complete()
         {
             return _context.SaveChanges();
