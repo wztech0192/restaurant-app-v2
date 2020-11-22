@@ -8,7 +8,8 @@ namespace RestaurantApp.DAL.Repositories
 {
     public interface IOrderRuleRepository : IBaseRepository<OrderRule, int>
     {
-
+        OrderRule GetByName(string name);
     }
 
+    
 }

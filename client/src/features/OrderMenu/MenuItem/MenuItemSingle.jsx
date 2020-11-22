@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import MinusIcon from "@material-ui/icons/Remove";
 import { getQuantity, handleAddOrRemoveItem } from "../slices/orderSlice";
+import { validateRule } from "features/ManageOrderRules/ruleValidator";
 
-const MenuItemSingle = ({ menuEntry, menuItem }) => {
+const MenuItemSingle = ({ menuEntry, menuItem, orderRules }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
     const quantity = useSelector(getQuantity(menuItem.name));
+
+    const isValid = validateRule(orderRules, menuItem.name);
 
     return (
         <ListItem divider className={classes.menuItemContainer}>
@@ -24,21 +27,30 @@ const MenuItemSingle = ({ menuEntry, menuItem }) => {
                 secondary={menuItem.price.toFixed(2)}
             />
             <ListItemSecondaryAction className={classes.menuItemActions}>
-                {quantity > 0 && (
+                {isValid ? (
                     <>
+                        {quantity > 0 && (
+                            <>
+                                <IconButton
+                                    size="small"
+                                    disabled={quantity <= 0}
+                                    onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, -1))}
+                                >
+                                    <MinusIcon />
+                                </IconButton>
+                                <Chip variant="outlined" size="small" label={quantity} />
+                            </>
+                        )}
                         <IconButton
-                            size="small"
-                            disabled={quantity <= 0}
-                            onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, -1))}
+                            color="primary"
+                            onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, 1))}
                         >
-                            <MinusIcon />
+                            <AddIcon />
                         </IconButton>
-                        <Chip variant="outlined" size="small" label={quantity} />
                     </>
+                ) : (
+                    <Chip color="secondary" label="Unavailable" size="small" />
                 )}
-                <IconButton color="primary" onClick={dispatch(handleAddOrRemoveItem(menuEntry.name, menuItem, 1))}>
-                    <AddIcon />
-                </IconButton>
             </ListItemSecondaryAction>
         </ListItem>
     );

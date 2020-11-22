@@ -9,7 +9,7 @@ import ManagerTabs from "./ManagerTabs";
 import ManageMenu from "features/ManageMenu";
 import ManageOrders from "features/ManageOrders";
 import OrderMenu from "features/OrderMenu";
-import ManageRules from "features/OrderRules/ManageRules";
+import ManageRules from "features/ManageOrderRules";
 import { Container, makeStyles } from "@material-ui/core";
 
 const routes = [

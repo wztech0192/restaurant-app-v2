@@ -14,7 +14,8 @@ import { Skeleton } from "@material-ui/lab";
 import CartFloatButton from "./Cart/CartFloatButton";
 import MenuItemEditDialog from "./MenuItem/MenuItemEditDialog";
 import useBadStatus from "./useBadStatus";
-import menu from "assets/menuSample.json";
+import { handleFetchOrderRules } from "features/ManageOrderRules/orderRuleSlice";
+//import menu from "assets/menuSample.json";
 
 const LoadingSkeleton = () => (
     <Grid container spacing={2}>
@@ -43,8 +44,10 @@ const OrderMenu = ({ setHeader }) => {
     const classes = useStyles();
     const selectedEntryName = useSelector(state => state.order.selectedEntryName);
 
-    //const menu = useSelector(state => state.menu);
+    const menu = useSelector(state => state.menu);
+    const orderRules = useSelector(state => state.orderRules);
     const hasMenu = Boolean(menu);
+    const hasRules = Boolean(orderRules);
 
     const dispatch = useDispatch();
     const isSelected = Boolean(selectedEntryName);
@@ -70,23 +73,31 @@ const OrderMenu = ({ setHeader }) => {
         }
     }, [hasMenu, dispatch]);
 
+    React.useEffect(() => {
+        if (!hasRules) {
+            dispatch(handleFetchOrderRules);
+        }
+    }, [hasRules, dispatch]);
+
     const MenuView = selectedEntryName ? MenuEntrySingle : MenuEntries;
 
     const BadStatus = useBadStatus();
+
+    const loading = !hasRules || !hasMenu;
 
     return (
         <Fade in>
             <div className={classes.menuBody}>
                 {BadStatus}
-                {hasMenu ? (
-                    <MenuView menu={menu} selectedEntryName={selectedEntryName} />
-                ) : (
+                {loading ? (
                     <LoadingSkeleton />
+                ) : (
+                    <MenuView orderRules={orderRules} menu={menu} selectedEntryName={selectedEntryName} />
                 )}
-                {hasMenu && (
+                {!loading && (
                     <div>
                         <Zoom in>
-                            <CartFloatButton classes={classes} menu={menu} />
+                            <CartFloatButton orderRules={orderRules} classes={classes} menu={menu} />
                         </Zoom>
                         <MenuItemEditDialog menu={menu} classes={classes} />
                     </div>

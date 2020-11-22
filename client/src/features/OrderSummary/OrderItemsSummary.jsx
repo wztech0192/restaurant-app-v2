@@ -11,10 +11,19 @@ const reduceSideTotal = (total, [_, opt]) => {
     return total;
 };
 
-const OrderItemsSummary = ({ handleRemoveOrder, handleEditOrder, canEdit, orderedItems, classes }) => {
+const OrderItemsSummary = ({
+    handleRemoveOrder,
+    handleEditOrder,
+    canEdit,
+    orderedItems,
+    classes,
+    unavailableItemSet
+}) => {
     return (
         <List className={classes.itemsContainer}>
             {orderedItems.map(item => {
+                const isValid = !unavailableItemSet || !unavailableItemSet.has(item.name);
+
                 const sides = item.orderedOptions ? Object.entries(item.orderedOptions) : EMPTY_ARRAY;
                 const noSideTotal = sides.reduce(reduceSideTotal, item.price);
                 return (
@@ -37,7 +46,7 @@ const OrderItemsSummary = ({ handleRemoveOrder, handleEditOrder, canEdit, ordere
                         )}
                         <ListItemText
                             primary={
-                                <Typography color={false ? "error" : "textPrimary"}>
+                                <Typography color={!isValid ? "error" : "textPrimary"}>
                                     &nbsp;
                                     <Chip label={item.quantity} component="span" color="primary" size="small" />
                                     &nbsp;&nbsp;

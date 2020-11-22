@@ -1,14 +1,4 @@
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Grid,
-    makeStyles,
-    Typography
-} from "@material-ui/core";
+import { Dialog, DialogContent, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OrderSummary from ".";
@@ -35,12 +25,7 @@ const OrderSummaryModalContent = React.memo(
                     shouldUpdate
                     orderInfo={selectedOrder}
                     LeftBox={
-                        <Grid
-                            container
-                            justify="space-between"
-                            alignItems="stretch"
-                            className={classes.action}
-                        >
+                        <Grid container justify="space-between" alignItems="stretch" className={classes.action}>
                             {React.Children.map(children, child => (
                                 <Grid item xs={12} md="auto">
                                     {child}
@@ -62,11 +47,7 @@ const OrderSummaryModal = props => {
     };
     return (
         <Dialog open={Boolean(selectedOrder)} onClose={handleClose} maxWidth="md">
-            <OrderSummaryModalContent
-                selectedOrder={selectedOrder}
-                handleClose={handleClose}
-                {...props}
-            />
+            <OrderSummaryModalContent selectedOrder={selectedOrder} handleClose={handleClose} {...props} />
         </Dialog>
     );
 };

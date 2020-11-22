@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Grow, TextField, MenuItem, IconButton } from "@material-ui/core";
+import { Paper, Grow, TextField, MenuItem, IconButton, Typography } from "@material-ui/core";
 import useStyles from "../useStyles";
 import { setSelectedEntryName } from "../slices/orderSlice";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,8 @@ import MenuEntryTitle from "./MenuEntryTitle";
 import MenuItemList from "../MenuItem/MenuItemList";
 import PreviousIcon from "@material-ui/icons/ArrowBackIos";
 import NextIcon from "@material-ui/icons/ArrowForwardIos";
-const MenuEntrySingle = ({ menu, selectedEntryName }) => {
+import { validateRule } from "features/ManageOrderRules/ruleValidator";
+const MenuEntrySingle = ({ menu, selectedEntryName, orderRules }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const menuEntryIndex = React.useMemo(() => {
@@ -25,6 +26,8 @@ const MenuEntrySingle = ({ menu, selectedEntryName }) => {
             )),
         [menu.menuEntries]
     );
+
+    const isRuleValid = validateRule(orderRules, menuEntry.name);
 
     return (
         <Grow in>
@@ -69,9 +72,18 @@ const MenuEntrySingle = ({ menu, selectedEntryName }) => {
                         <NextIcon />
                     </IconButton>
                 </Paper>
-                <Paper>
-                    <MenuItemList menuEntry={menuEntry} />
-                </Paper>
+
+                {isRuleValid ? (
+                    <Paper>
+                        <MenuItemList orderRules={orderRules} menuEntry={menuEntry} />
+                    </Paper>
+                ) : (
+                    <Typography color="error">
+                        <br />
+                        This Entree is currently unavaiable!
+                        <br />
+                    </Typography>
+                )}
             </div>
         </Grow>
     );

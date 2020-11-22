@@ -1,12 +1,4 @@
-import {
-    IconButton,
-    Grow,
-    makeStyles,
-    Paper,
-    Typography,
-    Button,
-    Tooltip
-} from "@material-ui/core";
+import { IconButton, Grow, makeStyles, Paper, Typography, Button, Tooltip } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SaveIcon from "@material-ui/icons/Save";

@@ -15,7 +15,7 @@ namespace RestaurantApp.DAL.Models
 
         public bool ActiveTarget { get; set; }
 
-        public virtual ICollection<OrderRuleTimeRange> ActiveTimes { get; set; }
+        public virtual ICollection<OrderRuleTimeRange> ActiveTimes { get; set; } = new List<OrderRuleTimeRange>();
 
 
 

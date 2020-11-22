@@ -3,7 +3,6 @@ import FetchWrapper from "common/fetchWrapper";
 import { postLogin, postAccount, getAccount, putAccount } from "app/apiProvider";
 import { asyncAction, encryptionAction } from "app/sharedActions";
 import { enqueueSnackbar, setErrors, setGlobalLoading, setLoading } from "app/Indicator/indicatorSlice";
-import encryptionProvider from "common/encryptionProvider";
 import getUID from "common/getUID";
 import history from "app/history";
 
@@ -88,6 +87,7 @@ const slice = createSlice({
         },
         loadAccountInfo(state, { payload }) {
             state.accountInfo = payload.accountInfo;
+            state.token = payload.accountInfo.token;
             if (payload.close) {
                 state.viewMode = ACCOUNT_VIEW.CLOSE;
                 state.editAccountInfo = initialState.editAccountInfo;
@@ -154,11 +154,12 @@ export const handleGetAccountInfo = dispatch => {
     dispatch(
         asyncAction({
             promise: getAccount,
-            success: accountInfo => dispatch(loadAccountInfo({ accountInfo })),
+            success: accountInfo => {
+                dispatch(loadAccountInfo({ accountInfo }));
+            },
             failed: e => {
-                if (e !== "TypeError: Failed to fetch") {
+                if (e.res && e.res.status === 401) {
                     FetchWrapper.setToken("");
-                    //todo: fetch current account?
                     dispatch(reset());
                     dispatch(setAccountView(ACCOUNT_VIEW.CLOSE));
                 }

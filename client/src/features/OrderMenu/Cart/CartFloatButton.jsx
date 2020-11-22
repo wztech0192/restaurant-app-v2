@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenCart } from "../slices/orderSlice";
 import CartSwipeView from "./CartSwipeView";
 
-const CartFloatButton = ({ classes, menu }) => {
+const CartFloatButton = ({ classes, menu, orderRules }) => {
     const price = useSelector(state => state.order.cart.price);
     const dispatch = useDispatch();
     return (
@@ -19,7 +19,7 @@ const CartFloatButton = ({ classes, menu }) => {
                 <ShoppingCart className={classes.extendedIcon} />
                 &nbsp;&nbsp; ${price.toFixed(2)}
             </Fab>
-            <CartSwipeView menu={menu} />
+            <CartSwipeView menu={menu} orderRules={orderRules} />
         </>
     );
 };

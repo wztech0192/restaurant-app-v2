@@ -5,7 +5,6 @@ import {
     AccordionSummary,
     Badge,
     Button,
-    ButtonGroup,
     Chip,
     makeStyles,
     Typography
@@ -13,8 +12,6 @@ import {
 import React from "react";
 import { editedItemSelectOption } from "../slices/orderSlice";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AddIcon from "@material-ui/icons/Add";
-import MinusIcon from "@material-ui/icons/Remove";
 import { EMPTY_OBJECT } from "common";
 
 const useBadeStyles = makeStyles({

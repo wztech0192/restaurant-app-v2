@@ -1,6 +1,5 @@
 import { Fade, Typography, Box } from "@material-ui/core";
 import { EMPTY_OBJECT } from "common";
-import PhoneMask from "common/phoneMask";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import React from "react";
 import cardValidator from "card-validator";

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -37,13 +38,12 @@ namespace RestaurantApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.UseCustomCors();
 
             var appSettings = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettings);
-            services.AddControllers().AddNewtonsoftJson();
-            services.UseCustomCors();
             services.AddSignalR();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddRouting(options => options.LowercaseUrls = true);
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -159,3 +159,4 @@ namespace RestaurantApp
         }
     }
 }
+

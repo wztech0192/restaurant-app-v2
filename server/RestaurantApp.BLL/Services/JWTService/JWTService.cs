@@ -88,7 +88,7 @@ namespace RestaurantApp.BLL.Services
                 issuer: _appSettings.Issuer,
                 audience: _appSettings.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMonths(1),
+                expires: DateTime.Now.AddDays(7),
                 signingCredentials: credentials
             );
 

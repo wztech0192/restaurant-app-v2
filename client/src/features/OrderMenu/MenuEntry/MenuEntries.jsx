@@ -6,7 +6,7 @@ import { setSelectedEntryName } from "../slices/orderSlice";
 import { useDispatch } from "react-redux";
 import MenuEntryTitle from "./MenuEntryTitle";
 
-const MenuEntries = ({ menu }) => {
+const MenuEntries = ({ menu, orderRules }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const menuEntries = menu.menuEntries;

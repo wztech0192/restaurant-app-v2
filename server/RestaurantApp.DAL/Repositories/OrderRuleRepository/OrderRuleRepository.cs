@@ -13,5 +13,9 @@ namespace RestaurantApp.DAL.Repositories
         public OrderRuleRepository(RestaurantAppContext context): base(context)
         {
         }
+        public OrderRule GetByName(string name)
+        {
+            return base.Context.OrderRules.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+        }
     }
 }

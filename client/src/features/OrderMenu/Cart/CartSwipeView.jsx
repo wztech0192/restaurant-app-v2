@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenCart, setTip, setAdditionalRequest, handleAddOrRemoveItem, setEditedItem } from "../slices/orderSlice";
 import CartPayment from "./CartPayment";
 import useBadStatus from "../useBadStatus";
+import { validateRule } from "features/ManageOrderRules/ruleValidator";
 
 const PaperProps = {
     style: {
@@ -12,7 +13,7 @@ const PaperProps = {
         maxHeight: "82vh"
     }
 };
-const CartSwipeView = ({ menu }) => {
+const CartSwipeView = ({ menu, orderRules }) => {
     const dispatch = useDispatch();
     const open = useSelector(state => state.order.openCart);
     const orderInfo = useSelector(state => state.order.cart);
@@ -38,6 +39,17 @@ const CartSwipeView = ({ menu }) => {
         }),
         [dispatch]
     );
+
+    const unavailableItemSet = React.useMemo(() => {
+        const set = new Set();
+        for (let item of orderInfo.orderedItems) {
+            if (!validateRule(orderRules, item.entryName) || !validateRule(orderRules, item.name)) {
+                set.add(item.name);
+            }
+        }
+        return set;
+    }, [orderRules, orderInfo.orderedItems]);
+
     return (
         <SwipeableDrawer
             disableDiscovery
@@ -52,6 +64,8 @@ const CartSwipeView = ({ menu }) => {
                     shouldUpdate={open}
                     orderInfo={orderInfo}
                     tax={menu.tax}
+                    orderRules={orderRules}
+                    unavailableItemSet={unavailableItemSet}
                     canEdit={!openPayment}
                     {...handlers}
                     LeftBox={
@@ -67,7 +81,11 @@ const CartSwipeView = ({ menu }) => {
                             </Button>
                         ) : (
                             <Button
-                                disabled={orderInfo.orderedItems.length <= 0}
+                                disabled={
+                                    orderInfo.orderedItems.length <= 0 ||
+                                    unavailableItemSet.size > 0 ||
+                                    Boolean(BadStatus)
+                                }
                                 color="primary"
                                 variant="contained"
                                 onClick={e => {
@@ -79,7 +97,7 @@ const CartSwipeView = ({ menu }) => {
                         )
                     }
                 />
-                {openPayment && (BadStatus || <CartPayment />)}
+                {BadStatus || (openPayment && <CartPayment />)}
                 <br />
             </Box>
         </SwipeableDrawer>

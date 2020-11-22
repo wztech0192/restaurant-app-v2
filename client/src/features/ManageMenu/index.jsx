@@ -13,7 +13,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ManageMenuContainer = () => {
+const ManageMenuContainer = ({ setHeader }) => {
+    React.useEffect(() => {
+        setHeader({ title: "Manage Menu" });
+    }, [setHeader]);
+
     const classes = useStyles();
     const selectedID = useSelector(state => state.manageMenu.selectedMenu.id);
 

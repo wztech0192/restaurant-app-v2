@@ -1,4 +1,4 @@
-import { Box, Chip, Divider, Typography } from "@material-ui/core";
+import { Box, Chip, Typography } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { getDateStr } from "common";
 import OrderStatus, { getStatusChipProps } from "features/OrderHistory/orderStatus";

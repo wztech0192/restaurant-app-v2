@@ -14,9 +14,8 @@ namespace RestaurantApp.Hubs
         /// </summary>
         public const string RECEIVE_ORDER = "ReceiveOrder";
 
-        public async Task SubmitOrder(OrderDTO order)
-        {
-           // await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
+        public const string UPDATE_ORDER_RULES = "UpdateOrderRules";
+
+     
     }
 }

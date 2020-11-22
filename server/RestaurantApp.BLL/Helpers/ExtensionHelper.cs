@@ -13,7 +13,7 @@ namespace RestaurantApp.BLL.Helpers
             IEnumerable<TDto> dtos,
             Func<TDto, TKey> dtoKey,
             Func<TEntity, TKey> entityKey,
-            Action<TDto> create = null,
+            Action<TDto, Action<TEntity, TDto>> create = null,
             Action<TEntity, TDto> update = null,
             Action<TEntity> delete = null)
         {
@@ -30,7 +30,7 @@ namespace RestaurantApp.BLL.Helpers
                 else
                 {
                     //exist only in dtos: should CREATE based on dto
-                    create?.Invoke(dto);
+                    create?.Invoke(dto, update);
                 }
             };
 

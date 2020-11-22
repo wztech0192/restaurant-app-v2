@@ -35,7 +35,10 @@ namespace RestaurantApp.BLL.Services
                 {
                     throw new ServiceException("Unauthorized, please try to login in again", HttpStatusCode.Unauthorized);
                 }
-                msg.Data = new AccountDTO(entity);
+                msg.Data = new AccountDTO(entity)
+                {
+                    Token = base.JWTService.GenerateAccountJWTToken(entity) //refresh token
+                };
                 msg.Success = true;
             });
         }
@@ -162,7 +165,7 @@ namespace RestaurantApp.BLL.Services
                 dtos: dtos,
                 dtoKey: dto => dto.ID,
                 entityKey: entity => entity.ID,
-                create: dto =>
+                create: (dto, _) =>
                 {
                     entities.Add(new Card()
                     {

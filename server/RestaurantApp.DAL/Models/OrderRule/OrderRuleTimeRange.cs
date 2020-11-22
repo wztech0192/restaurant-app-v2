@@ -15,6 +15,7 @@ namespace RestaurantApp.DAL.Models
         public string Start { get; set; }
         public string Stop { get; set; }
 
+        [Required]
         public virtual OrderRule OrderRule { get; set; }
 
     }

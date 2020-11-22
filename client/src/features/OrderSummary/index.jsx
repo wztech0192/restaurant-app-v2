@@ -1,11 +1,10 @@
-import { Box, Divider, Grid, Paper, Typography } from "@material-ui/core";
+import { Box, Grid, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import TextFieldWrapper from "common/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
 import OrderPriceSummaryBox from "./OrderPriceSummaryBox";
 import OrderSummaryHeader from "./OrderSummaryHeader";
 import OrderItemsSummary from "./OrderItemsSummary";
-import { propCompare } from "common";
 
 const OrderSummary = ({
     orderInfo,
@@ -15,7 +14,8 @@ const OrderSummary = ({
     handleUpdateTip,
     handleRemoveOrder,
     handleEditOrder,
-    handleUpdateAdditionalRequest
+    handleUpdateAdditionalRequest,
+    unavailableItemSet
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
@@ -32,12 +32,18 @@ const OrderSummary = ({
                         </div>
                     ) : (
                         <OrderItemsSummary
+                            unavailableItemSet={unavailableItemSet}
                             orderedItems={orderInfo.orderedItems}
                             canEdit={canEdit}
                             handleRemoveOrder={handleRemoveOrder}
                             handleEditOrder={handleEditOrder}
                             classes={classes}
                         />
+                    )}
+                    {unavailableItemSet && unavailableItemSet.size > 0 && (
+                        <Typography color="error">
+                            One or more items are currently unavailable! Please remove them to continue.
+                        </Typography>
                     )}
                     <TextFieldWrapper
                         solid
@@ -84,10 +90,7 @@ const OrderSummary = ({
                                         <Grid item xs={6}>
                                             <Typography align="right">
                                                 <b>
-                                                    {orderInfo.phone.replace(
-                                                        /^(\d{3})(\d{3})(\d{4})$/,
-                                                        "($1) $2-$3"
-                                                    )}
+                                                    {orderInfo.phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3")}
                                                 </b>
                                             </Typography>
                                         </Grid>

@@ -101,6 +101,12 @@ namespace RestaurantApp.DAL
             .OnDelete(DeleteBehavior.Cascade);
 
 
+            modelBuilder.Entity<OrderRuleTimeRange>()
+               .HasOne(x => x.OrderRule)
+               .WithMany(x => x.ActiveTimes)
+               .OnDelete(DeleteBehavior.Cascade);
+
+
 
             seeding(modelBuilder);
 

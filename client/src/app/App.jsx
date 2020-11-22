@@ -6,7 +6,9 @@ import NotistackProvider from "../common/NotistackProvider";
 import theme from "app/theme";
 import Layout from "./Layout";
 import encryptionProvider from "common/encryptionProvider";
+import moment from "moment-timezone/moment-timezone";
 
+moment.tz.setDefault("America/New_York");
 encryptionProvider.setPublicKey(process.env.REACT_APP_ENCRYPTION_PUBLIC_KEY);
 
 const App = () => {

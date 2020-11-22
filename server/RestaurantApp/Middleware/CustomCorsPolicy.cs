@@ -20,10 +20,10 @@ namespace RestaurantApp.Middleware
                     builder =>
                     {
                         builder
-                            .SetIsOriginAllowed(origin => true)
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .AllowCredentials();
+                            .AllowCredentials()
+                            .SetIsOriginAllowed(origin => true);
                     });
             });
         }

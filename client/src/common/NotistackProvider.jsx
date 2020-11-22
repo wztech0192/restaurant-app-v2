@@ -21,18 +21,11 @@ const action = key => (
             width: "100%",
             top: 0
         }}
-        styleType="link"
     />
 );
 const NotistackProvider = ({ children }) => {
     return (
-        <SnackbarProvider
-            preventDuplicate
-            dense
-            action={action}
-            classes={customClasses}
-            ref={notistackRef}
-        >
+        <SnackbarProvider preventDuplicate dense action={action} classes={customClasses} ref={notistackRef}>
             {children}
         </SnackbarProvider>
     );

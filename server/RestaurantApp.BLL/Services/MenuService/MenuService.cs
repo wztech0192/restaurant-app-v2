@@ -150,14 +150,11 @@ namespace RestaurantApp.BLL.Services
                 dtos: dtos,
                 dtoKey: dto => dto.ID,
                 entityKey: entity => entity.ID,
-                create: dto =>
+                create: (dto, update) =>
                 {
-                    entities.Add(new MenuEntry()
-                    {
-                        Name = dto.Name,
-                        Summary = dto.Summary,
-                        MenuItems = handleUpdateMenuItems(dto.MenuItems, new List<MenuItem>()),
-                    });
+                    var entity = new MenuEntry();
+                    update(entity, dto);
+                    entities.Add(entity);
                 },
                 update: (entity, dto) =>
                 {
@@ -179,17 +176,11 @@ namespace RestaurantApp.BLL.Services
               dtos: dtos,
               dtoKey: dto => dto.ID,
               entityKey: entity => entity.ID,
-              create: dto =>
+              create: (dto, update) =>
               {
-                  entities.Add(new MenuItem()
-                  {
-                      Name = dto.Name,
-                      Summary = dto.Summary,
-                      CanAddSides = dto.CanAddSides,
-                      OptionPriceMultiplier = dto.OptionPriceMultiplier,
-                      Price = dto.Price,
-                      MenuOptionGroups = string.Join(MenuItem.Seperator, dto.OptionGroupNames)
-                  });
+                  var entity = new MenuItem();
+                  update(entity, dto);
+                  entities.Add(entity);
               },
               update: (entity, dto) =>
               {
@@ -242,13 +233,11 @@ namespace RestaurantApp.BLL.Services
               dtos: dtos,
               dtoKey: dto => dto.ID,
               entityKey: entity => entity.ID,
-              create: dto =>
+              create: (dto, update) =>
               {
-                  entities.Add(new MenuOptionItem()
-                  {
-                      Name = dto.Name,
-                      Price = dto.Price
-                  });
+                  var entity = new MenuOptionItem();
+                  update(entity, dto);
+                  entities.Add(entity);
               },
               update: (entity, dto) =>
               {

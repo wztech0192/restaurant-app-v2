@@ -1,12 +1,4 @@
-import {
-    Button,
-    Chip,
-    List,
-    ListItem,
-    ListItemSecondaryAction,
-    ListItemText,
-    makeStyles
-} from "@material-ui/core";
+import { Button, Chip, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { EMPTY_ARRAY } from "common";
@@ -14,11 +6,7 @@ import SkeletonWrapper from "common/SkeletonWrapper";
 import { getAccountToken } from "features/Account/accountSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    handleFetchOrderHistory,
-    handleSyncOrderStatus,
-    handleUnSyncOrderStatus
-} from "./orderHistorySlice";
+import { handleFetchOrderHistory, handleSyncOrderStatus, handleUnSyncOrderStatus } from "./orderHistorySlice";
 import { getDateStr } from "common";
 import { checkIsOrderHubConnected } from "app/centralHub";
 import OrderStatus, { getStatusChipProps } from "./orderStatus";

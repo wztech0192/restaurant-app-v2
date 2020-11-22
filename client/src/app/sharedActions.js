@@ -29,12 +29,19 @@ export const asyncAction = ({
         }
 
         const res = await promise();
-        const json = await res.json();
+
+        let data = null;
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            data = await res.json();
+        } else {
+            data = await res.text();
+        }
         if (res.ok) {
-            if (success) success(json);
+            if (success) success(data);
         } else {
             const error = new Error();
-            error.errors = json;
+            error.errors = data;
             error.res = res;
             throw error;
         }
@@ -44,6 +51,7 @@ export const asyncAction = ({
 
         if (!hideErrorModal) {
             let title = "Request Error";
+            let message = !e.errors && "Unexcepted error occurred, please refresh and retry!";
             if (e.res) {
                 switch (e.res.status) {
                     case 404:
@@ -54,6 +62,8 @@ export const asyncAction = ({
                         break;
                     case 401:
                         title = "Unauthorized";
+                        message =
+                            "You are not authorized to access, please try to re-login you account if you believe you have the authority.";
                         break;
                     default:
                 }
@@ -63,7 +73,7 @@ export const asyncAction = ({
                 handleOpenModal({
                     title: title,
                     color: "secondary",
-                    message: !e.errors && "Unexcepted error occurred, please refresh and retry!",
+                    message,
                     messages: e.errors
                 })
             );

@@ -34,7 +34,7 @@ const Login = ({ handleClose, loading, errors }) => {
                 })
             );
         }
-    }, []);
+    }, [dispatch]);
     const handleUpdateState = dispatch(handleEditAccountInfo);
 
     return (

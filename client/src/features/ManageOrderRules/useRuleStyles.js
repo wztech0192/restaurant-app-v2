@@ -14,6 +14,11 @@ export default () =>
             }
         },
         header: {
-            flexGrow: 1
+            flexGrow: 1,
+            fontWeight: "bold",
+            textTransform: "capitalize"
+        },
+        skeleton: {
+            marginBottom: 10
         }
     }));

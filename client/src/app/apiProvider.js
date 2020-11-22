@@ -20,3 +20,7 @@ export const postOrder = data => apiCaller.post("order", data);
 export const getOrder = id => apiCaller.get(`order/${id}`);
 export const getRecentOrder = () => apiCaller.get(`order/recent/10`);
 export const getOrderStatus = ids => apiCaller.get(`order/status?${qs.stringify({ ids }, { arrayFormat: "repeat" })}`);
+
+export const getOrderRules = () => apiCaller.get("orderRules");
+export const postOrderRule = rule => apiCaller.post("orderRules", rule);
+export const deleteOrderRules = ruleName => apiCaller.delete(`orderRules/${ruleName}`);

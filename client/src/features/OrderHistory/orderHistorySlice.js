@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getOrderStatus, getRecentOrder } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import { parseLocalStorageOrDefault } from "common";
-import { getAccountToken } from "features/Account/accountSlice";
+import { getAccountRole, getAccountToken } from "features/Account/accountSlice";
 import { isManager } from "features/Account/roleChecker";
 
 let storedHistory = parseLocalStorageOrDefault("orderHistory", []);
@@ -114,7 +114,6 @@ export const handleSyncOrderStatus = (dispatch, getState) => {
     const hasToken = getAccountToken(state);
     const { sync, orders } = state.orderHistory;
     if (orders && !sync) {
-        console.log("get Status");
         dispatch(
             asyncAction({
                 toggleLoadingFor: "orderHistory",
@@ -138,12 +137,10 @@ export const handleSyncOrderStatus = (dispatch, getState) => {
 const RECEIVE_ORDER = "ReceiveOrder";
 const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 
-let invoke = null;
-export const orderHubMiddleware = (dispatch, getState, _invoke) => {
-    invoke = _invoke;
+export const orderHistoryHubMiddleware = (dispatch, getState) => {
     return {
         [RECEIVE_ORDER]: order => {
-            if (isManager(getState())) dispatch(appendOrderHistory(order));
+            if (isManager(getAccountRole(getState()))) dispatch(appendOrderHistory(order));
         },
         [UPDATE_ORDER_STATUS]: (id, status) => {
             dispatch(updateOrderStatus({ id, status }));
