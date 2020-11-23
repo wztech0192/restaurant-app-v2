@@ -16,6 +16,7 @@ namespace RestaurantApp.Hubs
 
         public const string UPDATE_ORDER_RULES = "UpdateOrderRules";
 
-     
+        public const string UPDATE_ORDER_STATUS = "UpdateOrderStatus";
+
     }
 }

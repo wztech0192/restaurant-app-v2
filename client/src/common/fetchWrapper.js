@@ -1,3 +1,5 @@
+import qs from "qs";
+
 class FetchWrapper {
     token = undefined;
     baseURL = "";
@@ -17,28 +19,34 @@ class FetchWrapper {
         this.baseURL = url;
     };
 
-    getUrl = url => {
-        return `${this.baseURL}/${url}`;
+    paramOptions = { arrayFormat: "repeat" };
+    getUrl = (url, params) => {
+        let result = `${this.baseURL}/${url}`;
+
+        if (params) {
+            result += "?" + qs.stringify(params, this.paramOptions);
+        }
+        return result;
     };
 
-    get = url =>
-        fetch(this.getUrl(url), {
+    get = (url, params) =>
+        fetch(this.getUrl(url, params), {
             method: "GET",
             headers: this.getHeader()
         });
-    post = (url, data) =>
-        fetch(this.getUrl(url), {
+    post = (url, data, params) =>
+        fetch(this.getUrl(url, params), {
             method: "POST",
             headers: this.getHeader(),
             body: JSON.stringify(data)
         });
-    delete = url =>
-        fetch(this.getUrl(url), {
+    delete = (url, params) =>
+        fetch(this.getUrl(url, params), {
             method: "DELETE",
             headers: this.getHeader()
         });
-    put = (url, data) =>
-        fetch(this.getUrl(url), {
+    put = (url, data, params) =>
+        fetch(this.getUrl(url, params), {
             method: "PUT",
             headers: this.getHeader(),
             body: JSON.stringify(data)

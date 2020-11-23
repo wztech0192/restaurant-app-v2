@@ -11,6 +11,6 @@ namespace RestaurantApp.BLL.Services
         IServiceMessage<IDictionary<string, OrderRuleDTO>> Get();
         IServiceMessage<OrderRuleDTO> CreateOrUpdate(OrderRuleDTO dto);
         IServiceMessage<bool> Remove(string ruleName);
-
+        bool ValidateRule(IDictionary<string, OrderRuleDTO> orderRules, string name);
     }
 }

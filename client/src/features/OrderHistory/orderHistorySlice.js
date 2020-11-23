@@ -1,16 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getOrderStatus, getRecentOrder } from "app/apiProvider";
+import { getOrderQuery, getOrderStatus, getRecentOrder } from "app/apiProvider";
 import { asyncAction } from "app/sharedActions";
 import { parseLocalStorageOrDefault } from "common";
 import { getAccountRole, getAccountToken } from "features/Account/accountSlice";
 import { isManager } from "features/Account/roleChecker";
+import uid from "uid";
+import moment from "moment";
+import OrderStatus from "./orderStatus";
+import { updateOrderSummaryStatus } from "../OrderSummary/orderSummarySlice";
+import audio from "./audio";
 
 let storedHistory = parseLocalStorageOrDefault("orderHistory", []);
 const saveHistory = () => {
     localStorage.setItem("orderHistory", JSON.stringify(storedHistory.slice(-10)));
 };
 
+const today = moment().format("MM/DD/YYYY");
+
 const initialState = {
+    filter: {
+        dateRange: [today, today],
+        status: [OrderStatus.Pending]
+    },
     orders: undefined,
     sync: false
 };
@@ -19,6 +30,11 @@ const slice = createSlice({
     name: "orderHistory",
     initialState,
     reducers: {
+        updateFilter(state, { payload }) {
+            for (let key in payload) {
+                state.filter[key] = payload[key];
+            }
+        },
         fetchOrderHistory(state, { payload }) {
             state.sync = true;
             state.orders = payload || initialState.orders;
@@ -46,8 +62,10 @@ const {
     unSyncOrderStatus,
     fetchOrderHistory,
     appendOrderHistory: appendOrderHistoryAction,
-    updateOrderStatus
+    updateOrderStatus,
+    updateFilter
 } = slice.actions;
+export { updateFilter, updateOrderStatus };
 
 export const appendOrderHistory = payload => (dispatch, getState) => {
     const state = getState();
@@ -74,7 +92,26 @@ const mapOrderStatus = (orders, allStatus) =>
         return h;
     });
 
-export const handleFetchOrderHistory = (dispatch, getState) => {
+let queryBuff = null;
+export const handleQueryOrder = filter => dispatch => {
+    const queryId = uid();
+    queryBuff = queryId;
+    dispatch(
+        asyncAction({
+            toggleLoadingFor: "orderHistory",
+            promise: () => getOrderQuery(filter),
+            success: orders => {
+                if (queryBuff === queryId) {
+                    dispatch(fetchOrderHistory(orders));
+                } else {
+                    return false;
+                }
+            }
+        })
+    );
+};
+
+export const handleFetchRecentOrderHistory = (dispatch, getState) => {
     const hasToken = getAccountToken(getState());
     if (hasToken) {
         dispatch(
@@ -135,15 +172,34 @@ export const handleSyncOrderStatus = (dispatch, getState) => {
 
 /**Client receivers */
 const RECEIVE_ORDER = "ReceiveOrder";
-const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+const UPDATE_ORDER_STATUS = "UpdateOrderStatus";
 
 export const orderHistoryHubMiddleware = (dispatch, getState) => {
     return {
         [RECEIVE_ORDER]: order => {
-            if (isManager(getAccountRole(getState()))) dispatch(appendOrderHistory(order));
+            const state = getState();
+            if (isManager(getAccountRole(state))) {
+                const filter = state.orderHistory.filter;
+
+                if (
+                    (filter.status.length <= 0 || filter.status.includes(order.status)) &&
+                    moment().isBetween(
+                        moment(filter.dateRange[0]),
+                        moment(filter.dateRange[1]).add(1, "day").subtract(1, "seconds")
+                    )
+                ) {
+                    audio.play();
+                    dispatch(appendOrderHistory(order));
+                }
+            }
         },
         [UPDATE_ORDER_STATUS]: (id, status) => {
+            if (isManager(getAccountRole(getState()))) {
+                audio.stop();
+            }
+
             dispatch(updateOrderStatus({ id, status }));
+            dispatch(updateOrderSummaryStatus({ id, status }));
         }
     };
 };

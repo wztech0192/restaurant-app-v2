@@ -90,5 +90,39 @@ namespace RestaurantApp.BLL.Services
             });
         }
 
+        public bool ValidateRule(IDictionary<string, OrderRuleDTO> orderRules, string name)
+        {
+            if(orderRules.TryGetValue(name.ToLower(), out OrderRuleDTO rule))
+            {
+                if(!rule.ActiveTarget || !validateTime(rule.ActiveTimes))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool validateTime(IEnumerable<OrderRuleTimeRangeDTO> activeTimes)
+        {
+            var now = DateTime.Now;
+            var day = (int)now.DayOfWeek;
+            var nowTime = DateTime.Now.TimeOfDay;
+
+            foreach (var time in activeTimes)
+            {
+                if (time.IsValid)
+                {
+                    var start = TimeSpan.Parse(time.Start);
+                    var end = TimeSpan.Parse(time.Stop);
+                    if (!time.DaysOfWeek.Contains(day) || !((nowTime > start) && (nowTime < end)))
+                    {
+                    
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

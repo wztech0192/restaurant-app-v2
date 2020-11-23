@@ -1,7 +1,10 @@
 import { Box, Chip, Typography } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { getDateStr } from "common";
-import OrderStatus, { getStatusChipProps } from "features/OrderHistory/orderStatus";
+import OrderStatus, {
+    getOrderStatusDisplay,
+    getStatusChipProps
+} from "features/OrderHistory/orderStatus";
 import React from "react";
 
 const OrderSummaryHeader = ({ orderInfo, totalItems, classes }) => {
@@ -20,7 +23,7 @@ const OrderSummaryHeader = ({ orderInfo, totalItems, classes }) => {
                             <Chip
                                 component="span"
                                 {...getStatusChipProps(orderInfo.status)}
-                                label={OrderStatus.getDisplay(orderInfo.status)}
+                                label={getOrderStatusDisplay(orderInfo.status)}
                                 size="small"
                             />
                         )}

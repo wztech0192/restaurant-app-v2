@@ -1,10 +1,26 @@
 import React from "react";
-import { Dialog, DialogContent, DialogTitle, DialogActions, Button, Typography } from "@material-ui/core";
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogActions,
+    Button,
+    Typography
+} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { handleCloseModal } from "./indicatorSlice";
 
 const GlobalModalContent = React.memo(
-    ({ title, titleColor = "primary", content, buttons, message, messages, onConfirm, handleClose }) => {
+    ({
+        title,
+        titleColor = "primary",
+        content,
+        buttons,
+        message,
+        messages,
+        onConfirm,
+        handleClose
+    }) => {
         return (
             <>
                 <DialogTitle>
@@ -18,8 +34,8 @@ const GlobalModalContent = React.memo(
                     {message && <Typography>{message}</Typography>}
                     {messages && Array.isArray(messages) && messages.length > 0 && (
                         <ul>
-                            {messages.map(msg => (
-                                <li>
+                            {messages.map((msg, i) => (
+                                <li key={i}>
                                     <Typography>{msg}</Typography>
                                 </li>
                             ))}
