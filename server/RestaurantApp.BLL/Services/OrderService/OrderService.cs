@@ -163,6 +163,7 @@ namespace RestaurantApp.BLL.Services
                                 CreatedOn = DateTime.Now,
                                 EncryptedCardInfo = dto.EncryptedCardInfo,
                                 LastFourDigit = dto.LastFourDigit,
+                                UseAsDefault = !account.Cards.Any()
                             });
                         }
                     }

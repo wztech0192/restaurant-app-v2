@@ -88,7 +88,6 @@ const MenuSearchItems = React.memo(
     ({ classes, search, orderRules, entries }) => {
         search = search.toLowerCase();
         if (!search) {
-            console.log(entries);
             const defaultEntry = entries.find(en => en.name === DefaultDisplayEntryName);
             entries = defaultEntry ? [defaultEntry] : EMPTY_ARRAY;
         }

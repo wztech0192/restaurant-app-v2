@@ -1,6 +1,6 @@
 import React from "react";
 import { getAccountRole } from "features/Account/accountSlice";
-import CustomerMain from "features/CustomerMain";
+import CustomerMain from "features/Home";
 import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import Unauthorized from "./Unauthorized";

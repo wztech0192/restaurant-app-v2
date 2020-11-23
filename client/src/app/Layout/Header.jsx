@@ -1,11 +1,11 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, Tooltip, makeStyles } from "@material-ui/core";
-import PhoneIcon from "@material-ui/icons/Phone";
 import AccountButton from "features/Account/AccountButton";
 import { useSelector } from "react-redux";
 import { checkIsOrderHubConnected } from "app/centralHub";
 import CloudOffIcon from "@material-ui/icons/CloudOff";
-import { phoneNum } from "common";
+import HomeIcon from "@material-ui/icons/Home";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -24,11 +24,9 @@ const Header = ({ header }) => {
         <AppBar position="fixed">
             <Toolbar className={classes.toolbar}>
                 {!header.action ? (
-                    <Tooltip title={`Call us at ${phoneNum}`}>
-                        <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
-                            <PhoneIcon />
-                        </IconButton>
-                    </Tooltip>
+                    <IconButton color="inherit" component={Link} to="/">
+                        <HomeIcon />
+                    </IconButton>
                 ) : (
                     header.action
                 )}

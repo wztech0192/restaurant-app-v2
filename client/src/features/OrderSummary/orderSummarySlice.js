@@ -31,7 +31,7 @@ export default slice.reducer;
 export const handleUpdateOrderStatus = (id, status) => dispatch => e => {
     dispatch(
         asyncAction({
-            loading: LOADING.GLOBAL,
+            toggleLoadingFor: LOADING.GLOBAL,
             promise: () => putOrderStatus(id, status),
             success: () => {
                 //close modal

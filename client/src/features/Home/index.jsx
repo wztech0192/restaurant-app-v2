@@ -1,10 +1,12 @@
 import React from "react";
-import { Typography, Button, makeStyles, Grow } from "@material-ui/core";
+import { Typography, Button, makeStyles, Grow, Tooltip, IconButton } from "@material-ui/core";
 import MapButton from "./MapButton";
 import MainImage from "./MainImage";
 import OrderIcon from "@material-ui/icons/Store";
 import { Link } from "react-router-dom";
 import OrderHistory from "features/OrderHistory";
+import { phoneNum } from "common";
+import PhoneIcon from "@material-ui/icons/Phone";
 
 const maxWidth = 600;
 const useStyles = makeStyles({
@@ -37,7 +39,16 @@ const useStyles = makeStyles({
 
 const Home = ({ setHeader }) => {
     React.useEffect(() => {
-        setHeader({ title: "Hibachi House" });
+        setHeader({
+            title: "Hibachi House",
+            action: (
+                <Tooltip title={`Call us at ${phoneNum}`}>
+                    <IconButton edge="start" color="inherit" component="a" href={`tel:+${phoneNum}`}>
+                        <PhoneIcon />
+                    </IconButton>
+                </Tooltip>
+            )
+        });
     }, [setHeader]);
 
     const classes = useStyles();

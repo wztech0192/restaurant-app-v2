@@ -182,6 +182,10 @@ export const handleLoadLocalAccount = dispatch => {
     } else {
         dispatch(setGlobalLoading(false));
     }
+
+    setInterval(() => {
+        if (localStoredToken) dispatch(handleGetAccountInfo);
+    }, 518400000); //refresh token every 6 days if the user never disconnect
 };
 
 export const handleLoginAccount = (accountData, actionType) => dispatch => e => {

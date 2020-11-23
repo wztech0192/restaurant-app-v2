@@ -12,7 +12,7 @@ namespace RestaurantApp.Middleware
 
         public const string DEV_CORS = "DevCors";
 
-        public static void UseCustomCors(this IServiceCollection services)
+        public static void UseCustomCors(this IServiceCollection services, string allowedHosts)
         {
             services.AddCors(options =>
             {
@@ -22,8 +22,16 @@ namespace RestaurantApp.Middleware
                         builder
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .AllowCredentials()
-                            .SetIsOriginAllowed(origin => true);
+                            .AllowCredentials();
+
+                        if(allowedHosts == "*")
+                        {
+                            builder.SetIsOriginAllowed(origin => true);
+                        }
+                        else
+                        {
+                            builder.WithOrigins(allowedHosts.Split(";"));
+                        }
                     });
             });
         }

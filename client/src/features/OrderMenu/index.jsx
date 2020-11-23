@@ -6,9 +6,7 @@ import MenuSearch from "./MenuSearch";
 import MenuEntrySingle from "./MenuEntry/MenuEntrySingle";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import HomeIcon from "@material-ui/icons/Home";
 import { setSelectedEntryName } from "./slices/orderSlice";
-import { Link } from "react-router-dom";
 import { handleFetchMenu } from "./slices/menuSlice";
 import { Skeleton } from "@material-ui/lab";
 import CartFloatButton from "./Cart/CartFloatButton";
@@ -59,11 +57,7 @@ const OrderMenu = ({ setHeader }) => {
                 <IconButton color="inherit" onClick={e => dispatch(setSelectedEntryName(""))}>
                     <ArrowBackIcon />
                 </IconButton>
-            ) : (
-                <IconButton color="inherit" component={Link} to="/">
-                    <HomeIcon />
-                </IconButton>
-            )
+            ) : undefined
         });
     }, [setHeader, isSelected, dispatch]);
 

@@ -8,7 +8,7 @@ export default new (class {
     }
 
     promptPublicKey() {
-        const key = window.prompt("Private Key:");
+        const key = window.prompt("Private Key:", process.env.REACT_APP_ENCRYPTION_TESTING_PRIVATE_KEY);
         if (key) this.setPrivateKey(key);
     }
 

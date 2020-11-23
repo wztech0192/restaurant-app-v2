@@ -15,6 +15,7 @@ const PaymentSummaryBox = ({ classes, encryptedCardInfo }) => {
             console.error(e);
         }
         return false;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [encryptedCardInfo, reload]);
 
     return (
