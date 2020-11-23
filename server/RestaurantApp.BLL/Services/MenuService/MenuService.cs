@@ -152,9 +152,7 @@ namespace RestaurantApp.BLL.Services
                 entityKey: entity => entity.ID,
                 create: (dto, update) =>
                 {
-                    var entity = new MenuEntry();
-                    update(entity, dto);
-                    entities.Add(entity);
+                    entities.Add(update(new MenuEntry(), dto));
                 },
                 update: (entity, dto) =>
                 {
@@ -178,9 +176,7 @@ namespace RestaurantApp.BLL.Services
               entityKey: entity => entity.ID,
               create: (dto, update) =>
               {
-                  var entity = new MenuItem();
-                  update(entity, dto);
-                  entities.Add(entity);
+                  entities.Add(update(new MenuItem(), dto));
               },
               update: (entity, dto) =>
               {
@@ -235,9 +231,7 @@ namespace RestaurantApp.BLL.Services
               entityKey: entity => entity.ID,
               create: (dto, update) =>
               {
-                  var entity = new MenuOptionItem();
-                  update(entity, dto);
-                  entities.Add(entity);
+                  entities.Add(update(new MenuOptionItem(), dto));
               },
               update: (entity, dto) =>
               {

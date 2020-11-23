@@ -1,5 +1,6 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { createSlice } from "@reduxjs/toolkit";
+import { getAccountToken } from "features/Account/accountSlice";
 import { orderRulesHubMiddleware } from "features/ManageOrderRules/orderRuleSlice";
 import { orderHistoryHubMiddleware } from "features/OrderHistory/orderHistorySlice";
 
@@ -33,6 +34,10 @@ export const checkIsOrderHubConnected = state => state.hub.connected;
 
 export const invoke = (name, ...args) => {
     connection.invoke(name, ...args);
+};
+
+export const joinHubGroup = token => {
+    invoke("JoinGroup", token);
 };
 
 export const handleStartOrderHub = (dispatch, getState) => {

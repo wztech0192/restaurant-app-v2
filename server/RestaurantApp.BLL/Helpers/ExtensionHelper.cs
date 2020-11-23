@@ -13,11 +13,17 @@ namespace RestaurantApp.BLL.Helpers
             IEnumerable<TDto> dtos,
             Func<TDto, TKey> dtoKey,
             Func<TEntity, TKey> entityKey,
-            Action<TDto, Action<TEntity, TDto>> create = null,
+            Action<TDto, Func<TEntity, TDto, TEntity>> create = null,
             Action<TEntity, TDto> update = null,
             Action<TEntity> delete = null)
         {
             var entityDictionary = entities.ToDictionary(en => entityKey(en));
+
+            Func<TEntity, TDto, TEntity> _update = (entity, dto) => {
+                update?.Invoke(entity, dto);
+                return entity;
+            };
+
             foreach (var dto in dtos)
             {
                 var key = dtoKey(dto);
@@ -30,7 +36,7 @@ namespace RestaurantApp.BLL.Helpers
                 else
                 {
                     //exist only in dtos: should CREATE based on dto
-                    create?.Invoke(dto, update);
+                    create?.Invoke(dto, _update);
                 }
             };
 

@@ -20,6 +20,6 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public virtual Menu Menu { get; set; }
 
-        public virtual ICollection<MenuItem> MenuItems { get; set; }
+        public virtual ICollection<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
     }
 }

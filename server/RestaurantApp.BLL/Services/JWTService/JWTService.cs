@@ -33,17 +33,17 @@ namespace RestaurantApp.BLL.Services
         }
 
 
-        public Account GetCurrentAccount()
+        public Account GetCurrentAccount(string token = null)
         {
-            var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var mToken = token ?? httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-            if (token != null)
+            if (mToken != null)
             {
                 try
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                    tokenHandler.ValidateToken(token, new TokenValidationParameters
+                    tokenHandler.ValidateToken(mToken, new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),

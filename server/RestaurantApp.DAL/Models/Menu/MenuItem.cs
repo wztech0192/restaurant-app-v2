@@ -25,7 +25,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public virtual MenuEntry MenuEntry { get; set; }
 
-        public virtual IEnumerable<OrderedItem> OrderedItems { get; set; }
+        public virtual IEnumerable<OrderedItem> OrderedItems { get; set; } = new List<OrderedItem>();
 
         // groupName1;groupName2,  concated string
         public string MenuOptionGroups { get; set; }

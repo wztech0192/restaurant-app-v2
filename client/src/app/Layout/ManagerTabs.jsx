@@ -36,9 +36,7 @@ const ManagerTabs = () => {
     const location = useLocation();
     const [state, setState] = React.useState(() => {
         const index = routes.findIndex(r => r.to === location.pathname);
-        if (index === -1) {
-            return 0;
-        }
+
         return index;
     });
 

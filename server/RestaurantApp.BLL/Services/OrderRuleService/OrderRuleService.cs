@@ -68,9 +68,7 @@ namespace RestaurantApp.BLL.Services
                   entityKey: entity => entity.ID,
                   create: (dto, update) =>
                   {
-                      var orderRuleTimeRange = new OrderRuleTimeRange();
-                      update(orderRuleTimeRange, dto);
-                      entity.ActiveTimes.Add(orderRuleTimeRange);
+                      entity.ActiveTimes.Add(update(new OrderRuleTimeRange(), dto));
                   },
                   update: (entity, dto) =>
                   {

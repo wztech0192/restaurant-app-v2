@@ -6,13 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
+
 
 namespace RestaurantApp.Hubs
 {
     public class OrderHub: Hub
     {
-
         private readonly IJWTService _jwtService;
+        private ConcurrentDictionary<string, string> UserGroups = new ConcurrentDictionary<string, string>();
+
         /// <summary>
         /// Client Receivers
         /// </summary>
@@ -25,20 +28,31 @@ namespace RestaurantApp.Hubs
             _jwtService = jwtService;
         }
 
-        public override async Task OnConnectedAsync()
+        public async Task JoinGroup(string token)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, getUserGroupName());
+            if (UserGroups.TryGetValue(Context.ConnectionId, out string previousGroup))
+            {
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, previousGroup);
+            }
+
+            var groupName = getUserGroupName(token);
+            UserGroups.AddOrUpdate(Context.ConnectionId, groupName, (key, oldValue) => groupName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             await base.OnConnectedAsync();
         }
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, getUserGroupName());
+            if(UserGroups.TryRemove(Context.ConnectionId, out string group))
+            {
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, group);
+            }
             await base.OnDisconnectedAsync(exception);
         }
 
-        private string getUserGroupName()
+        private string getUserGroupName(string token)
         {
-            var currentUser = _jwtService.GetCurrentAccount();
+            var currentUser = _jwtService.GetCurrentAccount(token);
             if(currentUser != null && currentUser.Role == Policy.Manager)
             {
                 return Policy.Manager;

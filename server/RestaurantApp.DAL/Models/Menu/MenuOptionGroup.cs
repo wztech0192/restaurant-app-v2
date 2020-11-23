@@ -13,7 +13,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<MenuOptionItem> MenuOptionItems { get; set; }
+        public virtual ICollection<MenuOptionItem> MenuOptionItems { get; set; } = new List<MenuOptionItem>();
 
         [Required]
         public virtual Menu Menu { get; set; }

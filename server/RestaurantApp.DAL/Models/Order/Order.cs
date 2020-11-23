@@ -34,7 +34,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public virtual Menu Menu { get; set; }
 
-        public virtual ICollection<OrderedItem> OrderedItems { get; set; }
+        public virtual ICollection<OrderedItem> OrderedItems { get; set; } = new List<OrderedItem>();
 
     }
 }

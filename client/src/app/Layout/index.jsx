@@ -10,6 +10,7 @@ import { handleLoadLocalAccount } from "features/Account/accountSlice";
 import { useDispatch } from "react-redux";
 import { handleStartOrderHub } from "app/centralHub";
 import GlobalLoading from "app/Indicator/GlobalLoading";
+import Connection from "./Connection";
 import { EMPTY_OBJECT } from "common";
 
 const Layout = () => {
@@ -30,7 +31,12 @@ const Layout = () => {
         <Router history={history}>
             <Header header={header} />
             <AccountViewModal />
-            {loaded && <Routes setHeader={setHeader} />}
+            {loaded && (
+                <>
+                    <Routes setHeader={setHeader} />
+                    <Connection />
+                </>
+            )}
             <Notifier />
             <GlobalModal />
             <GlobalLoading />

@@ -4,8 +4,12 @@ import TextFieldWrapper from "common/components/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
 import PriceSummaryBox from "./OrderSummaryBoxes/PriceSummaryBox";
 import PersonSummaryBox from "./OrderSummaryBoxes/PersonSummaryBox";
+import PaymentSummaryBox from "./OrderSummaryBoxes/PaymentSummaryBox";
 import OrderSummaryHeader from "./OrderSummaryHeader";
 import OrderItemsSummary from "./OrderItemsSummary";
+import { getAccountRole } from "features/Account/accountSlice";
+import { isManager } from "features/Account/roleChecker";
+import { useSelector } from "react-redux";
 
 const OrderSummary = ({
     orderInfo,
@@ -20,6 +24,8 @@ const OrderSummary = ({
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
+
+    const manager = isManager(useSelector(getAccountRole));
     return (
         <div>
             <OrderSummaryHeader orderInfo={orderInfo} classes={classes} totalItems={totalItems} />
@@ -60,28 +66,18 @@ const OrderSummary = ({
                     {LeftBox}
                 </Grid>
                 <Grid item xs={8} md={5}>
-                    <Box display="flex" justifyContent="flex-end">
-                        <PriceSummaryBox
-                            classes={classes}
-                            canEdit={canEdit}
-                            handleUpdateTip={handleUpdateTip}
-                            tip={orderInfo.tip}
-                            tax={tax || orderInfo.tax}
-                            subtotal={orderInfo.price}
-                        />
-                    </Box>
+                    <PriceSummaryBox
+                        classes={classes}
+                        canEdit={canEdit}
+                        handleUpdateTip={handleUpdateTip}
+                        tip={orderInfo.tip}
+                        tax={tax || orderInfo.tax}
+                        subtotal={orderInfo.price}
+                    />
                     {orderInfo.id && (
                         <>
-                            <br />
-                            <PersonSummaryBox
-                                classes={classes}
-                                orderInfo={orderInfo}
-                                canEdit={canEdit}
-                                handleUpdateTip={handleUpdateTip}
-                                tip={orderInfo.tip}
-                                tax={tax || orderInfo.tax}
-                                subtotal={orderInfo.price}
-                            />
+                            <PersonSummaryBox classes={classes} orderInfo={orderInfo} />
+                            {manager && <PaymentSummaryBox classes={classes} orderInfo={orderInfo} />}
                         </>
                     )}
                 </Grid>

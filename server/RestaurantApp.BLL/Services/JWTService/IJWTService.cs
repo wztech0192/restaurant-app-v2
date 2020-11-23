@@ -10,6 +10,6 @@ namespace RestaurantApp.BLL.Services
     {
         string GenerateAccountJWTToken(Account account);
 
-        Account GetCurrentAccount();
+        Account GetCurrentAccount(string token = null);
     }
 }

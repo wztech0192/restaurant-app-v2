@@ -19,7 +19,7 @@ namespace RestaurantApp.DAL.Models
         [Required]
         public virtual MenuOptionGroup Group { get; set; }
 
-        public virtual ICollection<OrderedItemMenuOptionItem> OrderedItems { get; set; }
+        public virtual ICollection<OrderedItemMenuOptionItem> OrderedItems { get; set; } = new List<OrderedItemMenuOptionItem>();
 
     }
 }

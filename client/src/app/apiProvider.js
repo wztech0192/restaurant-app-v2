@@ -8,8 +8,7 @@ export const putAccount = data => apiCaller.put("account", data);
 
 export const getAccount = () => apiCaller.get("account");
 
-export const postMenu = (menu, updateStatus) =>
-    apiCaller.post(`menu?updateStatus=${updateStatus}`, menu);
+export const postMenu = (menu, updateStatus) => apiCaller.post(`menu?updateStatus=${updateStatus}`, menu);
 
 export const deleteMenu = menuID => apiCaller.delete(`menu/${menuID}`);
 export const getMenu = menuID => apiCaller.get(`menu/${menuID}`);

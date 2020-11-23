@@ -94,7 +94,7 @@ namespace RestaurantApp.Controllers
         /// </summary>
         /// <returns>order id and status</returns>
         [HttpPut("{id}/status/{status}")]
-        public IActionResult Post(int id, OrderStatus status)
+        public IActionResult Put(int id, OrderStatus status)
         {
             var msg = _service.UpdateOrderStatus(id, status);
 
