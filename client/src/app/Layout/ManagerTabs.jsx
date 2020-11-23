@@ -34,11 +34,11 @@ const ManagerTabs = () => {
     const classes = useStyles();
 
     const location = useLocation();
-    const [state, setState] = React.useState(() => {
-        const index = routes.findIndex(r => r.to === location.pathname);
+    const [state, setState] = React.useState(0);
 
-        return index;
-    });
+    React.useEffect(() => {
+        setState(routes.findIndex(r => location.pathname.includes(r.to)));
+    }, [location.pathname]);
 
     return (
         <Paper square elevation={6} className={classes.root}>

@@ -77,7 +77,9 @@ const OrderSummary = ({
                     {orderInfo.id && (
                         <>
                             <PersonSummaryBox classes={classes} orderInfo={orderInfo} />
-                            {manager && <PaymentSummaryBox classes={classes} orderInfo={orderInfo} />}
+                            {manager && orderInfo.encryptedCardInfo && (
+                                <PaymentSummaryBox classes={classes} encryptedCardInfo={orderInfo.encryptedCardInfo} />
+                            )}
                         </>
                     )}
                 </Grid>

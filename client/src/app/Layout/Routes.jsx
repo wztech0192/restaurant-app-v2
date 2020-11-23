@@ -27,7 +27,7 @@ const routes = [
         roleCheck: isManager
     },
     {
-        path: "/manage/orders",
+        path: "/manage/orders/:key?",
         component: ManageOrders,
         roleCheck: isManager
     },
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({ setHeader }) => {
+const Routes = ({ setHeader }) => {
     const classes = useStyles();
 
     const role = useSelector(getAccountRole);
@@ -72,3 +72,5 @@ export default ({ setHeader }) => {
         </Container>
     );
 };
+
+export default Routes;
