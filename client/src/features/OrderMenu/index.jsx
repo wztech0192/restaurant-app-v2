@@ -54,7 +54,7 @@ const OrderMenu = ({ setHeader }) => {
 
     React.useEffect(() => {
         setHeader({
-            title: <MenuSearch classes={classes} />,
+            title: <MenuSearch />,
             action: isSelected ? (
                 <IconButton color="inherit" onClick={e => dispatch(setSelectedEntryName(""))}>
                     <ArrowBackIcon />
@@ -65,7 +65,7 @@ const OrderMenu = ({ setHeader }) => {
                 </IconButton>
             )
         });
-    }, [setHeader, classes, isSelected, dispatch]);
+    }, [setHeader, isSelected, dispatch]);
 
     React.useEffect(() => {
         if (!hasMenu) {

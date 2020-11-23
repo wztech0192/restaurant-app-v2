@@ -1,12 +1,10 @@
 import React from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import Popover from "@material-ui/core/Popover";
-import { Grid } from "@material-ui/core";
+import { Grid, TextField, MenuItem } from "@material-ui/core";
 
 const format = "MM/DD/YYYY";
 
@@ -60,10 +58,7 @@ const DateRangeSelector = ({ onChange, defaultValue, ...props }) => {
 
     const onCalenderSelect = range => {
         if (range.length > 1) {
-            const formattedRange = [
-                moment(range[0], format).format(format),
-                moment(range[1], format).format(format)
-            ];
+            const formattedRange = [moment(range[0], format).format(format), moment(range[1], format).format(format)];
             setState({
                 range: formattedRange,
                 selected: "Customize Range",
@@ -116,12 +111,7 @@ const DateRangeSelector = ({ onChange, defaultValue, ...props }) => {
                 <Grid container className={classes.popperRoot}>
                     <Grid item>
                         {Object.keys(rangeOptions).map((val, i) => (
-                            <MenuItem
-                                selected={val === state.selected}
-                                value={val}
-                                key={i}
-                                onClick={rangeChange}
-                            >
+                            <MenuItem selected={val === state.selected} value={val} key={i} onClick={rangeChange}>
                                 {val}
                             </MenuItem>
                         ))}

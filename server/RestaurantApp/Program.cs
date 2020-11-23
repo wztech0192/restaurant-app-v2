@@ -21,7 +21,7 @@ namespace RestaurantApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://localhost:30001");
+                    webBuilder.UseUrls("http://localhost:44366");
                 });
     }
 }

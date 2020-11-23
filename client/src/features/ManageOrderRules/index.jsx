@@ -9,8 +9,6 @@ import useRuleStyles from "./useRuleStyles";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { Skeleton } from "@material-ui/lab";
 
-const useStyles = useRuleStyles();
-
 const LoadingSkeleton = ({ classes }) =>
     Array(4)
         .fill()
@@ -19,7 +17,7 @@ const LoadingSkeleton = ({ classes }) =>
         ));
 
 const ManageRules = ({ setHeader }) => {
-    const classes = useStyles();
+    const classes = useRuleStyles();
     const dispatch = useDispatch();
     const rules = useSelector(state => state.orderRules) || EMPTY_OBJECT;
     const loading = useSelector(getLoading("orderRules"));
