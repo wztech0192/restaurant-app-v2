@@ -1,10 +1,7 @@
 import { Chip, Grid, MenuItem, Paper, TextField } from "@material-ui/core";
 import { EMPTY_ARRAY } from "common";
-import DateRangeSelector from "common/DateRangeSelector";
-import OrderStatus, {
-    getOrderStatusDisplay,
-    getStatusChipProps
-} from "features/OrderHistory/orderStatus";
+import DateRangeSelector from "common/components/DateRangeSelector";
+import OrderStatus, { getOrderStatusDisplay, getStatusChipProps } from "features/OrderHistory/orderStatus";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFilter } from "./orderHistorySlice";

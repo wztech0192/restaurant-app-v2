@@ -12,8 +12,8 @@ import {
     MenuStatus,
     handleRemoveMenu
 } from "./manageMenuSlice";
-import TextFieldWrapper from "common/TextFieldWrapper";
-import SkeletonWrapper from "common/SkeletonWrapper";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
+import SkeletonWrapper from "common/components/SkeletonWrapper";
 import { getLoading } from "app/Indicator/indicatorSlice";
 
 const useStyles = makeStyles(theme => ({

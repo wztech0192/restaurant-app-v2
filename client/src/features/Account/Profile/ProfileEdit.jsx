@@ -22,8 +22,8 @@ import {
     removeCard,
     handleEditAccountInfoPhone
 } from "../accountSlice";
-import TextFieldWrapper from "common/TextFieldWrapper";
-import ErrorDisplayer from "common/ErrorDisplayer";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
+import ErrorDisplayer from "common/components/ErrorDisplayer";
 import UndoIcon from "@material-ui/icons/Undo";
 import CardList from "features/CreditCard/CardList";
 import AddCardModal from "features/CreditCard/AddCardModal";

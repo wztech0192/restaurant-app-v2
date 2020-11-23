@@ -9,7 +9,7 @@ import {
     IconButton,
     Typography
 } from "@material-ui/core";
-import TextFieldWrapper from "common/TextFieldWrapper";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEditedItem, setEditedItemMetadata, handleSaveEditedItem } from "../slices/orderSlice";

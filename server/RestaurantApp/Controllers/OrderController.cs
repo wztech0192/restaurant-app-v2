@@ -82,7 +82,8 @@ namespace RestaurantApp.Controllers
 
             if (msg.Success)
             {
-                _orderHub.Clients.All.SendAsync(OrderHub.RECEIVE_ORDER, msg.Data);
+                //notify all managers
+                _orderHub.Clients.Group(Policy.Manager).SendAsync(OrderHub.RECEIVE_ORDER, msg.Data);
             }
 
             return base.ProcessService(msg);

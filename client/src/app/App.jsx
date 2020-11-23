@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Fade, ThemeProvider } from "@material-ui/core";
-import NotistackProvider from "../common/NotistackProvider";
+import NotistackProvider from "common/components/NotistackProvider";
 import theme from "app/theme";
 import Layout from "./Layout";
 import encryptionProvider from "common/encryptionProvider";

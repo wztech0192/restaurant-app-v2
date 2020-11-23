@@ -8,8 +8,8 @@ import {
     handleLoginAccount,
     handleSetAccountView
 } from "./accountSlice";
-import TextFieldWrapper from "common/TextFieldWrapper";
-import ErrorDisplayer from "common/ErrorDisplayer";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
+import ErrorDisplayer from "common/components/ErrorDisplayer";
 import AccountHeader from "./AccountHeader";
 
 const progessBarStyle = {

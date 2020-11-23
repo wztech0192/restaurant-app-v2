@@ -2,7 +2,7 @@ import React from "react";
 import { Chip, MenuItem, TextField, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { handleFetchMenus, handleSelectMenu, MenuStatus } from "./manageMenuSlice";
-import SkeletonWrapper from "common/SkeletonWrapper";
+import SkeletonWrapper from "common/components/SkeletonWrapper";
 import { EMPTY_ARRAY } from "common";
 
 const getChipPropByStatus = status => {

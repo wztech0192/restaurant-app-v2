@@ -1,8 +1,9 @@
 import { Box, Grid, Paper, Typography } from "@material-ui/core";
 import React from "react";
-import TextFieldWrapper from "common/TextFieldWrapper";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
-import OrderPriceSummaryBox from "./OrderPriceSummaryBox";
+import PriceSummaryBox from "./OrderSummaryBoxes/PriceSummaryBox";
+import PersonSummaryBox from "./OrderSummaryBoxes/PersonSummaryBox";
 import OrderSummaryHeader from "./OrderSummaryHeader";
 import OrderItemsSummary from "./OrderItemsSummary";
 
@@ -60,9 +61,8 @@ const OrderSummary = ({
                 </Grid>
                 <Grid item xs={8} md={5}>
                     <Box display="flex" justifyContent="flex-end">
-                        <OrderPriceSummaryBox
+                        <PriceSummaryBox
                             classes={classes}
-                            orderInfo={orderInfo}
                             canEdit={canEdit}
                             handleUpdateTip={handleUpdateTip}
                             tip={orderInfo.tip}
@@ -73,30 +73,15 @@ const OrderSummary = ({
                     {orderInfo.id && (
                         <>
                             <br />
-                            <Box display="flex" justifyContent="flex-end">
-                                <Paper elevation={5}>
-                                    <Grid container className={classes.priceBox}>
-                                        <Grid item xs={6}>
-                                            <Typography align="right">Order Name:</Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography align="right">
-                                                <b>{orderInfo.name}</b>
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography align="right">Phone:</Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography align="right">
-                                                <b>
-                                                    {orderInfo.phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3")}
-                                                </b>
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Box>
+                            <PersonSummaryBox
+                                classes={classes}
+                                orderInfo={orderInfo}
+                                canEdit={canEdit}
+                                handleUpdateTip={handleUpdateTip}
+                                tip={orderInfo.tip}
+                                tax={tax || orderInfo.tax}
+                                subtotal={orderInfo.price}
+                            />
                         </>
                     )}
                 </Grid>

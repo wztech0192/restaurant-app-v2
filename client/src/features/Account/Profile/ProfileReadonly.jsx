@@ -2,7 +2,7 @@ import React from "react";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { handleLogout } from "../accountSlice";
-import TextFieldWrapper from "common/TextFieldWrapper";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
 import { getDateStr } from "common";
 import CardList from "features/CreditCard/CardList";
 

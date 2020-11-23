@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
-import TextFieldWrapper from "common/TextFieldWrapper";
-import NumberFormatCustom from "common/NumberCustomFormat";
+import TextFieldWrapper from "common/components/TextFieldWrapper";
+import NumberFormatCustom from "common/components/NumberCustomFormat";
 
 const InputProps = {
     inputComponent: NumberFormatCustom
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     }
 });
 
-const OrderPriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal = 0, tax = 0 }) => {
+const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal = 0, tax = 0 }) => {
     const tipFieldClasses = useStyles();
     const taxedTotal = subtotal * tax;
     return (
@@ -77,4 +77,4 @@ const OrderPriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subt
     );
 };
 
-export default OrderPriceSummaryBox;
+export default PriceSummaryBox;
