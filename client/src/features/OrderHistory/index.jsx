@@ -1,18 +1,19 @@
-import { Button, Chip, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
+import { Button, makeStyles } from "@material-ui/core";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { EMPTY_ARRAY } from "common";
-import SkeletonWrapper from "common/SkeletonWrapper";
 import { getAccountToken } from "features/Account/accountSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFetchOrderHistory, handleSyncOrderStatus, handleUnSyncOrderStatus } from "./orderHistorySlice";
-import { getDateStr } from "common";
+import {
+    handleFetchRecentOrderHistory,
+    handleSyncOrderStatus,
+    handleUnSyncOrderStatus
+} from "./orderHistorySlice";
 import { checkIsOrderHubConnected } from "app/centralHub";
-import OrderStatus, { getStatusChipProps } from "./orderStatus";
 import OrderSummaryModal from "features/OrderSummary/OrderSummaryModal";
-import { setOrderSummary } from "features/OrderSummary/orderSummarySlice";
+import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
 import { handleBuyAgain } from "features/OrderMenu/slices/orderSlice";
+import OrderHistoryList from "./OrderHistoryList";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -34,7 +35,7 @@ const OrderHistory = () => {
     React.useEffect(() => {
         if (!historyOrders || tokenRef.current !== hasToken) {
             tokenRef.current = hasToken;
-            dispatch(handleFetchOrderHistory);
+            dispatch(handleFetchRecentOrderHistory);
         }
     }, [historyOrders, dispatch, hasToken]);
 
@@ -46,46 +47,7 @@ const OrderHistory = () => {
     const orders = historyOrders || EMPTY_ARRAY;
     return (
         <div className={classes.container}>
-            <SkeletonWrapper
-                loading={loading}
-                CustomSkelton={Array(4)
-                    .fill()
-                    .map((_, i) => (
-                        <Skeleton key={i} height="61px" animation="wave" />
-                    ))}
-            >
-                <List dense>
-                    {orders.map((order, i) => (
-                        <ListItem
-                            divider
-                            button
-                            key={i}
-                            onClick={() => {
-                                dispatch(setOrderSummary(order));
-                            }}
-                        >
-                            <ListItemText
-                                primary={
-                                    <span>
-                                        <b>Ticket {order.id}</b>
-                                    </span>
-                                }
-                                secondary={getDateStr(order.createdOn)}
-                            />
-                            <ListItemSecondaryAction>
-                                {order.status !== OrderStatus.Expired && (
-                                    <Chip
-                                        {...getStatusChipProps(order.status)}
-                                        label={OrderStatus.getDisplay(order.status)}
-                                        size="small"
-                                    />
-                                )}
-                                &nbsp; &nbsp;&nbsp; ${order.price.toFixed(2)}
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
-            </SkeletonWrapper>
+            <OrderHistoryList orders={orders} loading={loading} />
             <OrderSummaryModal>
                 <Button
                     color="primary"
@@ -98,7 +60,7 @@ const OrderHistory = () => {
                 </Button>
                 <Button
                     onClick={() => {
-                        dispatch(setOrderSummary());
+                        dispatch(handleSetOrderSummary());
                     }}
                 >
                     Close

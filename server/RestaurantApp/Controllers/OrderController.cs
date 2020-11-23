@@ -28,14 +28,14 @@ namespace RestaurantApp.Controllers
         }
 
         /// <summary>
-        /// Get all orders.
+        /// query orders
         /// </summary>
         /// <returns>A list of orders</returns>
-        [HttpGet("all")]
+        [HttpGet("query")]
         [Authorize(Roles = Policy.Manager)]
-        public IActionResult GetAll()
+        public IActionResult Query([FromQuery] IEnumerable<DateTime> dateRange, [FromQuery] IEnumerable<OrderStatus> status)
         {
-            return base.ProcessService(_service.GetAll());
+            return base.ProcessService(_service.Query(dateRange, status));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace RestaurantApp.Controllers
         /// <summary>
         /// Create a order
         /// </summary>
-        /// <returns>Menu</returns>
+        /// <returns>Order</returns>
         [HttpPost("")]
         public IActionResult Post(OrderDTO dto)
         {
@@ -83,6 +83,23 @@ namespace RestaurantApp.Controllers
             if (msg.Success)
             {
                 _orderHub.Clients.All.SendAsync(OrderHub.RECEIVE_ORDER, msg.Data);
+            }
+
+            return base.ProcessService(msg);
+        }
+
+        /// <summary>
+        /// Put order status
+        /// </summary>
+        /// <returns>order id and status</returns>
+        [HttpPut("{id}/status/{status}")]
+        public IActionResult Post(int id, OrderStatus status)
+        {
+            var msg = _service.UpdateOrderStatus(id, status);
+
+            if (msg.Success)
+            {
+                _orderHub.Clients.All.SendAsync(OrderHub.UPDATE_ORDER_STATUS, id, status);
             }
 
             return base.ProcessService(msg);

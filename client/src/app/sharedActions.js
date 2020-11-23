@@ -23,6 +23,7 @@ export const asyncAction = ({
     hideErrorModal,
     toggleLoadingFor
 }) => async dispatch => {
+    let shouldToggle = true;
     try {
         if (toggleLoadingFor) {
             dispatch(setLoading({ target: toggleLoadingFor, loading: true }));
@@ -38,7 +39,11 @@ export const asyncAction = ({
             data = await res.text();
         }
         if (res.ok) {
-            if (success) success(data);
+            if (success) {
+                if (success(data)) {
+                    shouldToggle = false;
+                }
+            }
         } else {
             const error = new Error();
             error.errors = data;
@@ -82,7 +87,7 @@ export const asyncAction = ({
 
     if (completed) completed();
 
-    if (toggleLoadingFor) {
+    if (toggleLoadingFor && shouldToggle) {
         dispatch(setLoading({ target: toggleLoadingFor, loading: false }));
     }
 };

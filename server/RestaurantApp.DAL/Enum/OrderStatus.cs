@@ -8,7 +8,7 @@ namespace RestaurantApp.DAL.Enum
     {
         Draft = 0,
         Pending = 1,
-        Approved = 2,
+        Accepted = 2,
         Rejected = 3,
         Expired = 4
     }

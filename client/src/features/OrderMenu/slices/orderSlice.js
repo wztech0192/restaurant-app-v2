@@ -5,10 +5,15 @@ import { handleOpenModal, LOADING, enqueueSnackbar } from "app/Indicator/indicat
 import { asyncAction, encryptionAction } from "app/sharedActions";
 import { handleGetAccountInfo } from "features/Account/accountSlice";
 import { appendOrderHistory } from "features/OrderHistory/orderHistorySlice";
-import { setOrderSummary } from "features/OrderSummary/orderSummarySlice";
+import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
 import uid from "uid";
 import OrderSubmitMessage from "../OrderSubmitMessage";
-import { itemCounterHelper, addOrderItemHelper, removeOrderItemHelper, needEditModal } from "./helper";
+import {
+    itemCounterHelper,
+    addOrderItemHelper,
+    removeOrderItemHelper,
+    needEditModal
+} from "./helper";
 import { handleFetchMenu } from "./menuSlice";
 
 const initialState = {
@@ -47,7 +52,9 @@ const slice = createSlice({
         saveEditedItem(state) {
             const { cart, editedItem } = state;
             if (editedItem) {
-                const replaceItemIndex = cart.orderedItems.findIndex(item => item.uid === editedItem.uid);
+                const replaceItemIndex = cart.orderedItems.findIndex(
+                    item => item.uid === editedItem.uid
+                );
                 if (replaceItemIndex !== -1) {
                     const replaceItem = cart.orderedItems[replaceItemIndex];
                     cart.price -= replaceItem.price * replaceItem.quantity;
@@ -61,7 +68,12 @@ const slice = createSlice({
                 } else {
                     cart.orderedItems.push(editedItem);
                 }
-                itemCounterHelper(state.itemCounter, editedItem.entryName, editedItem.name, editedItem.quantity);
+                itemCounterHelper(
+                    state.itemCounter,
+                    editedItem.entryName,
+                    editedItem.name,
+                    editedItem.quantity
+                );
                 cart.price += editedItem.price * editedItem.quantity;
             }
             state.editedItem = false;
@@ -114,7 +126,12 @@ const slice = createSlice({
             const { menuEntryName, menuItem, quantity } = payload;
             itemCounterHelper(state.itemCounter, menuEntryName, menuItem.name, quantity);
 
-            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(state.cart, menuEntryName, menuItem, quantity);
+            (quantity > 0 ? addOrderItemHelper : removeOrderItemHelper)(
+                state.cart,
+                menuEntryName,
+                menuItem,
+                quantity
+            );
         },
         setOpenCart(state, { payload }) {
             state.openCart = payload;
@@ -179,7 +196,10 @@ export const handleAddOrRemoveItem = (menuEntryName, menuItem, quantity) => disp
     }
 };
 
-export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) => (dispatch, getState) => e => {
+export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) => (
+    dispatch,
+    getState
+) => e => {
     const order = getState().order.cart;
     const payload = {
         ...order,
@@ -246,10 +266,10 @@ export const handleBuyAgain = (dispatch, getState) => {
 };
 
 export const resolveBuyAgain = (order, menu) => dispatch => {
-    if (order.menuId !== menu.id) {
+    if (order.menuId === menu.id) {
         dispatch(buyAgain(order));
         //close selected order summary
-        dispatch(setOrderSummary());
+        dispatch(handleSetOrderSummary());
         history.push("/order");
     } else {
         dispatch(

@@ -7,7 +7,10 @@ export const validTimeRange = activeTimes => {
     for (let time of activeTimes) {
         const { isValid, daysOfWeek, start, stop } = time;
         if (isValid) {
-            if (!daysOfWeek.includes(day) || !now.isBetween(moment(start, timeFormat), moment(stop, timeFormat))) {
+            if (
+                !daysOfWeek.includes(day) ||
+                !now.isBetween(moment(start, timeFormat), moment(stop, timeFormat))
+            ) {
                 return false;
             }
         }
