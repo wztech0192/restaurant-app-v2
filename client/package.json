@@ -31,8 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-testing": "set PUBLIC_URL=/testing/hibachihouse&&env-cmd -f .env.testing react-scripts build",
-    "build-production": "set PUBLIC_URL=/hibachihouse&&env-cmd -f .env.production react-scripts build",
+    "build-Testing": "set PUBLIC_URL=/testing/hibachihouse&&env-cmd -f .env.testing react-scripts build",
+    "build-Production": "set PUBLIC_URL=/hibachihouse&&env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
