@@ -10,7 +10,6 @@ import OrderSummaryModal from "features/OrderSummary/OrderSummaryModal";
 import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
 import { handleBuyAgain } from "features/OrderMenu/slices/orderSlice";
 import OrderHistoryList from "./OrderHistoryList";
-import { ContactPhoneSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     container: {

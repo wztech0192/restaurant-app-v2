@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import { getLoading } from "app/Indicator/indicatorSlice";
 import { EMPTY_ARRAY } from "common";
 import React from "react";
@@ -47,13 +47,11 @@ const ManageOrders = ({ match, setHeader }) => {
         <div className={classes.container}>
             <OrderHistoryFilter />
             <br />
-            <Paper component={Box}>
-                <OrderHistoryList
-                    orders={orders}
-                    loading={loading}
-                    emptyLabel={<Typography>&nbsp;&nbsp;&nbsp;Empty...</Typography>}
-                />
-            </Paper>
+            <OrderHistoryList
+                orders={orders}
+                loading={loading}
+                emptyLabel={<Typography>&nbsp;&nbsp;&nbsp;Empty...</Typography>}
+            />
 
             <OrderSummaryModal>
                 {selectedOrder && selectedOrder.status === OrderStatus.Pending ? (
