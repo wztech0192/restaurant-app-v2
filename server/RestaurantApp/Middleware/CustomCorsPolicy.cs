@@ -10,13 +10,13 @@ namespace RestaurantApp.Middleware
     public static class CustomCorsPolicy
     {
 
-        public const string DEV_CORS = "DevCors";
+        public const string CUSTOM_CORS = "CustomCors";
 
         public static void UseCustomCors(this IServiceCollection services, string allowedHosts)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(DEV_CORS,
+                options.AddPolicy(CUSTOM_CORS,
                     builder =>
                     {
                         builder
