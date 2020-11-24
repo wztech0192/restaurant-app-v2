@@ -243,7 +243,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-deploy*
 
 **appsettings.Testing.json
 **appsettings.Production.json
