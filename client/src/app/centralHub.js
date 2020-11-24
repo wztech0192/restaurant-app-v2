@@ -66,9 +66,9 @@ export const handleStartOrderHub = (dispatch, getState) => {
     });
 
     connection.onclose(() => {
-        console.log("closed, try to reconnect in 5 second....");
+        console.log("closed, try to reconnect in 2 second....");
         dispatch(connect(false));
-        setTimeout(start, 5000);
+        setTimeout(start, 2000);
     });
 
     for (let middleware of hubMiddalewares) {
