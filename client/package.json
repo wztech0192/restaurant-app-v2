@@ -31,13 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
-    "build-Testing": "PUBLIC_URL=/testing/hibachihouse GENERATE_SOURCEMAP=false env-cmd -f .env.testing react-scripts build",
+    "build-Testing": "PUBLIC_URL=/hibachihouse-testing GENERATE_SOURCEMAP=false env-cmd -f .env.testing react-scripts build",
     "build-Production": "PUBLIC_URL=/hibachihouse GENERATE_SOURCEMAP=false env-cmd -f .env.production react-scripts build",
-=======
-    "build-Testing": "set PUBLIC_URL=/hibachihouse-testing&&env-cmd -f .env.testing react-scripts build",
-    "build-Production": "set PUBLIC_URL=/hibachihouse&&env-cmd -f .env.production react-scripts build",
->>>>>>> e25b1167bcf39d0502bb8479de25556a1dac9a55
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
