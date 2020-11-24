@@ -19,7 +19,7 @@ const CartFloatButton = ({ classes, menu, orderRules }) => {
                 <ShoppingCart className={classes.extendedIcon} />
                 &nbsp;&nbsp; ${price.toFixed(2)}
             </Fab>
-            <CartSwipeView menu={menu} orderRules={orderRules} />
+            {menu && orderRules && <CartSwipeView menu={menu} orderRules={orderRules} />}
         </>
     );
 };

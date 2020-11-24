@@ -1,4 +1,4 @@
-import { Fade, Grid, IconButton, Zoom } from "@material-ui/core";
+import { Card, CardContent, Fade, Grid, IconButton, Typography, Zoom } from "@material-ui/core";
 import React from "react";
 import useStyles from "./useStyles";
 import MenuEntries from "./MenuEntry/MenuEntries";
@@ -13,28 +13,27 @@ import CartFloatButton from "./Cart/CartFloatButton";
 import MenuItemEditDialog from "./MenuItem/MenuItemEditDialog";
 import useBadStatus from "./useBadStatus";
 import { handleFetchOrderRules } from "features/ManageOrderRules/orderRuleSlice";
+import SkeletonWrapper from "common/components/SkeletonWrapper";
 //import menu from "assets/menuSample.json";
 
 const LoadingSkeleton = () => (
     <Grid container spacing={2}>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={120} variant="rect" />
-        </Grid>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={100} variant="rect" />
-        </Grid>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={140} variant="rect" />
-        </Grid>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={120} variant="rect" />
-        </Grid>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={120} variant="rect" />
-        </Grid>
-        <Grid item md={6} xs={12}>
-            <Skeleton height={120} variant="rect" />
-        </Grid>
+        {Array(11)
+            .fill()
+            .map((_, i) => (
+                <Grid key={i} item md={6} xs={12}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h4">
+                                <Skeleton width="150px" />
+                            </Typography>
+                            <Typography variant="body2" width="250px" color="textSecondary" component="p">
+                                <Skeleton />
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            ))}
     </Grid>
 );
 
@@ -83,19 +82,13 @@ const OrderMenu = ({ setHeader }) => {
         <Fade in>
             <div className={classes.menuBody}>
                 {BadStatus}
-                {loading ? (
-                    <LoadingSkeleton />
-                ) : (
+                <SkeletonWrapper Animation={Fade} loading={loading} fill CustomSkeleton={<LoadingSkeleton />}>
                     <MenuView orderRules={orderRules} menu={menu} selectedEntryName={selectedEntryName} />
-                )}
-                {!loading && (
-                    <div>
-                        <Zoom in>
-                            <CartFloatButton orderRules={orderRules} classes={classes} menu={menu} />
-                        </Zoom>
-                        <MenuItemEditDialog menu={menu} classes={classes} />
-                    </div>
-                )}
+                </SkeletonWrapper>
+                <Zoom in={!loading}>
+                    <CartFloatButton orderRules={orderRules} classes={classes} menu={menu} />
+                </Zoom>
+                {!loading && <MenuItemEditDialog menu={menu} classes={classes} />}
             </div>
         </Fade>
     );

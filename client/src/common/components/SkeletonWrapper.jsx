@@ -12,28 +12,38 @@ const useStyles = makeStyles({
         width: "100%",
         height: "100%"
     },
+    padding: {
+        height: "calc (100% - 8px)",
+        margin: "8px 0px"
+    },
     skeleton: {
-        width: "100%",
-        height: "100%"
+        borderRadius: 4,
+        height: "100%",
+        width: "100%"
     }
 });
 
 const skeletonTimeout = { enter: 50, exit: 500 };
-const contentTimeout = { enter: 500, exit: 50 };
+const contentTimeout = { enter: 500, exit: 100 };
 const SkeletonWrapper = ({
+    width,
     children,
     loading,
     variant,
     minHeight,
-    CustomSkelton,
+    CustomSkeleton,
+    fill,
+    array,
+    Animation = Grow,
     ...skeletonProps
 }) => {
     const classes = useStyles();
+
     return (
-        <Box className={classes.root} minHeight={minHeight}>
-            <Grow in={loading} unmountOnExit timeout={skeletonTimeout}>
+        <Box width={width || "100%"} className={classes.root} minHeight={minHeight}>
+            <Animation in={loading} unmountOnExit timeout={skeletonTimeout}>
                 <div className={classes.skeletonRoot}>
-                    {CustomSkelton || (
+                    {CustomSkeleton || (
                         <Skeleton
                             animation="wave"
                             variant={variant || "rect"}
@@ -42,10 +52,10 @@ const SkeletonWrapper = ({
                         />
                     )}
                 </div>
-            </Grow>
-            <Grow in={!loading} timeout={contentTimeout}>
-                <div>{children}</div>
-            </Grow>
+            </Animation>
+            <Animation in={!loading} timeout={contentTimeout}>
+                <div>{(loading && fill && CustomSkeleton) || children}</div>
+            </Animation>
         </Box>
     );
 };

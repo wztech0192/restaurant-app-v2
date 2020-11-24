@@ -35,8 +35,8 @@ const TimeRangeSelector = ({ timeRule, onChange, loading, onRemove }) => {
     };
 
     return (
-        <Grid container spacing={2} justify="space-evenly" alignItems="center">
-            <Grid item xs={6}>
+        <Grid container spacing={2} justify="flex-start" alignItems="center">
+            <Grid item xs={12} sm={5}>
                 <TextField
                     fullWidth
                     select
@@ -61,20 +61,22 @@ const TimeRangeSelector = ({ timeRule, onChange, loading, onRemove }) => {
                     ))}
                 </TextField>
             </Grid>
-            <Grid item>
+            <Grid item xs={5} sm={3}>
                 <TextField
                     {...timeProp}
                     disabled={loading}
                     label="Start Time"
                     type="time"
+                    fullWidth
                     value={start}
                     name="start"
                     onBlur={handleTriggerOnChange}
                     onChange={handleOnChange}
                 />
             </Grid>
-            <Grid item>
+            <Grid item xs={5} sm={3}>
                 <TextField
+                    fullWidth
                     disabled={loading}
                     label="Stop Time"
                     type="time"
@@ -85,7 +87,7 @@ const TimeRangeSelector = ({ timeRule, onChange, loading, onRemove }) => {
                     onChange={handleOnChange}
                 />
             </Grid>
-            <Grid item>
+            <Grid item xs={1}>
                 <IconButton color="secondary" disabled={loading} onClick={onRemove}>
                     <RemoveIcon />
                 </IconButton>
