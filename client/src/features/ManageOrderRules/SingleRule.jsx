@@ -27,14 +27,14 @@ const SingleRule = ({ rule, classes }) => {
         <Grow in>
             <Accordion elevation={6}>
                 <AccordionSummary className={classes.summary} expandIcon={<ExpandMoreIcon />}>
-                    <div className={classes.header}>
+                    <Box flexGrow="1" className={classes.header}>
                         <Typography>
                             <b>{rule.name}</b>
                         </Typography>
                         <Fade in={loading}>
                             <LinearProgress />
                         </Fade>
-                    </div>
+                    </Box>
 
                     <Switch
                         disabled={loading}

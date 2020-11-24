@@ -4,16 +4,13 @@ import { EMPTY_ARRAY } from "common";
 import { getAccountToken } from "features/Account/accountSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    handleFetchRecentOrderHistory,
-    handleSyncOrderStatus,
-    handleUnSyncOrderStatus
-} from "./orderHistorySlice";
+import { handleFetchRecentOrderHistory, handleSyncOrderStatus, handleUnSyncOrderStatus } from "./orderHistorySlice";
 import { checkIsOrderHubConnected } from "app/centralHub";
 import OrderSummaryModal from "features/OrderSummary/OrderSummaryModal";
 import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
 import { handleBuyAgain } from "features/OrderMenu/slices/orderSlice";
 import OrderHistoryList from "./OrderHistoryList";
+import { ContactPhoneSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -29,7 +26,6 @@ const OrderHistory = () => {
 
     const hasToken = useSelector(getAccountToken);
     const loading = useSelector(getLoading("orderHistory"));
-
     const dispatch = useDispatch();
     const tokenRef = React.useRef(hasToken);
     React.useEffect(() => {

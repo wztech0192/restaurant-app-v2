@@ -39,9 +39,11 @@ const slice = createSlice({
             state.sync = true;
             state.orders = payload || initialState.orders;
         },
-        appendOrderHistory(state, { payload }) {
+        appendOrderHistory(state, { payload: newOrder }) {
             if (state.orders) {
-                state.orders.unshift(payload);
+                if (!state.orders.some(order => order.id === newOrder.id)) {
+                    state.orders.unshift(newOrder);
+                }
             }
         },
         updateOrderStatus(state, { payload }) {

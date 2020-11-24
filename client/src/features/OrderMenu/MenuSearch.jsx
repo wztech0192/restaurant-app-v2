@@ -1,16 +1,6 @@
 import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
-import {
-    ClickAwayListener,
-    fade,
-    InputBase,
-    List,
-    ListItem,
-    ListSubheader,
-    makeStyles,
-    Paper,
-    Popper
-} from "@material-ui/core";
+import { ClickAwayListener, fade, InputBase, List, ListSubheader, makeStyles, Popper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { EMPTY_ARRAY, EMPTY_OBJECT } from "common";
 import MenuItemSingle from "./MenuItem/MenuItemSingle";
@@ -72,7 +62,9 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
         position: "relative",
         overflow: "auto",
-        maxHeight: 300
+        maxHeight: 300,
+        padding: "0 !important",
+        boxShadow: theme.shadows[15]
     },
     listSection: {
         backgroundColor: "inherit"
@@ -115,11 +107,11 @@ const MenuSearchItems = React.memo(
             return acc;
         }, []);
         return (
-            <Paper>
+            result.length > 0 && (
                 <List className={classes.root} subheader={<li />}>
-                    {result.length > 0 ? result : <ListItem>Empty...</ListItem>}
+                    {result}
                 </List>
-            </Paper>
+            )
         );
     },
     (prev, next) => !next.open

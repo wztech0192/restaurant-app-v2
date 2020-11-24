@@ -27,6 +27,7 @@ const ManageOrders = ({ match, setHeader }) => {
     const loading = useSelector(getLoading("orderHistory"));
     const dispatch = useDispatch();
     const filter = useSelector(state => state.orderHistory.filter);
+    console.log(loading);
 
     React.useEffect(() => {
         setHeader({
@@ -47,11 +48,11 @@ const ManageOrders = ({ match, setHeader }) => {
             <OrderHistoryFilter />
             <br />
             <Paper component={Box}>
-                {orders.length > 0 ? (
-                    <OrderHistoryList orders={orders} loading={loading} />
-                ) : (
-                    <Typography>&nbsp;&nbsp;&nbsp;Empty...</Typography>
-                )}
+                <OrderHistoryList
+                    orders={orders}
+                    loading={loading}
+                    emptyLabel={<Typography>&nbsp;&nbsp;&nbsp;Empty...</Typography>}
+                />
             </Paper>
 
             <OrderSummaryModal>

@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { checkIsOrderHubConnected, joinHubGroup } from "app/centralHub";
+import { checkIsOrderHubInitConnected, joinHubGroup } from "app/centralHub";
 import { getAccountToken } from "features/Account/accountSlice";
 
 const Connection = () => {
-    const isConnected = useSelector(checkIsOrderHubConnected);
+    const isConnected = useSelector(checkIsOrderHubInitConnected);
     const token = useSelector(getAccountToken);
 
     React.useEffect(() => {

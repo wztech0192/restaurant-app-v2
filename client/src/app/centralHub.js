@@ -1,6 +1,5 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { createSlice } from "@reduxjs/toolkit";
-import { getAccountToken } from "features/Account/accountSlice";
 import { orderRulesHubMiddleware } from "features/ManageOrderRules/orderRuleSlice";
 import { orderHistoryHubMiddleware } from "features/OrderHistory/orderHistorySlice";
 
@@ -11,7 +10,8 @@ const url = process.env.REACT_APP_API_URL + "/orders";
 const connection = new HubConnectionBuilder().withUrl(url).configureLogging(LogLevel.Information).build();
 
 const initialState = {
-    connected: false,
+    connected: true,
+    init: false,
     orders: [],
     activeMenuId: 0
 };
@@ -22,6 +22,7 @@ const orderHubSlice = createSlice({
     reducers: {
         connect(state, { payload }) {
             state.connected = payload;
+            state.init = true;
         }
     }
 });
@@ -31,6 +32,7 @@ export default orderHubSlice.reducer;
 const { connect } = orderHubSlice.actions;
 
 export const checkIsOrderHubConnected = state => state.hub.connected;
+export const checkIsOrderHubInitConnected = state => state.hub.connected && state.hub.init;
 
 export const invoke = (name, ...args) => {
     connection.invoke(name, ...args);
@@ -47,6 +49,7 @@ export const handleStartOrderHub = (dispatch, getState) => {
             await connection.start();
             dispatch(connect(true));
         } catch (err) {
+            dispatch(connect(false));
             console.log("connection failed, try to reconnect in 5 second....");
             setTimeout(start, 5000);
         }
