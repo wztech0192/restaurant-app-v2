@@ -19,22 +19,22 @@ const PaymentSummaryBox = ({ classes, encryptedCardInfo }) => {
     }, [encryptedCardInfo, reload]);
 
     return (
-        <Box display="flex" justifyContent="flex-end" marginTop="20px">
+        <Box display="flex" maxWidth="240px" justifyContent="flex-end" marginTop="20px">
             <Paper elevation={5}>
                 {paymentInfo ? (
                     <Grid container className={classes.priceBox}>
-                        <Grid item xs={6}>
-                            <Typography align="right">Card:</Typography>
+                        <Grid item xs={4}>
+                            <Typography align="left">Card:</Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <Typography align="right">
                                 <b> {paymentInfo.card && paymentInfo.card.replace(/(\d{4})/g, "$1 ")}</b>
                             </Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography align="right">Expiration Date:</Typography>
+                        <Grid item xs={4}>
+                            <Typography align="left">Expiration Date:</Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <Typography align="right">
                                 <b>{paymentInfo.expireDate}</b>
                             </Typography>

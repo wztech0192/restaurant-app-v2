@@ -17,50 +17,48 @@ const CartPayment = () => {
     }, [cards.length]);
 
     return (
-        <CreditCardForm
-            account={account}
-            payWithExistingCard={payWithExistingCard}
-            requiredPersonInfo
-            action={(isValid, paymentInfo) => (
-                <div>
-                    {payWithExistingCard ? (
-                        <br />
-                    ) : (
-                        account && (
-                            <div>
-                                <Checkbox
-                                    color="primary"
-                                    checked={saveCard}
-                                    onClick={e => setSaveCard(e.target.checked)}
-                                />
-                                Save This Card
-                            </div>
-                        )
-                    )}
-                    <Button
-                        disabled={!isValid}
-                        fullWidth
-                        autoFocus
-                        color="primary"
-                        variant="contained"
-                        onClick={dispatch(
-                            handleSubmitOrder(paymentInfo, payWithExistingCard, saveCard)
+        <>
+            <br />
+
+            <CreditCardForm
+                account={account}
+                payWithExistingCard={payWithExistingCard}
+                requiredPersonInfo
+                action={(isValid, paymentInfo) => (
+                    <div>
+                        {payWithExistingCard ? (
+                            <br />
+                        ) : (
+                            account && (
+                                <div>
+                                    <Checkbox
+                                        color="primary"
+                                        checked={saveCard}
+                                        onClick={e => setSaveCard(e.target.checked)}
+                                    />
+                                    Save This Card
+                                </div>
+                            )
                         )}
-                    >
-                        Submit One-Time Payment
-                    </Button>
-                    {cards.length > 0 && (
                         <Button
+                            disabled={!isValid}
                             fullWidth
                             autoFocus
-                            onClick={() => setPayWithExistingCard(!payWithExistingCard)}
+                            color="primary"
+                            variant="contained"
+                            onClick={dispatch(handleSubmitOrder(paymentInfo, payWithExistingCard, saveCard))}
                         >
-                            {payWithExistingCard ? "Pay With New Card" : "Pay With Existing Cards"}
+                            Submit One-Time Payment
                         </Button>
-                    )}
-                </div>
-            )}
-        />
+                        {cards.length > 0 && (
+                            <Button fullWidth autoFocus onClick={() => setPayWithExistingCard(!payWithExistingCard)}>
+                                {payWithExistingCard ? "Pay With New Card" : "Pay With Existing Cards"}
+                            </Button>
+                        )}
+                    </div>
+                )}
+            />
+        </>
     );
 };
 

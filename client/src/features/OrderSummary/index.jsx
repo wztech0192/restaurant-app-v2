@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import TextFieldWrapper from "common/components/TextFieldWrapper";
 import useSummaryStyles from "./useSummaryStyles";
@@ -30,7 +30,7 @@ const OrderSummary = ({
         <div>
             <OrderSummaryHeader orderInfo={orderInfo} classes={classes} totalItems={totalItems} />
 
-            <Grid container spacing={1} alignItems="center">
+            <Grid container spacing={1} alignItems="flex-end">
                 <Grid item xs={12} md={7} className={classes.summaryItemsGrid}>
                     {totalItems === 0 ? (
                         <div>
@@ -66,22 +66,27 @@ const OrderSummary = ({
                     {LeftBox}
                 </Grid>
                 <Grid item xs={8} md={5}>
-                    <PriceSummaryBox
-                        classes={classes}
-                        canEdit={canEdit}
-                        handleUpdateTip={handleUpdateTip}
-                        tip={orderInfo.tip}
-                        tax={tax || orderInfo.tax}
-                        subtotal={orderInfo.price}
-                    />
-                    {orderInfo.id && (
-                        <>
-                            <PersonSummaryBox classes={classes} orderInfo={orderInfo} />
-                            {manager && orderInfo.encryptedCardInfo && (
-                                <PaymentSummaryBox classes={classes} encryptedCardInfo={orderInfo.encryptedCardInfo} />
-                            )}
-                        </>
-                    )}
+                    <Box display="flex" flexDirection="column" alignItems="flex-end" width="100%">
+                        <PriceSummaryBox
+                            classes={classes}
+                            canEdit={canEdit}
+                            handleUpdateTip={handleUpdateTip}
+                            tip={orderInfo.tip}
+                            tax={tax || orderInfo.tax}
+                            subtotal={orderInfo.price}
+                        />
+                        {orderInfo.id && (
+                            <>
+                                <PersonSummaryBox classes={classes} orderInfo={orderInfo} />
+                                {manager && orderInfo.encryptedCardInfo && (
+                                    <PaymentSummaryBox
+                                        classes={classes}
+                                        encryptedCardInfo={orderInfo.encryptedCardInfo}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </Box>
                 </Grid>
             </Grid>
         </div>

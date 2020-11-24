@@ -26,27 +26,27 @@ const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal 
     const tipFieldClasses = useStyles();
     const taxedTotal = subtotal * tax;
     return (
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" maxWidth="240px" justifyContent="flex-end">
             <Paper elevation={5}>
                 <Grid container className={classes.priceBox}>
-                    <Grid item xs={6}>
-                        <Typography align="right">Subtotal:</Typography>
+                    <Grid item xs={4}>
+                        <Typography align="left">Subtotal:</Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={8}>
                         <Typography align="right">{subtotal.toFixed(2)}</Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography align="right">Tax:</Typography>
+                    <Grid item xs={4}>
+                        <Typography align="left">Tax:</Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={8}>
                         <Typography align="right">{taxedTotal.toFixed(2)}</Typography>
                     </Grid>
                     {Boolean(canEdit || tip) && (
                         <>
-                            <Grid item xs={6}>
-                                <Typography align="right">Tip:</Typography>
+                            <Grid item xs={4}>
+                                <Typography align="left">Tip:</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={8}>
                                 <TextFieldWrapper
                                     disabled={!canEdit}
                                     fullWidth
@@ -63,12 +63,12 @@ const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal 
                             </Grid>
                         </>
                     )}
-                    <Grid item xs={6}>
-                        <Typography align="right">
+                    <Grid item xs={4}>
+                        <Typography align="left">
                             <b>Total:</b>
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={8}>
                         <Typography align="right">
                             <b>{(subtotal + taxedTotal + tip).toFixed(2)}</b>
                         </Typography>
