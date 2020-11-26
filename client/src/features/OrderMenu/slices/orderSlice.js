@@ -220,6 +220,7 @@ export const handleSubmitOrder = (paymentInfo, payWithExistingCard, saveCard) =>
             promise: () => postOrder(payload),
             success: order => {
                 dispatch(clearOrder());
+                localStorage.removeItem("savedCart");
                 dispatch(
                     handleOpenModal({
                         title: "Order Submitted!",
