@@ -1,4 +1,4 @@
-rimport { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import monitorReducersEnhancer from "./reduxStuff/monitorReducersEnhancer";
 import loggerMiddleware from "./reduxStuff/reduxLogger";
 
