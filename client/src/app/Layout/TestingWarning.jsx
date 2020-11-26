@@ -8,7 +8,7 @@ const TestingWarning = () => {
     React.useEffect(() => {
         if (true) {
             const previousTime = parseLocalStorageOrDefault("testingWarning", 0);
-            if (new Date() - previousTime / 60000 > 10) {
+            if ((new Date() - previousTime) / 60000 > 10) {
                 dispatch(
                     handleOpenModal({
                         title: "Testing Enviroment Warning",
