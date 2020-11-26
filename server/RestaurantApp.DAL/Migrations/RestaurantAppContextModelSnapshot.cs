@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantApp.DAL;
 
@@ -16,35 +15,33 @@ namespace RestaurantApp.DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("RestaurantApp.DAL.Models.Account", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
                         .HasMaxLength(100);
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -57,9 +54,9 @@ namespace RestaurantApp.DAL.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2020, 11, 25, 22, 44, 4, 787, DateTimeKind.Local).AddTicks(6777),
+                            CreatedOn = new DateTime(2020, 11, 26, 1, 13, 22, 23, DateTimeKind.Local).AddTicks(909),
                             Name = "Manager",
-                            Password = "$2a$11$aczh6xc9CBwjQ3yNP9N8d.i//skEq4jgU.82yZyvwQwi3Rzc1bFK6",
+                            Password = "$2a$11$nILgRZIyxNGXQsDBWGxG3OLafmwWxSy1AV8ppC/fDVNAUWvNvoZHi",
                             Phone = "8032260689",
                             Role = "Manager"
                         });
@@ -69,25 +66,24 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int?>("AccountID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("EncryptedCardInfo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("LastFourDigit")
-                        .HasColumnType("nvarchar(4)")
+                        .HasColumnType("varchar(4) CHARACTER SET utf8mb4")
                         .HasMaxLength(4);
 
                     b.Property<bool>("UseAsDefault")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("ID");
 
@@ -100,24 +96,23 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<double>("Tax")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("ID");
 
@@ -128,21 +123,20 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -155,33 +149,32 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("CanAddSides")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("MenuEntryID")
                         .HasColumnType("int");
 
                     b.Property<string>("MenuOptionGroups")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<double>("OptionPriceMultiplier")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -194,15 +187,14 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -215,18 +207,17 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("GroupID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.HasKey("ID");
 
@@ -239,40 +230,39 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int?>("AccountID")
                         .HasColumnType("int");
 
                     b.Property<string>("AdditionalRequest")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("EncryptedCardInfo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("MenuID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(40)")
+                        .HasColumnType("varchar(40) CHARACTER SET utf8mb4")
                         .HasMaxLength(40);
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(10)")
+                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
                         .HasMaxLength(10);
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<double>("Tip")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.HasKey("ID");
 
@@ -287,14 +277,13 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<bool>("ActiveTarget")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -313,20 +302,19 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("DaysOfWeek")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("OrderRuleID")
                         .HasColumnType("int");
 
                     b.Property<string>("Start")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Stop")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -339,11 +327,10 @@ namespace RestaurantApp.DAL.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("AdditionalRequest")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("MenuItemID")
                         .HasColumnType("int");
@@ -352,7 +339,7 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -375,7 +362,7 @@ namespace RestaurantApp.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Key")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

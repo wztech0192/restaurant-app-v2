@@ -10,21 +10,10 @@ namespace RestaurantApp.DAL.DependencyInjection
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            if (isDevelopment)
-            {
-                services.AddDbContext<RestaurantAppContext>(options =>
-                  options
-                  .UseLazyLoadingProxies()
-                  .UseSqlServer(configuration.GetConnectionString("RestaurantAppContext")));
-            }
-            else
-            {
-                services.AddDbContext<RestaurantAppContext>(options =>
+            services.AddDbContext<RestaurantAppContext>(options =>
                options
                .UseLazyLoadingProxies()
                .UseMySql(configuration.GetConnectionString("RestaurantAppContext")));
-            }
-          
         }
     }
 }

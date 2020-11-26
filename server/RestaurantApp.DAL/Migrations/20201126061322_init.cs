@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RestaurantApp.DAL.Migrations
@@ -12,7 +13,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Password = table.Column<string>(maxLength: 100, nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
@@ -29,7 +30,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Tax = table.Column<double>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
@@ -42,11 +43,25 @@ namespace RestaurantApp.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderRules",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    ActiveTarget = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderRules", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EncryptedCardInfo = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     UseAsDefault = table.Column<bool>(nullable: false),
@@ -69,7 +84,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
                     Summary = table.Column<string>(nullable: true),
@@ -91,7 +106,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     MenuID = table.Column<int>(nullable: false)
                 },
@@ -111,7 +126,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     EncryptedCardInfo = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(maxLength: 10, nullable: true),
@@ -120,7 +135,7 @@ namespace RestaurantApp.DAL.Migrations
                     Price = table.Column<double>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     AdditionalRequest = table.Column<string>(nullable: true),
-                    AccountID = table.Column<int>(nullable: false),
+                    AccountID = table.Column<int>(nullable: true),
                     MenuID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -131,7 +146,7 @@ namespace RestaurantApp.DAL.Migrations
                         column: x => x.AccountID,
                         principalTable: "Accounts",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Menus_MenuID",
                         column: x => x.MenuID,
@@ -141,11 +156,33 @@ namespace RestaurantApp.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderRuleTimeRanges",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DaysOfWeek = table.Column<string>(nullable: true),
+                    Start = table.Column<string>(nullable: true),
+                    Stop = table.Column<string>(nullable: true),
+                    OrderRuleID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderRuleTimeRanges", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_OrderRuleTimeRanges_OrderRules_OrderRuleID",
+                        column: x => x.OrderRuleID,
+                        principalTable: "OrderRules",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MenuItems",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
                     Summary = table.Column<string>(nullable: true),
@@ -171,7 +208,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     GroupID = table.Column<int>(nullable: false)
@@ -192,7 +229,7 @@ namespace RestaurantApp.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Quantity = table.Column<int>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     AdditionalRequest = table.Column<string>(nullable: true),
@@ -218,14 +255,14 @@ namespace RestaurantApp.DAL.Migrations
                 name: "OrderedItemMenuOptionItems",
                 columns: table => new
                 {
+                    Key = table.Column<string>(nullable: false),
                     OrderedItemID = table.Column<int>(nullable: false),
                     MenuOptionItemID = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    Key = table.Column<string>(nullable: true)
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderedItemMenuOptionItems", x => new { x.MenuOptionItemID, x.OrderedItemID });
+                    table.PrimaryKey("PK_OrderedItemMenuOptionItems", x => new { x.MenuOptionItemID, x.OrderedItemID, x.Key });
                     table.ForeignKey(
                         name: "FK_OrderedItemMenuOptionItems_MenuOptionItems_MenuOptionItemID",
                         column: x => x.MenuOptionItemID,
@@ -243,7 +280,12 @@ namespace RestaurantApp.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "ID", "CreatedOn", "Name", "Password", "Phone", "Role" },
-                values: new object[] { 1, new DateTime(2020, 11, 15, 15, 0, 56, 15, DateTimeKind.Local).AddTicks(7827), "Manager", "$2a$11$77z1fQ6IDOJKHbmvYpR6V.Q3yEPiBhrsdof7n9ufqFgLJioJkIsbu", "8032260689", "Manager" });
+                values: new object[] { 1, new DateTime(2020, 11, 26, 1, 13, 22, 23, DateTimeKind.Local).AddTicks(909), "Manager", "$2a$11$nILgRZIyxNGXQsDBWGxG3OLafmwWxSy1AV8ppC/fDVNAUWvNvoZHi", "8032260689", "Manager" });
+
+            migrationBuilder.InsertData(
+                table: "OrderRules",
+                columns: new[] { "ID", "ActiveTarget", "Name" },
+                values: new object[] { 1, true, "Global" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Phone",
@@ -292,6 +334,11 @@ namespace RestaurantApp.DAL.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderRuleTimeRanges_OrderRuleID",
+                table: "OrderRuleTimeRanges",
+                column: "OrderRuleID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_AccountID",
                 table: "Orders",
                 column: "AccountID");
@@ -311,10 +358,16 @@ namespace RestaurantApp.DAL.Migrations
                 name: "OrderedItemMenuOptionItems");
 
             migrationBuilder.DropTable(
+                name: "OrderRuleTimeRanges");
+
+            migrationBuilder.DropTable(
                 name: "MenuOptionItems");
 
             migrationBuilder.DropTable(
                 name: "OrderedItems");
+
+            migrationBuilder.DropTable(
+                name: "OrderRules");
 
             migrationBuilder.DropTable(
                 name: "MenuOptionGroups");
