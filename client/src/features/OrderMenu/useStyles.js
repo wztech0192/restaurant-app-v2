@@ -101,7 +101,8 @@ export default makeStyles(theme => ({
     optionsContainer: {
         overflowX: "hidden",
         overflowY: "auto",
-        maxHeight: "50vh"
+        maxHeight: "50vh",
+        padding: 10
     },
     singleEntreeHeader: {
         display: "flex",
