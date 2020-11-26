@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
 });
 
 function configureAppStore(preloadedState) {
-estore    const middleware = [...getDefaultMiddleware()];
+    const middleware = [...getDefaultMiddleware()];
     const enhancers = [];
 
     if (process.env.NODE_ENV !== "production") {
