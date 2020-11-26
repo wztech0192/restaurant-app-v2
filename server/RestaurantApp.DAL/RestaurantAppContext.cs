@@ -58,7 +58,7 @@ namespace RestaurantApp.DAL
                 .IsUnique();
 
             modelBuilder.Entity<OrderedItemMenuOptionItem>()
-                .HasKey(x => new { x.MenuOptionItemID, x.OrderedItemID });
+                .HasKey(x => new { x.MenuOptionItemID, x.OrderedItemID, x.Key });
 
             modelBuilder.Entity<OrderedItemMenuOptionItem>()
                 .HasOne(x => x.OrderedItem)

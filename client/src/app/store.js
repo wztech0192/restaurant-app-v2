@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+rimport { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import monitorReducersEnhancer from "./reduxStuff/monitorReducersEnhancer";
 import loggerMiddleware from "./reduxStuff/reduxLogger";
 
@@ -26,11 +26,19 @@ const rootReducer = combineReducers({
 });
 
 function configureAppStore(preloadedState) {
+estore    const middleware = [...getDefaultMiddleware()];
+    const enhancers = [];
+
+    if (process.env.NODE_ENV !== "production") {
+        middleware.push(loggerMiddleware);
+        enhancers.push(monitorReducersEnhancer);
+    }
+
     const store = configureStore({
         reducer: rootReducer,
-        middleware: [loggerMiddleware, ...getDefaultMiddleware()],
         preloadedState,
-        enhancers: [monitorReducersEnhancer]
+        middleware,
+        enhancers
     });
 
     const subscribeListeners = [tokenSubscribeListener];

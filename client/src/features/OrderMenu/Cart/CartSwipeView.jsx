@@ -18,6 +18,18 @@ const CartSwipeView = ({ menu, orderRules }) => {
     const open = useSelector(state => state.order.openCart);
     const orderInfo = useSelector(state => state.order.cart);
 
+    React.useEffect(() => {
+        const unloadFunc = () => {
+            if (orderInfo.orderedItems.length > 0) {
+                localStorage.setItem("savedCart", JSON.stringify({ ...orderInfo, menuId: menu.id }));
+            }
+        };
+        window.addEventListener("beforeunload", unloadFunc, false);
+        return () => {
+            window.removeEventListener("beforeunload", unloadFunc);
+        };
+    }, [orderInfo, menu.id]);
+
     const BadStatus = useBadStatus();
 
     const [openPayment, setOpenPayment] = React.useState(false);

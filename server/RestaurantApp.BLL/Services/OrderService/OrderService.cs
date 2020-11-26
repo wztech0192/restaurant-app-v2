@@ -172,7 +172,10 @@ namespace RestaurantApp.BLL.Services
                     base.UnitOfWork.Orders.Add(entity);
                     base.UnitOfWork.Complete();
 
-                    msg.Data = new OrderDTO(entity);
+                    msg.Data = new OrderDTO(entity)
+                    {
+                        EncryptedCardInfo = entity.EncryptedCardInfo //send to the manager via signalr hub, then remove in the controller
+                    };
                     msg.Success = true;
                 }
                 else

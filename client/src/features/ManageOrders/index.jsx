@@ -27,7 +27,6 @@ const ManageOrders = ({ match, setHeader }) => {
     const loading = useSelector(getLoading("orderHistory"));
     const dispatch = useDispatch();
     const filter = useSelector(state => state.orderHistory.filter);
-    console.log(loading);
 
     React.useEffect(() => {
         setHeader({

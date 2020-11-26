@@ -1,4 +1,4 @@
-import { Box, Chip, Fade, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Box, Chip, Fade, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@material-ui/core";
 import React from "react";
 import { getDateStr } from "common";
 import OrderStatus, { getOrderStatusDisplay, getStatusChipProps } from "./orderStatus";
@@ -46,9 +46,9 @@ const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
                           >
                               <ListItemText
                                   primary={
-                                      <span>
+                                      <Typography variant={i === 0 ? "h6" : undefined}>
                                           <b>Ticket {order.id}</b>
-                                      </span>
+                                      </Typography>
                                   }
                                   secondary={getDateStr(order.createdOn)}
                               />

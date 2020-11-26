@@ -7,7 +7,7 @@ namespace RestaurantApp.DAL.Models
 {
     public class OrderedItemMenuOptionItem
     {
-
+        public string Key { get; set; }
         public int Quantity { get; set; }
         public int OrderedItemID { get; set; }
 
@@ -15,6 +15,6 @@ namespace RestaurantApp.DAL.Models
 
         public int MenuOptionItemID { get; set; }
         public virtual MenuOptionItem MenuOptionItem { get; set; }
-        public string Key { get; set; }
+      
     }
 }

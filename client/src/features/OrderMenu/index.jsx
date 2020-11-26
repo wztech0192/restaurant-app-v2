@@ -6,7 +6,7 @@ import MenuSearch from "./MenuSearch";
 import MenuEntrySingle from "./MenuEntry/MenuEntrySingle";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { setSelectedEntryName } from "./slices/orderSlice";
+import { setSelectedEntryName, loadCart } from "./slices/orderSlice";
 import { handleFetchMenu } from "./slices/menuSlice";
 import { Skeleton } from "@material-ui/lab";
 import CartFloatButton from "./Cart/CartFloatButton";
@@ -14,6 +14,7 @@ import MenuItemEditDialog from "./MenuItem/MenuItemEditDialog";
 import useBadStatus from "./useBadStatus";
 import { handleFetchOrderRules } from "features/ManageOrderRules/orderRuleSlice";
 import SkeletonWrapper from "common/components/SkeletonWrapper";
+import { parseLocalStorageOrDefault } from "common";
 //import menu from "assets/menuSample.json";
 
 const LoadingSkeleton = () => (
@@ -62,7 +63,20 @@ const OrderMenu = ({ setHeader }) => {
 
     React.useEffect(() => {
         if (!hasMenu) {
-            dispatch(handleFetchMenu());
+            dispatch(
+                handleFetchMenu(undefined, menu => {
+                    const savedCart = parseLocalStorageOrDefault("savedCart", false);
+                    if (savedCart) {
+                        //note: save previous cart data in ./Cart/CartSwipeView useEffect
+                        if (savedCart.menuId === menu.id) {
+                            //load previous cart data
+                            dispatch(loadCart(savedCart));
+                        } else {
+                            localStorage.removeItem("savedCart");
+                        }
+                    }
+                })
+            );
         }
     }, [hasMenu, dispatch]);
 

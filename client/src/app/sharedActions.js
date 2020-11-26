@@ -56,7 +56,7 @@ export const asyncAction = ({
 
         if (!hideErrorModal) {
             let title = "Request Error";
-            let message = !e.errors && "Unexcepted error occurred, please refresh and retry!";
+            let message = "";
             if (e.res) {
                 switch (e.res.status) {
                     case 404:
@@ -71,8 +71,11 @@ export const asyncAction = ({
                             "You are not authorized to access, please try to re-login you account if you believe you have the authority.";
                         break;
                     default:
+                        message = !e.errors && "Unexcepted error occurred, please refresh and retry!";
                 }
                 title = `${e.res.status} ${title}`;
+            } else {
+                message = "Online Service currently not available. Please try again later.";
             }
             dispatch(
                 handleOpenModal({

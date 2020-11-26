@@ -10,9 +10,7 @@ export const itemCounterHelper = (itemCounter, menuEntryName, menuItemName, adde
 };
 
 export const addOrderItemHelper = (cart, menuEntryName, menuItem, quantity) => {
-    let orderedItem = cart.orderedItems.find(
-        x => x.name === menuItem.name && x.entryName === menuEntryName
-    );
+    let orderedItem = cart.orderedItems.find(x => x.name === menuItem.name && x.entryName === menuEntryName);
     if (orderedItem) {
         orderedItem.quantity += quantity;
     } else {
@@ -70,5 +68,4 @@ export const removeOrderItemHelper = (cart, menuEntryName, menuItem, quantity) =
     }
 };
 
-export const needEditModal = menuItem =>
-    menuItem.canAddSides || menuItem.optionGroupNames.length > 0;
+export const needEditModal = menuItem => menuItem.canAddSides || menuItem.optionGroupNames.length > 0;

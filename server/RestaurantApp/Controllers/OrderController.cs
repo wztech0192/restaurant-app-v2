@@ -84,8 +84,10 @@ namespace RestaurantApp.Controllers
             {
                 //notify all managers
                 _orderHub.Clients.Group(Policy.Manager).SendAsync(OrderHub.RECEIVE_ORDER, msg.Data);
+                //delete encrypted card data before reach the client
+                msg.Data.EncryptedCardInfo = null;
             }
-
+        
             return base.ProcessService(msg);
         }
 

@@ -45,7 +45,7 @@ export default makeStyles(theme => ({
         paddingRight: 13,
         marginRight: -13,
         [theme.breakpoints.up("md")]: {
-            maxHeight: "70vh"
+            maxHeight: "60vh"
         }
     },
     summaryItemsGrid: {
