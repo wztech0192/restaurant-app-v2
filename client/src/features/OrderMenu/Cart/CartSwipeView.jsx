@@ -19,14 +19,15 @@ const CartSwipeView = ({ menu, orderRules }) => {
     const orderInfo = useSelector(state => state.order.cart);
 
     React.useEffect(() => {
-        const unloadFunc = () => {
+        const storeFunc = () => {
             if (orderInfo.orderedItems.length > 0) {
                 localStorage.setItem("savedCart", JSON.stringify({ ...orderInfo, menuId: menu.id }));
             }
         };
-        window.addEventListener("beforeunload", unloadFunc, false);
+        const event = "onpagehide" in window ? "pagehide" : "beforeunload";
+        window.addEventListener(event, storeFunc, false);
         return () => {
-            window.removeEventListener("beforeunload", unloadFunc);
+            window.removeEventListener(event, storeFunc);
         };
     }, [orderInfo, menu.id]);
 
