@@ -10,9 +10,9 @@ namespace RestaurantApp.BLL.DependencyInjection
 {
     public static class BLLInjection
     {
-        public static void Inject(IServiceCollection services, IConfiguration configuration)
+        public static void Inject(IServiceCollection services, IConfiguration configuration, bool isDevelopment)
         {
-            DALInjection.Inject(services, configuration);
+            DALInjection.Inject(services, configuration, isDevelopment);
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IJWTService, JWTService>();
