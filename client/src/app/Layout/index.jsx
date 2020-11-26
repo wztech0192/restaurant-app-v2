@@ -12,6 +12,7 @@ import { handleStartOrderHub } from "app/centralHub";
 import GlobalLoading from "app/Indicator/GlobalLoading";
 import Connection from "./Connection";
 import { EMPTY_OBJECT } from "common";
+import TestingWarning from "./TestingWarning";
 
 const Layout = () => {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Layout = () => {
                 <>
                     <Routes setHeader={setHeader} />
                     <Connection />
+                    <TestingWarning />
                 </>
             )}
             <Notifier />
