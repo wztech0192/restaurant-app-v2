@@ -52,6 +52,7 @@ export default makeStyles(theme => ({
         [theme.breakpoints.up("md")]: {
             borderRight: `1px solid ${theme.palette.divider}`,
             paddingRight: 10
-        }
+        },
+        alignSelf: "normal"
     }
 }));

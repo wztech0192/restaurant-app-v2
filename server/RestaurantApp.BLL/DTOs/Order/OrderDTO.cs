@@ -25,7 +25,7 @@ namespace RestaurantApp.BLL.DTOs
             AccountId = entity.Account?.ID ?? 0;
             MenuId = entity.Menu.ID;
             OrderedItems = entity.OrderedItems.Select(order => new OrderedItemDTO(order));
-
+            Tax = entity.Menu.Tax;
             if (includeCardInfo)
             {
                 EncryptedCardInfo = entity.EncryptedCardInfo;
@@ -48,6 +48,8 @@ namespace RestaurantApp.BLL.DTOs
         public double Tip { get; set; }
 
         public double Price { get; set; }
+
+        public double Tax { get; set; }
 
         public OrderStatus Status { get; set; }
         public string AdditionalRequest { get; set; }
