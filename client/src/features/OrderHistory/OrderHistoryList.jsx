@@ -9,10 +9,10 @@ import {
     Typography
 } from "@material-ui/core";
 import React from "react";
-import { calcTotal, getDateStr } from "common";
+import { calcTotal, getDateStr, validateOrderFilter } from "common";
 import OrderStatus, { getOrderStatusDisplay, getStatusChipProps } from "./orderStatus";
 import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "@material-ui/lab";
 import SkeletonWrapper from "common/components/SkeletonWrapper";
 
@@ -41,6 +41,7 @@ const LoadingSkeleton = () => (
 );
 const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
     const dispatch = useDispatch();
+    const filter = useSelector(state => state.orderHistory.filter);
 
     return (
         <SkeletonWrapper
@@ -52,35 +53,39 @@ const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
             <List dense>
                 {orders.length <= 0
                     ? emptyLabel
-                    : orders.map((order, i) => (
-                          <ListItem
-                              divider
-                              button
-                              key={i}
-                              onClick={() => {
-                                  dispatch(handleSetOrderSummary(order));
-                              }}
-                          >
-                              <ListItemText
-                                  primary={
-                                      <Typography variant={i === 0 ? "h6" : undefined}>
-                                          <b>Ticket {order.id}</b>
-                                      </Typography>
-                                  }
-                                  secondary={getDateStr(order.createdOn)}
-                              />
-                              <ListItemSecondaryAction>
-                                  {order.status !== OrderStatus.Expired && (
-                                      <Chip
-                                          {...getStatusChipProps(order.status)}
-                                          label={getOrderStatusDisplay(order.status)}
-                                          size="small"
+                    : orders.reduce((acc, order, i) => {
+                          if (validateOrderFilter(filter, order))
+                              acc.push(
+                                  <ListItem
+                                      divider
+                                      button
+                                      key={i}
+                                      onClick={() => {
+                                          dispatch(handleSetOrderSummary(order));
+                                      }}
+                                  >
+                                      <ListItemText
+                                          primary={
+                                              <Typography variant={i === 0 ? "h6" : undefined}>
+                                                  <b>Ticket {order.id}</b>
+                                              </Typography>
+                                          }
+                                          secondary={getDateStr(order.createdOn)}
                                       />
-                                  )}
-                                  &nbsp; &nbsp;&nbsp; ${calcTotal(order).toFixed(2)}
-                              </ListItemSecondaryAction>
-                          </ListItem>
-                      ))}
+                                      <ListItemSecondaryAction>
+                                          {order.status !== OrderStatus.Expired && (
+                                              <Chip
+                                                  {...getStatusChipProps(order.status)}
+                                                  label={getOrderStatusDisplay(order.status)}
+                                                  size="small"
+                                              />
+                                          )}
+                                          &nbsp; &nbsp;&nbsp; ${calcTotal(order).toFixed(2)}
+                                      </ListItemSecondaryAction>
+                                  </ListItem>
+                              );
+                          return acc;
+                      }, [])}
             </List>
         </SkeletonWrapper>
     );

@@ -6,6 +6,9 @@ const OrderStatus = {
     Expired: 4
 };
 
+export const AllStatus = [0, 1, 2, 3, 4];
+export const OnlyPending = [1];
+
 const _statusMap = Object.entries(OrderStatus).reduce((acc, [key, value]) => {
     acc[value] = key;
     return acc;

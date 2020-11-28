@@ -181,18 +181,8 @@ export const orderHistoryHubMiddleware = (dispatch, getState) => {
         [RECEIVE_ORDER]: order => {
             const state = getState();
             if (isManager(getAccountRole(state))) {
-                const filter = state.orderHistory.filter;
-
-                if (
-                    (filter.status.length <= 0 || filter.status.includes(order.status)) &&
-                    moment().isBetween(
-                        moment(filter.dateRange[0]),
-                        moment(filter.dateRange[1]).add(1, "day").subtract(1, "seconds")
-                    )
-                ) {
-                    audio.play();
-                    dispatch(appendOrderHistory(order));
-                }
+                audio.play();
+                dispatch(appendOrderHistory(order));
             }
         },
         [UPDATE_ORDER_STATUS]: (id, status) => {

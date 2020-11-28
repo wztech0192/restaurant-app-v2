@@ -24,7 +24,7 @@ const OrderSummary = ({
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
-
+    console.log(orderInfo);
     const manager = isManager(useSelector(getAccountRole));
     return (
         <div>
@@ -49,7 +49,8 @@ const OrderSummary = ({
                     )}
                     {unavailableItemSet && unavailableItemSet.size > 0 && (
                         <Typography color="error">
-                            One or more items are currently unavailable! Please remove them to continue.
+                            One or more items are currently unavailable! Please remove them to
+                            continue.
                         </Typography>
                     )}
                     <TextFieldWrapper
