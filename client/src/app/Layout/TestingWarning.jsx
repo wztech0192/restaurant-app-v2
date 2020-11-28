@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 const TestingWarning = () => {
     const dispatch = useDispatch();
     React.useEffect(() => {
-        if (true) {
+        if (window.location.pathname.includes("hibachihouse-testing")) {
             const previousTime = parseLocalStorageOrDefault("testingWarning", 0);
             if ((new Date() - previousTime) / 60000 > 10) {
                 dispatch(
