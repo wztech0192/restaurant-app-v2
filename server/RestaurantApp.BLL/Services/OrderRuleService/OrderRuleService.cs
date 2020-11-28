@@ -106,21 +106,25 @@ namespace RestaurantApp.BLL.Services
             var now = DateTime.Now;
             var day = (int)now.DayOfWeek;
             var nowTime = DateTime.Now.TimeOfDay;
-
+            var result = true;
             foreach (var time in activeTimes)
             {
                 if (time.IsValid)
                 {
                     var start = TimeSpan.Parse(time.Start);
                     var end = TimeSpan.Parse(time.Stop);
-                    if (!time.DaysOfWeek.Contains(day) || !((nowTime > start) && (nowTime < end)))
+                    if (time.DaysOfWeek.Contains(day) && (nowTime > start) && (nowTime < end))
                     {
                     
-                        return false;
+                        return true;
+                    }
+                    else
+                    {
+                        result = false;
                     }
                 }
             }
-            return true;
+            return result;
         }
     }
 }

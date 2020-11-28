@@ -3,19 +3,21 @@ const timeFormat = "hh:mm";
 export const validTimeRange = activeTimes => {
     const now = moment();
     const day = now.day();
-
+    let result = true;
     for (let time of activeTimes) {
         const { isValid, daysOfWeek, start, stop } = time;
         if (isValid) {
             if (
-                !daysOfWeek.includes(day) ||
-                !now.isBetween(moment(start, timeFormat), moment(stop, timeFormat))
+                daysOfWeek.includes(day) &&
+                now.isBetween(moment(start, timeFormat), moment(stop, timeFormat))
             ) {
-                return false;
+                return true;
+            } else {
+                result = false;
             }
         }
     }
-    return true;
+    return result;
 };
 
 export const validateRule = (orderRules, name) => {
