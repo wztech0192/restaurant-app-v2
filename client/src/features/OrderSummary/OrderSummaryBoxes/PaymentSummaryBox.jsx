@@ -23,16 +23,19 @@ const PaymentSummaryBox = ({ classes, encryptedCardInfo }) => {
             <Paper elevation={5}>
                 {paymentInfo ? (
                     <Grid container className={classes.priceBox}>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <Typography align="left">Card:</Typography>
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={9}>
                             <Typography align="right">
-                                <b> {paymentInfo.card && paymentInfo.card.replace(/(\d{4})/g, "$1 ")}</b>
+                                <b>
+                                    {paymentInfo.card &&
+                                        paymentInfo.card.replace(/(\d{4})/g, "$1 ")}
+                                </b>
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                            <Typography align="left">Expiration Date:</Typography>
+                            <Typography align="left">Expiration:</Typography>
                         </Grid>
                         <Grid item xs={8}>
                             <Typography align="right">
