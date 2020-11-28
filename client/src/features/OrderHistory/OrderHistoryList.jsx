@@ -1,6 +1,15 @@
-import { Box, Chip, Fade, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@material-ui/core";
+import {
+    Box,
+    Chip,
+    Fade,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+    Typography
+} from "@material-ui/core";
 import React from "react";
-import { getDateStr } from "common";
+import { calcTotal, getDateStr } from "common";
 import OrderStatus, { getOrderStatusDisplay, getStatusChipProps } from "./orderStatus";
 import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
 import { useDispatch } from "react-redux";
@@ -13,7 +22,10 @@ const LoadingSkeleton = () => (
             .fill()
             .map((_, i) => (
                 <ListItem divider key={i}>
-                    <ListItemText primary={<Skeleton width="80px" />} secondary={<Skeleton width="130px" />} />
+                    <ListItemText
+                        primary={<Skeleton width="80px" />}
+                        secondary={<Skeleton width="130px" />}
+                    />
                     <ListItemSecondaryAction>
                         <Box display="inline-flex">
                             <Skeleton display="inline-flex" height="35px" width="65px" />
@@ -31,7 +43,12 @@ const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
     const dispatch = useDispatch();
 
     return (
-        <SkeletonWrapper Animation={Fade} fill loading={loading} CustomSkeleton={<LoadingSkeleton />}>
+        <SkeletonWrapper
+            Animation={Fade}
+            fill
+            loading={loading}
+            CustomSkeleton={<LoadingSkeleton />}
+        >
             <List dense>
                 {orders.length <= 0
                     ? emptyLabel
@@ -60,7 +77,7 @@ const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
                                           size="small"
                                       />
                                   )}
-                                  &nbsp; &nbsp;&nbsp; ${order.price.toFixed(2)}
+                                  &nbsp; &nbsp;&nbsp; ${calcTotal(order).toFixed(2)}
                               </ListItemSecondaryAction>
                           </ListItem>
                       ))}

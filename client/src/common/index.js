@@ -37,3 +37,8 @@ export const parseLocalStorageOrDefault = (name, defaultItem) => {
     }
 };
 export const DayOptions = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+
+export const calcTotal = ({ tax, price, tip }) => {
+    const taxedTotal = price * tax;
+    return taxedTotal + price + tip;
+};

@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import TextFieldWrapper from "common/components/TextFieldWrapper";
 import NumberFormatCustom from "common/components/NumberCustomFormat";
+import { calcTotal } from "common";
 
 const InputProps = {
     inputComponent: NumberFormatCustom
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
 const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal = 0, tax = 0 }) => {
     const tipFieldClasses = useStyles();
     const taxedTotal = subtotal * tax;
+
     return (
         <Box display="flex" maxWidth="240px" justifyContent="flex-end">
             <Paper elevation={5}>
@@ -50,7 +52,6 @@ const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal 
                                 <TextFieldWrapper
                                     disabled={!canEdit}
                                     fullWidth
-                                    variant="standard"
                                     name="tip"
                                     value={tip.toFixed(2)}
                                     classes={tipFieldClasses}
@@ -70,7 +71,7 @@ const PriceSummaryBox = ({ classes, handleUpdateTip, canEdit, tip = 0, subtotal 
                     </Grid>
                     <Grid item xs={8}>
                         <Typography align="right">
-                            <b>{(subtotal + taxedTotal + tip).toFixed(2)}</b>
+                            <b>{calcTotal({ tip, price: subtotal, tax }).toFixed(2)}</b>
                         </Typography>
                     </Grid>
                 </Grid>
