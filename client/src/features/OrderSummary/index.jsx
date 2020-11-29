@@ -24,7 +24,6 @@ const OrderSummary = ({
 }) => {
     const classes = useSummaryStyles();
     const totalItems = orderInfo.orderedItems.length;
-    console.log(orderInfo);
     const manager = isManager(useSelector(getAccountRole));
     return (
         <div>

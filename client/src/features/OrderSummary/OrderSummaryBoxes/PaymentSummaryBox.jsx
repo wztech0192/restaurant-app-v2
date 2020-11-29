@@ -19,7 +19,7 @@ const PaymentSummaryBox = ({ classes, encryptedCardInfo }) => {
     }, [encryptedCardInfo, reload]);
 
     return (
-        <Box display="flex" maxWidth="240px" justifyContent="flex-end" marginTop="20px">
+        <Box display="flex" maxWidth="240px" justifyContent="flex-end" marginTop="10px">
             <Paper elevation={5}>
                 {paymentInfo ? (
                     <Grid container className={classes.priceBox}>

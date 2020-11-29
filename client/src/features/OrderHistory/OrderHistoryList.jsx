@@ -12,7 +12,7 @@ import React from "react";
 import { calcTotal, getDateStr, validateOrderFilter } from "common";
 import OrderStatus, { getOrderStatusDisplay, getStatusChipProps } from "./orderStatus";
 import { handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Skeleton } from "@material-ui/lab";
 import SkeletonWrapper from "common/components/SkeletonWrapper";
 
@@ -39,9 +39,8 @@ const LoadingSkeleton = () => (
             ))}
     </List>
 );
-const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
+const OrderHistoryList = ({ loading, orders, filter, emptyLabel = null }) => {
     const dispatch = useDispatch();
-    const filter = useSelector(state => state.orderHistory.filter);
 
     return (
         <SkeletonWrapper
@@ -54,7 +53,7 @@ const OrderHistoryList = ({ loading, orders, emptyLabel = null }) => {
                 {orders.length <= 0
                     ? emptyLabel
                     : orders.reduce((acc, order, i) => {
-                          if (validateOrderFilter(filter, order))
+                          if (!filter || validateOrderFilter(filter, order))
                               acc.push(
                                   <ListItem
                                       divider

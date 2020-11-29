@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleQueryOrder } from "../OrderHistory/orderHistorySlice";
 import { checkIsOrderHubConnected } from "app/centralHub";
 import OrderSummaryModal from "features/OrderSummary/OrderSummaryModal";
-import { handleUpdateOrderStatus, handleSetOrderSummary } from "features/OrderSummary/orderSummarySlice";
+import {
+    handleUpdateOrderStatus,
+    handleSetOrderSummary
+} from "features/OrderSummary/orderSummarySlice";
 import OrderHistoryFilter from "../OrderHistory/OrderHistoryFilter";
 import OrderHistoryList from "../OrderHistory/OrderHistoryList";
 import OrderStatus from "features/OrderHistory/orderStatus";
@@ -47,6 +50,7 @@ const ManageOrders = ({ match, setHeader }) => {
             <OrderHistoryFilter />
             <br />
             <OrderHistoryList
+                filter={filter}
                 orders={orders}
                 loading={loading}
                 emptyLabel={<Typography>&nbsp;&nbsp;&nbsp;Empty...</Typography>}
@@ -59,14 +63,18 @@ const ManageOrders = ({ match, setHeader }) => {
                             key="accept"
                             color="primary"
                             variant="contained"
-                            onClick={dispatch(handleUpdateOrderStatus(selectedOrder.id, OrderStatus.Accepted))}
+                            onClick={dispatch(
+                                handleUpdateOrderStatus(selectedOrder.id, OrderStatus.Accepted)
+                            )}
                         >
                             Accept
                         </Button>,
                         <Button
                             key="reject"
                             color="secondary"
-                            onClick={dispatch(handleUpdateOrderStatus(selectedOrder.id, OrderStatus.Rejected))}
+                            onClick={dispatch(
+                                handleUpdateOrderStatus(selectedOrder.id, OrderStatus.Rejected)
+                            )}
                         >
                             Reject
                         </Button>

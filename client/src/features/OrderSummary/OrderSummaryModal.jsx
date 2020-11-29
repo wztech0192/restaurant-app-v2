@@ -51,7 +51,7 @@ const OrderSummaryModal = props => {
         dispatch(handleSetOrderSummary());
     };
     return (
-        <Dialog open={Boolean(selectedOrder)} onClose={handleClose} maxWidth="md">
+        <Dialog open={Boolean(selectedOrder)} onClose={handleClose} maxWidth="sm" fullWidth>
             <OrderSummaryModalContent
                 selectedOrder={selectedOrder}
                 handleClose={handleClose}

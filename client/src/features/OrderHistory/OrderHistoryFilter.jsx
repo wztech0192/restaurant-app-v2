@@ -10,7 +10,7 @@ import OrderStatus, {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFilter } from "./orderHistorySlice";
-import moment from "moment";
+import { rangeOptions } from "common/components/DateRangeSelector";
 
 const chips = {
     display: "flex",
@@ -63,12 +63,21 @@ const OrderFilter = () => {
                 aria-label="simple tabs example"
                 onChange={(e, newVal) => {
                     setTab(newVal);
-                    const today = moment().format("MM/DD/YYYY");
-                    const dateRange = [today, today];
                     if (newVal === 0) {
-                        dispatch(updateFilter({ dateRange, status: OnlyPending }));
+                        dispatch(
+                            updateFilter({ dateRange: rangeOptions.Today(), status: OnlyPending })
+                        );
                     } else if (newVal === 1) {
-                        dispatch(updateFilter({ dateRange, status: AllStatus }));
+                        dispatch(
+                            updateFilter({ dateRange: rangeOptions.Today(), status: AllStatus })
+                        );
+                    } else {
+                        dispatch(
+                            updateFilter({
+                                dateRange: rangeOptions["Last 7 Days"](),
+                                status: AllStatus
+                            })
+                        );
                     }
                 }}
             >
@@ -81,6 +90,7 @@ const OrderFilter = () => {
                     <Grid item xs={12} sm={6}>
                         <DateRangeSelector
                             label="Date Range"
+                            defaultRange="Last 7 Days"
                             margin="dense"
                             variant="outlined"
                             onChange={dateRange => {

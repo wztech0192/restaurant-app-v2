@@ -6,7 +6,7 @@ import moment from "moment";
 import Popover from "@material-ui/core/Popover";
 import { Grid, TextField, MenuItem } from "@material-ui/core";
 
-const format = "MM/DD/YYYY";
+export const format = "MM/DD/YYYY";
 
 const useStyles = makeStyles({
     root: {
@@ -23,42 +23,55 @@ const useStyles = makeStyles({
     }
 });
 
-const rangeOptions = {
+export const rangeOptions = {
     Today: () => {
-        const start = moment();
+        const start = moment().format(format);
         return [start, start];
     },
-    "This Week": () => [moment().startOf("week"), moment().endOf("week")],
-    "Last 7 Days": () => [moment().subtract(6, "days"), moment()],
-    "This Month": () => [moment().startOf("month"), moment().endOf("month")],
-    "Last 30 Days": () => [moment().subtract(29, "days"), moment()],
-    "This Year": () => [moment().startOf("year"), moment().endOf("year")],
+    "Last 7 Days": () => [moment().subtract(6, "days").format(format), moment().format(format)],
+    "Last 30 Days": () => [moment().subtract(29, "days").format(format), moment().format(format)],
+    "This Month": () => [
+        moment().startOf("month").format(format),
+        moment().endOf("month").format(format)
+    ],
+    "This Year": () => [
+        moment().startOf("year").format(format),
+        moment().endOf("year").format(format)
+    ],
     "Last Year": () => {
         const start = moment().subtract(1, "years").startOf("year");
         const end = start.clone().endOf("year");
-        return [start, end];
+        return [start.format(format), end.format(format)];
     }
 };
 
-const defaultRange = rangeOptions.Today();
 const initialState = {
-    range: defaultRange,
-    selected: "Today",
+    range: rangeOptions["Last 7 Days"](),
+    selected: "Last 7 Days",
     open: false
 };
 
-const DateRangeSelector = ({ onChange, defaultValue, ...props }) => {
+const DateRangeSelector = ({ onChange, defaultValue, defaultRange, ...props }) => {
     const classes = useStyles();
     const [state, setState] = React.useState(initialState);
     const anchorEl = React.useRef();
 
+    React.useEffect(() => {
+        if (defaultRange && state.selected !== defaultRange) {
+            rangeChange({ target: { textContent: defaultRange } });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultRange]);
     const toggleMenu = () => {
         setState({ ...state, open: !state.open });
     };
 
     const onCalenderSelect = range => {
         if (range.length > 1) {
-            const formattedRange = [moment(range[0], format).format(format), moment(range[1], format).format(format)];
+            const formattedRange = [
+                moment(range[0], format).format(format),
+                moment(range[1], format).format(format)
+            ];
             setState({
                 range: formattedRange,
                 selected: "Customize Range",
@@ -72,8 +85,6 @@ const DateRangeSelector = ({ onChange, defaultValue, ...props }) => {
     const rangeChange = e => {
         const selected = e.target.textContent;
         const range = rangeOptions[selected]();
-        range[0] = range[0].format(format);
-        range[1] = range[1].format(format);
         if (range) {
             setState({
                 range,
@@ -111,7 +122,12 @@ const DateRangeSelector = ({ onChange, defaultValue, ...props }) => {
                 <Grid container className={classes.popperRoot}>
                     <Grid item>
                         {Object.keys(rangeOptions).map((val, i) => (
-                            <MenuItem selected={val === state.selected} value={val} key={i} onClick={rangeChange}>
+                            <MenuItem
+                                selected={val === state.selected}
+                                value={val}
+                                key={i}
+                                onClick={rangeChange}
+                            >
                                 {val}
                             </MenuItem>
                         ))}

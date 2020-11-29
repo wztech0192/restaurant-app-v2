@@ -50,7 +50,6 @@ export default makeStyles(theme => ({
     },
     summaryItemsGrid: {
         [theme.breakpoints.up("md")]: {
-            borderRight: `1px solid ${theme.palette.divider}`,
             paddingRight: 10
         },
         alignSelf: "normal"

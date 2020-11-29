@@ -43,9 +43,12 @@ export const calcTotal = ({ tax, price, tip }) => {
     return taxedTotal + price + tip;
 };
 
-export const validateOrderFilter = (filter, order) =>
-    (filter.status.length <= 0 || filter.status.includes(order.status)) &&
-    moment().isBetween(
-        moment(filter.dateRange[0]),
-        moment(filter.dateRange[1]).add(1, "day").subtract(1, "seconds")
+export const validateOrderFilter = (filter, order) => {
+    return (
+        (filter.status.length <= 0 || filter.status.includes(order.status)) &&
+        moment(order.createdOn).isBetween(
+            moment(filter.dateRange[0]),
+            moment(filter.dateRange[1]).add(1, "day").subtract(1, "seconds")
+        )
     );
+};
