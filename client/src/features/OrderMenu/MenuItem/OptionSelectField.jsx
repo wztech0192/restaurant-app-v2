@@ -28,7 +28,8 @@ const OptionSelectField = ({
                         editedItemSelectOption({
                             selectedKey,
                             groupName,
-                            option: options.find(opt => opt.name === e.target.value)
+                            option: options.find(opt => opt.name === e.target.value),
+                            optionPriceMultiplier
                         })
                     )
                 }
@@ -38,7 +39,9 @@ const OptionSelectField = ({
                         <Typography component="h2" className="full-width">
                             {opt.name}
                             {Boolean(opt.price) && (
-                                <span className="float-right">{(opt.price * optionPriceMultiplier).toFixed(2)}</span>
+                                <span className="float-right">
+                                    {(opt.price * optionPriceMultiplier).toFixed(2)}
+                                </span>
                             )}
                         </Typography>
                     </MenuItem>

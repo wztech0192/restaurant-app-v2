@@ -36,7 +36,12 @@ const useStyles = makeStyles({
     }
 });
 
-const SideOrderSelector = ({ orderedOptions = EMPTY_OBJECT, dispatch, sideOrders, defaultExpanded }) => {
+const SideOrderSelector = ({
+    orderedOptions = EMPTY_OBJECT,
+    dispatch,
+    sideOrders,
+    defaultExpanded
+}) => {
     const badgeClasses = useBadeStyles();
     const classes = useStyles();
     const [editQuantity, setEditQuantity] = React.useState(1);

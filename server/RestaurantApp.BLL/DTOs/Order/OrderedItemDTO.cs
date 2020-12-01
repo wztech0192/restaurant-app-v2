@@ -21,7 +21,7 @@ namespace RestaurantApp.BLL.DTOs
             ItemId = entity.MenuItem.ID;
             OrderedOptions = entity
                 .OrderedOptions
-                .Select(o => new OrderedItemMenuOptionItemDTO(o))
+                .Select(o => new OrderedItemMenuOptionItemDTO(o, entity.MenuItem.OptionPriceMultiplier))
                 .ToDictionary(x=>x.Key);
 
         }

@@ -10,10 +10,16 @@ namespace RestaurantApp.BLL.DTOs
 
         public OrderedItemMenuOptionItemDTO() { }
 
-        internal OrderedItemMenuOptionItemDTO(OrderedItemMenuOptionItem entity)
+        internal OrderedItemMenuOptionItemDTO(OrderedItemMenuOptionItem entity, double multiplier)
         {
+            
+            if(multiplier < 1)
+            {
+                multiplier = 1;
+            }
+
             Quantity = entity.Quantity;
-            Price = entity.MenuOptionItem.Price;
+            Price = entity.MenuOptionItem.Price * multiplier;
             GroupName = entity.MenuOptionItem.Group.Name;
             Name = entity.MenuOptionItem.Name;
             Key = entity.Key;
