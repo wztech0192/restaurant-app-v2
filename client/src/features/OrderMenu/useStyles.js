@@ -1,31 +1,31 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
     menuBody: {
         marginBottom: 80,
         marginLeft: 0,
         marginRight: 0,
-        width: "100%"
+        width: "100%",
     },
     menuTitle: {
         color: "inherit",
         fontSize: 20,
         "&:before": {
-            borderColor: "rgb(0, 155, 160)"
+            borderColor: "#009ba0",
         },
         "&:after": {
-            borderColor: "inherit"
+            borderColor: "inherit",
         },
         "& svg": {
-            color: "inherit"
-        }
+            color: "inherit",
+        },
     },
     expandDetail: {
         padding: "0 8px",
-        display: "block"
+        display: "block",
     },
     menuEntryContent: {
-        paddingTop: 5
+        paddingTop: 5,
     },
     expandHead: {
         minHeight: "auto !important",
@@ -33,82 +33,82 @@ export default makeStyles(theme => ({
         "& .MuiExpansionPanelSummary-content": {
             margin: 0,
             justifyContent: "space-between",
-            alignItems: "center"
-        }
+            alignItems: "center",
+        },
     },
     cartButton: {
         position: "fixed",
         bottom: 24,
         right: 12,
-        zIndex: 1
+        zIndex: 1,
     },
     clearBtn: {
         position: "fixed",
         bottom: 30,
-        left: 8
+        left: 8,
     },
     foodOptions: {
         paddingLeft: "1.5em",
         fontSize: "0.95em",
-        display: "block"
+        display: "block",
     },
     addtionalRequestField: {
         paddingTop: 0,
         paddingBottom: 0,
         "& .MuiTextField-root": {
-            marginTop: 0
+            marginTop: 0,
         },
         "& .MuiInputBase-root": {
-            paddingRight: 100
-        }
+            paddingRight: 100,
+        },
     },
     cart: {
         maxHeight: "90vh",
         overflow: "auto",
         "& hr": {
-            margin: "0px 16px"
-        }
+            margin: "0px 16px",
+        },
     },
     cartHeader: {
         position: "sticky",
         top: 0,
         background: "white",
-        zIndex: 10
+        zIndex: 10,
     },
     footer: {
-        background: "rgb(0, 155, 160)"
+        background: "#009ba0",
     },
     entryBadge: {
-        display: "block"
+        display: "block",
     },
     media: {
-        height: 140
+        height: 140,
     },
 
     menuItemActions: {
-        right: 0
+        right: 0,
     },
     menuItemContainer: {
-        paddingRight: 85
+        paddingRight: 85,
     },
     editedItemQuantityAction: {
-        minWidth: 86
+        minWidth: 86,
     },
     itemEditDialogContainer: {
         padding: 8,
-        paddingTop: "8px !important"
+        paddingTop: "8px !important",
     },
     optionsContainer: {
         overflowX: "hidden",
         overflowY: "auto",
         maxHeight: "50vh",
-        padding: 10
+        padding: 10,
     },
     singleEntreeHeader: {
         display: "flex",
         position: "sticky",
         top: theme.mixins.toolbar.minHeight,
         zIndex: 2,
-        marginTop: -10
-    }
+        marginTop: -10,
+    },
 }));

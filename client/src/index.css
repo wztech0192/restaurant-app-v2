@@ -10,7 +10,7 @@ body {
         "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: rgb(0, 155, 160);
+    background: #009ba0;
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -30,7 +30,7 @@ footer {
     width: 100%;
     padding: 0;
     margin: 0;
-    background: rgb(0, 155, 160);
+    background: #009ba0;
     left: 0;
     color: #fafafa;
     position: fixed;

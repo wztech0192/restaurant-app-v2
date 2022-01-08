@@ -9,7 +9,13 @@
         <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" />
         <meta name="msapplication-TileColor" content="#00a300" />
-        <meta name="theme-color" content="#ffffff" />
+
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#009ba0" />
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#009ba0" />
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="#009ba0" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Web site created using create-react-app" />
@@ -33,7 +39,7 @@
 
         <style>
             .statusbar-overlay {
-                background: rgb(0, 155, 160);
+                background: #009ba0;
                 width: 100%;
                 position: fixed;
                 height: 200px;
@@ -46,7 +52,7 @@
                 position: fixed;
                 width: 100%;
                 display: flex;
-                background: rgb(0, 155, 160);
+                background: #009ba0;
                 height: 100%;
                 vertical-align: middle;
                 align-items: center;
