@@ -68,11 +68,7 @@ const Routes = ({ setHeader }) => {
                     />
                 ))}
             </Switch>
-            {manager ? (
-                <ManagerTabs />
-            ) : (
-                <footer className={classes.footer}>Copyright © 2019 Wei J. Zheng. All rights reserved.</footer>
-            )}
+            {manager ? <ManagerTabs /> : <footer className={classes.footer}>Copyright © 2019 Wei J. Zheng. All rights reserved.</footer>}
         </Container>
     );
 };

@@ -94,11 +94,7 @@ const CartSwipeView = ({ menu, orderRules }) => {
                             </Button>
                         ) : (
                             <Button
-                                disabled={
-                                    orderInfo.orderedItems.length <= 0 ||
-                                    unavailableItemSet.size > 0 ||
-                                    Boolean(BadStatus)
-                                }
+                                disabled={orderInfo.orderedItems.length <= 0 || unavailableItemSet.size > 0 || Boolean(BadStatus)}
                                 color="primary"
                                 variant="contained"
                                 onClick={e => {

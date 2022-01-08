@@ -75,9 +75,7 @@ export default makeStyles((theme) => ({
         background: "white",
         zIndex: 10,
     },
-    footer: {
-        background: "#009ba0",
-    },
+    footer: {},
     entryBadge: {
         display: "block",
     },
