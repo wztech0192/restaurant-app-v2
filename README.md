@@ -15,5 +15,5 @@
 - Go to server directory to restore dotnet dependencies and update database 
 - Run both client and server project.
 
-## Testing Server for hibachi house
+## Testing Server
 - http://wztechs.com/hibachihouse-testing/
